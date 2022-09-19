@@ -1,0 +1,9 @@
+configurar global user name y globar user email:
+git config --global user.name "juandiegorojas"
+git config --global user.email "jdrojaso@hotmail.com"
+
+token:
+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
+
+url clonado:
+git clone https://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:x-oauth-basic@github.com/juanrojasorduz/estudio.git
