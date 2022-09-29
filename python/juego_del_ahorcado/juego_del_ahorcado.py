@@ -165,13 +165,10 @@ def validation_list():
         letter_list.append(letter_dict)
     return letter_list
 
-# ONCEAVA INSTRUCCION
+# ONCEAVA INSTRUCCION - EJECUTAR EL JUEGO
 
 attemps = 0
 letter_list = validation_list()
-hanged_flag = True
-# for letter in letter_list:
-#     print(letter['value'],end='')
 
 while True:
     print('')
@@ -196,3 +193,7 @@ while True:
             error(attemps)
     if attemps >= 5:
         break
+       
+print('The correct answer was:')
+for letter in letter_list:    
+    print(letter['value'],end='')
