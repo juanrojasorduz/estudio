@@ -7,3 +7,9 @@ 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
 
 url clonado:
 git clone https://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:x-oauth-basic@github.com/juanrojasorduz/estudio.git
+
+una vez se cambie el token usar:
+
+git remote remove origin
+git remote add origin https://[TOKEN]@github.com/[USER]/[REPO]
+git push origin main
