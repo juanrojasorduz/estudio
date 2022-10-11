@@ -1,0 +1,62 @@
+###### COMANDOS BASICOS [powershell/linux]
+*cambiar directorio [powershell/linux]: cd
+*cambiar al anterior directorio [powershell/linux]: cd..
+*listar archivos [powershell/linux]: ls
+*limpiar pantalla [powershell/linux]: clear/ctrl+l
+*crear directorio [powershell/linux]: mkdir <nombre_directorio>
+*borrar directorio [powershell/linux]: rmdir <nombre_directorio>
+				       rm -r <nombre_directorio>
+*crear archivo [powershell]: new-item <nombre_archivo>.<ext>
+*crear archivo [linux]: touch <nombre_archivo>.<ext>
+*eliminar archivo [powershell/linux]: rm <nombre_archivo>.<ext>
+				      rm -r <nombre_archivo>.<ext>
+*ver contenido archivo [powershell/linux]: cat <nombre_archivo>.<ext>
+*modificar archivo [linux]:
+	vim <nombre_archivo>.<ext>  
+	    i
+	    modificar
+	    esc
+	    :
+	    wq
+	    enter
+*ver directorio actual [powershell/linux]: pwd
+*iniciar consola de python [powershell]: py
+*iniciar consola de python [linux]: python3 
+*cerrar consola de python [powershell/linux]: exit()
+*ejecutar programa de python [powershell]: py <nombre_archivo>.py
+*ejecutar programa de python [linux]: python3 <nombre_archivo>.py
+
+
+######CREAR AMBIENTE VIRTUAL [powershell/linux]:
+*iniciar repositorio [powershell/linux]: git init
+*crear ambiente virtual [powershell]: py -m venv <nombre_ambiente>
+*crear ambiente virtual [linux]: python3 -m venv <nombre_ambiente>
+*activar ambiente virtual paso 1 [powershell]: ejecutar como administrador:
+					       Set-ExecutionPolicy Unrestricted -Force
+*activar ambiente virtual paso 2 [powershell]: .\venv\Scripts\activate
+*activar ambiente virtual paso 2 [linux]: source <nombre_ambiente>/bin/activate
+*salir de entorno virtual [powershell/linux]: deactivate
+*alias para activar ambiente [powershell]: New-Alias -name avenv .\venv\Scripts\activate
+*alias para activar ambiente [linux]: alias avenv="source <nombre_ambiente>/bin/activate"
+
+
+#######INSTALAR DEPENDENCIAS DENTRO DEL AMBIENTE [powershell/linux]:
+*revisar dependencias instaladas [powershell/linux]: pip freeze
+*ejemplo instalar dependencia [powershell/linux]: pip install pandas
+
+
+######COMPARTIR DEPENDENCIAS CON OTRAS PERSONAS[powershell/linux]:
+*crear archivo con dependencias [powershell/linux]: pip freeze > requirements.txt
+*revisar archivo creado [powershell/linux]: cat .\requirements.txt
+*el desarrollador debera ejecutar: [powershell/linux]: pip install -r requirements.txt
+
+
+######INSTALAR CUALQUIER MODULO EN PYTHON [powershell/linux]:
+*instalar modulo [powershell]: py -m pip install <nombre_modulo>
+*instalar modulo [linux]: python3 -m pip install <nombre_modulo>
+
+######INSTALAR Y EJECUTAR JUPYTER NOTEBOOK [powershell/linux]:
+*instalar jupyter [powershell]: py -m pip install jupyter
+*instalar jupyter [linux]: python3 -m pip install jupyter
+*ejecutar jupyter notebook [powershell]: py -m jupyter notebook
+*ejecutar jupyter notebook [linux]: python3 -m jupyter notebook
