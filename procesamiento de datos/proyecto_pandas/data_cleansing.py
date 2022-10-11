@@ -16,7 +16,7 @@ messages = {
     2: 'Please select an option',
     3: 'Enter the name of the field you want to set as the index',
     4: 'Here you have a previous visualization of the first 3 raws:',
-    5: '�Welcome to the data cleanse process!',
+    5: '¡Welcome to the data cleanse process!',
     6: 'Do you want to send the file with the modifications Y/N?',
     7: 'Type the name of the destination file <file_name>.<ext>',
     8: 'Enter the file type you want to export'
