@@ -1,0 +1,149 @@
+amazon s3 -> almacenar objetos
+* los objetos se almacenan en BUCKETS
+
+## nomenclatura URLS:
+-> BUCKET: https://[nombre_region].amazonaws.com/[nombre_bucket]
+-> OBJETO: https://[nombre_region].amazonaws.com/[nombre_bucket]/[nombre_archivo].[ext]
+-> WEB STATICA: https://[nombre_bucket].s3-website-[nombre_region].amazonaws.com
+
+[nombre_region] = us-west-1
+[nombre_archivo] = doc1.pdf
+
+
+
+## versionamiento de archivos en s3
+Inicio
+-> Abrir consola de administracion de AWS
+-> Ir al servicio de Amazon S3
+-> crear bucket
+-> seleccionar propiedades
+-> habilitar versionamiento 
+-> guardamos configuracion
+
+ciclo (tantas versiones como quiera)
+-> subimos archivo (ej: archivo.txt)
+-> modificamos archivo 
+-> subimos de nuevo archivo modificado
+
+-> seleccionamos versions[show]
+   -> despliega las versiones del archivo con un tag
+-> si queremos podemos seleccionar uno de ellos y descargarlo
+ 
+nota: amazon cobra por el tamaño de todos los archivos versionados
+Fin
+
+
+
+##### sitio web statico
+-> el dominio debe llamarse igual al bucket -> (www.abc123.com)
+-> el archivo index y error deben ser publicos
+-> se debe configurar a nivel de dns(route53)
+
+Inicio
+-> Abrir consola de administracion de AWS
+-> Ir al servicio de Amazon S3
+-> Crear bucket con nombre del domino ej: abc123.com o dopscloud.click
+-> Seleccionar propiedades
+-> Ir a static website hosting
+-> Habilitar y llenar formulario
+   -> definir index document ej: index.html
+   -> definit error document ej: error.html
+   -> guardar -> el nos va a dar un endpoint por default ej: dopscloud.click.s3-website-us-east-1.amazonaws.com
+-> Subir los dos archivos index.html y error.html al bucket creado
+-> Vamos a cada archivo y le damos make public para que el endpoint funcione
+-> Vamos a Amazon Route 53
+-> seleccionamos create record set
+-> damos clik en alias=yes
+-> seleccionamos el dominio por default que era dopscloud.click.s3-website-us-east-1.amazonaws.com
+-> le damos crear para que el dominio sea dopscloud.click
+-> ingresamos a dopscloud.click y podremos visualizar nuestra pagina web
+
+Fin
+ejemplo: sitio web statico
+http://calculadora-estatica.s3-website-us-east-1.amazonaws.com/
+
+
+
+
+### logs a nivel de objetos
+-> tener el registro de las actividades que se hacen con la infomacion de nuestros buckets criticos
+-> realizar integraciones con plataformas de monitoreo
+-> crear diferentes tipos de alertas 
+
+
+Inicio
+-> Abrir la consola de administracion de aws
+-> Ir al servicio de amazon s3
+-> Crear un bucket con nombre ej: platziabc123
+-> dentro del bucket ir a propiedades
+-> Vamos a propiedades
+-> Seleccionamos Object level logging
+-> verificamos estado: debe estar en disabled
+-> vamos a amazon cloudtrail
+-> le damos crear trail
+  -> le damos nombre platziabc123trail
+  -> nos pide el bucket critico, en este caso platziabc123
+  -> seleccinamos el bucket destino de los logs ej: platziabc123logs
+  -> creamos
+
+-> vamos a amazon s3 de nuevo
+-> buscamos el bucket de ejemplo: platziabc123
+-> vamos a propiedades
+-> seleccionamos object level logging
+-> revisamos que ahora si se encuentre enabled
+-> nos devolvemos y seleccinamos el bucket donde se almacenan los logs: platziabc123logs
+-> abrimos el log y descargamos el json de la llamada a la api que se hizo, por ejemplo si es delete,etc
+Fin
+
+
+
+
+### Transferencia acelarada
+Tomar ventaja de edge locations o cache de contenido para cargar informacion de manera mas rapida
+
+Inicio
+-> Abrir consola de administracion de aws
+-> Ir al servicio de amazon s3
+-> Ir al bucket creado ej: plaztiabc123
+-> Seleccionar propiedades
+-> Seleccionar Transfer acceleration
+-> Le damos enable y seleccionamos want to compare your data transfer speed by region?
+-> nos redirige a una pagina para hacer test de velocidad de carga en las diferentes zonas
+Fin
+
+
+### Eventos en S3
+-> Bucket: Generar eventos en determinadas acciones
+
+Inicio
+-> Abrir consola de administracion de aws
+-> Ir al servicio de amazon s3
+-> Abrir el bucket creado ej: platziabc123
+-> Ir a propiedades
+-> Seleccionamos eventos
+-> seleccionamos agregar notificacion
+-> Habilitamos los eventos que necesitamos
+-> Mandar a un sns (mensajeria y notificaciones),sqs(colas de mensajes),funcion lambda
+Fin
+
+resultado esperado: defino un evento de eliminacion de hojas de calculo, si configuré un sns, me va
+a mandar a un mensaje sns,cada vez que ocurra este evento.
+
+
+
+###### Replicacion de objetos en s3
+-> Crear copias en otra region de los buckets criticos por si ocurre algo o por compliance, audiotorias etc
+-> la replicacion es asincrona
+
+Inicio
+-> Abrir consola de administracion de aws
+-> Ir al servicio de amazon s3
+-> Abrir el bucket creado ej: platziabc123
+-> Ir a management
+-> Seleccionamos replicacion
+-> configuramos la replicacion conforme a nuestras necesidades
+	-> bucket a donde replicamos
+	-> cuenta
+	-> clase de almacenamiento
+	-> etc
+Fin

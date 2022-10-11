@@ -1,0 +1,71 @@
+#########S3 IA (S3 Infrequent Access) - Acceso poco frecuente
+-> Almacenar objetos cuyo accesso es menos frecuente que s3 standard
+-> Acceso una o dos veces por mes
+-> El costo de almacenamiento es menor pero de solicitudes (get,put,delete,read) es mayor
+-> Esta en 3 zonas de disponibilidad
+
+
+
+########S3 IA-ONEZONE (Acceso poco frecuente y en una zona de disponibilidad unicamente)
+-> Almacenar objetos que no son criticos o que puedo extraer o recuperar facilmente, porque 
+al estar en una unica zona si algo llega a pasar en la zona no me va a afectar en mayor medida
+
+-> el costo de almacenamiento es aun mayor que en s3-ia
+-> el costo de solicitudes es muy parecido a s3-ia
+
+
+######S3 GLACIER (Usado para backups o data historica)
+-> poca frecuencia de acceso
+-> la durabilidad es la misma que en los otros servicios
+-> el costo de almacenamiento es mucho menor que en los otros servicios
+-> si necesito acceder al archivo debo esperar un tiempo aproximado de 1 a 3 horas,pero 
+puedo pagar si necesito acceder mas rapido, ejemplo 5 minutos
+
+
+######CICLO DE VIDA EN S3
+-> Podemos usar esta caracteristica en amazon s3 para que nuestros archivos
+tengan un ciclo de vida segun el numero de solicitudes sobre el archivo, de esta
+forma pasaria por s3standard, s3ia,s3iaone zone,glacier
+
+Inicio
+-> Abrir consola de administracion de aws
+-> Ir al servicio de amazon s3
+-> Abrir el bucket creado ej: platziabc123
+-> Ir a management
+-> Seleccionamos life cycle
+-> Añadimos una regla de lifecycle
+-> Configuramos
+	-> nombre
+	-> si es sobre objeto versionado o actual
+	-> selecciono que se muevan a cierto servicio ej (ia) despues de 30 y asi sucesivamente
+	-> puedo mover los objetos versionados a glacier
+	-> puedo configurar la expiracion (eliminacion) para objetos actuales o versionados
+-> Guardamos la configuracion
+Fin
+
+-> Nos permite ahorrar costos y la carga de administracion (ya que automatizo este manejo)
+
+
+
+
+##### ESTRATEGIAS DE MIGRACION A LA NUBE
+->Snowball-> 
+Inicio
+-> Abrir consola de administracion de aws
+-> Ir al servicio de snowball
+-> le damos create job
+-> Seleccionamos import into amazon s3
+-> Llenamos la informacion de contacto
+-> Conectamos el snowball al datacenter y enviamos los archivos a este dispositivo
+-> Enviamos dispositivo a amazon para que ellos lo suban al servidor
+
+-> Si es son hexabytes de informacion se usa snowmobile
+
+-> Carga multiparte
+dividir el archivo en varias partes y cargar en paralelo
+
+SDK->
+Programar scripts para hacer la migracion de manera automatizada
+
+AWS CLI->
+Mediante el uso de CLI de aws aprovechando la shell
