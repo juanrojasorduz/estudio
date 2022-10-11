@@ -1,0 +1,109 @@
+
+CREATE TABLE public.cust_sales_date (
+	c_custkey int4 NULL,
+	c_nation varchar(15) NULL,
+	c_region varchar(12) NULL,
+	c_mktsegment varchar(10) NULL,
+	d_date date NULL,
+	lo_revenue int4 NULL
+);
+
+copy cust_sales_date from 's3://jdbucketredshift/cust_sales_date.bz2' 
+credentials 'aws_iam_role=arn:aws:iam::850740812278:role/Myroleredshift' 
+BZIP2
+region 'us-east-1';
+
+select count(0) from cust_sales_date;
+
+select * from cust_sales_date limit 10;
+
+
+create table auxiliar (col int);
+
+insert into auxiliar values (1), (2), (3), (4), (5);
+
+select * from auxiliar;
+
+create table cust_sales_simple
+sortkey (c_custkey)
+as (select c_custkey, c_nation, c_region, c_mktsegment, d_date, lo_revenue 
+from cust_sales_date, auxiliar);
+
+
+create table cust_sales_compuesto
+compound sortkey (c_custkey,c_Region,c_mktsegment,d_date)
+as (select c_custkey, c_nation, c_region, c_mktsegment, d_date, lo_revenue 
+from cust_sales_date, auxiliar);
+
+
+create table cust_sales_intercalado
+interleaved sortkey (c_custkey,c_Region,c_mktsegment,d_date)
+as (select c_custkey, c_nation, c_region, c_mktsegment, d_date, lo_revenue 
+from cust_sales_date, auxiliar);
+
+
+set enable_result_cache_for_session to off; -- elimino los datos en cache
+
+select max(lo_revenue),min(lo_revenue)
+from cust_sales_simple 
+where c_custkey < 100000; -- 4.60 s
+
+select max(lo_revenue),min(lo_revenue)
+from cust_sales_compuesto
+where c_custkey < 100000; -- 197 ms
+
+select max(lo_revenue),min(lo_revenue)
+from cust_sales_intercalado
+where c_custkey < 100000; -- 103 ms
+
+
+--nota: en este caso la llave primaria del where era c_custkey por tanto se demora menos en correr
+
+--- ahora para otro tipo de consultas usamos:
+
+select max(lo_revenue),min(lo_revenue)
+from cust_sales_simple 
+where c_region = 'ASIA'
+and c_mktsegment = 'FURNITURE'; -- 7.459 s
+
+select max(lo_revenue),min(lo_revenue)
+from cust_sales_compuesto
+where c_region = 'ASIA'
+and c_mktsegment = 'FURNITURE'; -- 7.228 s 
+
+select max(lo_revenue),min(lo_revenue)
+from cust_sales_intercalado 
+where c_region = 'ASIA'
+and c_mktsegment = 'FURNITURE'; -- 4.526 s  
+
+--- Evaluando con otro tipo de consulta
+select max(lo_revenue),min(lo_revenue)
+from cust_sales_simple
+where d_date between '01/01/1996' and '01/14/1996'
+and c_mktsegment = 'FURNITURE'
+and c_region = 'ASIA'; --6.538 s
+
+select max(lo_revenue),min(lo_revenue)
+from cust_sales_compuesto
+where d_date between '01/01/1996' and '01/14/1996'
+and c_mktsegment = 'FURNITURE'
+and c_region = 'ASIA'; --6.123 s
+
+select max(lo_revenue),min(lo_revenue)
+from cust_sales_intercalado
+where d_date between '01/01/1996' and '01/14/1996'
+and c_mktsegment = 'FURNITURE'
+and c_region = 'ASIA'; --4.312 s 
+
+-- en este caso el intercalado le da prioridad a los campos especificados y demora menos en ejecutar la consulta aun siendo la carga demorada
+
+
+
+
+
+
+
+
+
+
+

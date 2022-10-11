@@ -1,0 +1,81 @@
+-- distribución tipo key
+create table dist_key (columna int)
+diststyle key distkey (columna);
+insert into dist_key values (10);
+
+-- distribución tipo even
+create table dist_even (columna int)
+diststyle even;
+insert into dist_even values (10);
+
+-- distribución tipo all
+create table dist_all (columna int)
+diststyle all;
+insert into dist_all values (10);
+
+-- distribución tipo automatica
+create table dist_auto (columna int);
+insert into dist_auto values (10);
+
+
+--usar una tabla de redshift para saber que distribucion hay por tabla
+select * from svv_table_info 
+where "table" like '%dist%' 
+limit 10;
+
+-- otra tabla informativa es:
+select * from pg_table_def 
+where tablename = 'users'; 
+
+select * from svv_diskusage
+where "name" = 'users' and col = 0;
+
+select * from svv_diskusage
+where "name" = 'users' and col = 0;
+
+select distinct slice, col, num_values, minvalue, maxvalue 
+from svv_diskusage
+where "name" = 'users'
+and col = 0
+and num_values > 0
+order by slice, col;
+
+
+create table user_key_state distkey(state) as (select * from users);
+
+select distinct slice, col, num_values, minvalue, maxvalue 
+from svv_diskusage
+where "name" = 'user_key_state'
+and col = 0
+and num_values > 0
+order by slice, col;
+
+
+create table user_even diststyle even as (select * from users);
+
+select distinct slice, col, num_values, minvalue, maxvalue 
+from svv_diskusage
+where "name" = 'user_even'
+and col = 0
+and num_values > 0
+order by slice, col;
+
+create table user_all diststyle all as (select * from users);
+
+select distinct slice, col, num_values, minvalue, maxvalue 
+from svv_diskusage
+where "name" = 'user_all'
+and col = 0
+and num_values > 0
+order by slice, col;
+
+
+
+
+
+
+--la distribucion key es la mejor si sabes como se distribuyen los datos
+
+
+
+ 

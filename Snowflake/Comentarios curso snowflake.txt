@@ -1,0 +1,12 @@
+AMAZON S3 - STAGED DATA
+external S3 bucket
+
+
+Getting Data into Snowflake There are many ways to get data into Snowflake from many locations including the COPY command, Snowpipe auto-ingestion, external connectors, or third-party ETL/ELT solutions. For more information on getting data into Snowflake, see the Snowflake documentation. For the purposes of this lab, we use the COPY command and AWS S3 storage to load data manually. In a real-world scenario, you would more likely use an automated process or ETL solution.
+
+Multi-cluster Warehouse
+
+In the CITIBIKE_ZERO_TO_SNOWFLAKE worksheet, use the following command to create a stage that points to the bucket where the semi-structured JSON data is stored on AWS S3:
+
+
+

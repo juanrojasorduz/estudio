@@ -1,0 +1,99 @@
+--Create table
+create  table  estudiante
+( id  int2,
+nombre  varchar(20),
+apellido  varchar(20),
+edad  int2,
+fecha_ingreso  date );
+
+
+
+-- Creamos una estructura en redshift que pueda satisfacer las necesidades de esta tabla
+{
+	"id": 4544,
+	"nombre": "test_1",
+	"apellido": "json_1",
+	"edad": 33,
+	"fecha_ingreso": "2020-08-01"
+}
+{
+	"id": 23232,
+	"nombre": "test_2",
+	"apellido": "json_2",
+	"edad": 22,
+	"fecha_ingreso": "2020-08-03"
+}
+
+
+
+ahora subimos lo subimos a s3 con el nombre que queramos y procedemos a cargarlo de la siguiente manera:
+
+copy  public.estudiante  from  's3://[tu_propia_ruta_del_archivo_json]'  credentials  'aws_iam_role=[tu_iam_role]'
+format  as  json  'auto'  region  '[tu_region]';
+
+
+Carga con jsonpaths:
+{
+	"id": 4544,
+	"nombre": "test_json3",
+	"apellido": "test_json3",
+	"edad": [
+		24332,
+		33,
+		443,
+		323232,
+		43434
+	],
+	"fechas": [
+		{
+			"id": 0,
+			"fecha_ingreso": "2015-05-01"
+		},
+		{
+			"id": 1,
+			"fecha_ingreso": "2016-05-30"
+		}
+	]
+}
+
+
+
+
+{
+	"jsonpaths": [
+		"$['id']",
+		"$['nombre']",
+		"$['apellido']",
+		"$['edad'][1]",
+		"$['fechas'][1]['fecha_ingreso']"
+	]
+}
+
+
+copy  public.estudiante  from  's3://[tu_propia_ruta_del_archivo_json]'  credentials  'aws_iam_role=[tu_iam_role]'
+format  as  json  's3://[tu_propia_ruta_del_archivo_jsonpaths]'  region  'tu_propia_region';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

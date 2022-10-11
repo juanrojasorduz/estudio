@@ -1,0 +1,24 @@
+-- revisar desde (1-15)
+
+***llaves de ordenamiento en Redshift
+ordenar las columnas por ciertos criterios para que sean guardadas de 
+cierto modo en nuestros nodos
+
+* simple -> llave compuesta por una unica columna
+* compuesto (compound) -> al momento de cargar los datos RS va a distribuir esos datos basados en los ordenamientos definidos 
+* intercalado (interleaved) -> la carga es lenta pero las consultas veloces
+n: revisar detalle
+
+
+## Replicar query de analisis de diseño de tablas
+
+
+#### MANIPULAR GRANDES CANTIDADES DE DATOS
+
+-> Comando copy para hacer ingesta de datos en Amazon S3:
+   importante dividir los archivos lo mas que puedas, 110 mb por archivo (recomendación)
+
+
+  
+
+

@@ -1,0 +1,293 @@
+create table estudiante
+(
+id int2,
+nombre varchar(20),
+apellido varchar(20),
+edad int2,
+fecha_ingreso date
+);
+
+copy estudiante from 's3://mibucketredshift/primer_cargue.csv'
+credentials 'aws_iam_role=arn:aws:iam::665326421644:role/MyRoleRedshift'
+region 'us-east-2'
+delimiter ';'
+ignoreheader 1
+ignoreblanklines
+blanksasnull
+dateformat 'mm-dd-yyyy';	
+
+## Hay una tabla util para revisar errores de carga:
+
+select * from stl_load_errors;
+select * from estudiante;
+truncate table estudiante;   --forma de eliminar los datos de una tabla
+
+### como cargar archivos que no tienen un delimitador
+si el archivo tiene espacios entre las columnas podemos delimitarlo manualmente:
+
+copy estudiante from 's3://mibucketredshift/primer_cargue.csv'
+credentials 'aws_iam_role=arn:aws:iam::665326421644:role/MyRoleRedshift'
+region 'us-east-2'
+fixedwidth '0:1,1:9,2:9,3:2,4:10'
+dateformat 'mm-dd-yyyy';
+
+
+
+#######archivo de manifiesto (test.manifest)-> formato en json -> estrucutura en redshift para archivos de manifiesto
+-> un archivo que me va a indicar donde quiero cargar mis archivos
+-> se guarda en el bucket de s3
+sintaxix:
+{
+    "entries": [
+        {"url":"<Ruta del archivo>", "mandatory":true},
+        {"url":"<Ruta del archivo>", "mandatory":true}
+    ]
+}
+
+
+ejemplo: 
+{
+    "entries": [
+        {"url":"s3://mibucketredshift/cargue_1.csv", "mandatory":true},
+        {"url":"s3://mibucketredshift/cargue_2.csv", "mandatory":true}
+    ]
+}
+
+-> posterior a ello ejecutamos la sentencia copy de la siguiente manera
+copy estudiante from 's3://mibucketredshift/test.manifest'
+credentials 'aws_iam_role=arn:aws:iam::665326421644:role/MyRoleRedshift'
+delimiter ';'
+ignoreheader 1
+manifest
+region 'us-east-2';
+
+
+formato de compresion
+si quiero asegurar que redshift me comprima lo mejor posible los archivos puedo usar la sentencia COMPUPDATE ON
+
+ejemplo:
+
+copy sales_compression_on from 's3://mibucketredshift/ticketdb/sales_tab.txt'
+credentials 'aws_iam_role=arn:aws:iam::665326421644:role/MyRoleRedshift'
+delimiter '\t'
+timeformat 'MM/DD/YYYY HH:MI:SS'
+COMPUPDATE ON
+region 'us-east-2';
+
+###tabla muy util para revisar la composicion de una tabla: 
+select * from pg_table_def where tablename = 'sales_compression_on'
+
+
+##Para hacer updates sobre tablas en bases de datos columnares puede ser costoso,por lo que 
+es recomendable usar una unica sentencia usando tablas auxiliares,como por ejemplo:
+
+update sales
+set pricepaid = sa.pricepaid
+from sales_auxiliar sa
+where sales.salesid = sa.salesid;
+
+update sales
+set pricepaid = sa.pricepaid
+from sales_auxiliar sa
+where sales.salesid = sa.salesid;
+
+delete from sales
+using sales_auxiliar
+where sales.salesid = sales_auxiliar.salesid;
+
+insert into sales (select * from sales_auxiliar)
+
+;
+
+
+####como mantener el performance de tu base de datos?
+analyze -> actualiza los metadatos estadisticos 
+
+
+SELECT *
+FROM pg_statistic_indicator
+WHERE stairelid = (SELECT DISTINCT id
+FROM stv_tbl_perm
+WHERE name = 'sales');
+
+SELECT *
+FROM pg_table_def
+WHERE tablename = 'sales';
+
+analyze sales(salesid, pricepaid);
+analyze sales predicate columns;
+analyze sales;
+
+SELECT *
+FROM stl_analyze;
+
+--Vaccum
+SELECT "table", unsorted, vacuum_sort_benefit
+FROM svv_table_info;
+
+vacuum sales;
+vacuum sort only sales to 75 percent;
+vacuum delete only sales to 75 percent;
+vacuum reindex sales;
+
+
+
+### BUENAS PRACTICAS DE SQL 
+
+Buenas practicas para diseñas consultas
+Evita usar “select * from…”
+Usar joins por llaves siempre que sea posible.
+Tantas condiciones en el where como sea posible.
+Evita usar funciones en el select.
+Usar columnas “sort” en el group by (mismo orden).
+Usa subconsultas con menos de 200 registros.
+Si usas group by y order by asegúrate que estén en el mismo orden.
+Filtra lo mismo cuentas veces se pueda en las distintas tablas.
+
+
+
+## Hay un comando que me permite ver como es el plan de ejecucion de un query (explain):
+ej:
+
+explain
+SELECT eventid, eventname, event.venueid, venuename
+FROM event, venue
+WHERE event.venueid = venue.venueid;
+
+explain
+SELECT eventid, eventname, event.venueid, venuename
+FROM event, venue;
+
+explain
+SELECT eventid, eventname, event.venueid, venuename
+FROM event, venue
+WHERE event.venueid = venue.venueid;
+
+SELECT *
+FROM pg_table_def
+WHERE tablename IN ('event', 'venue');
+
+CREATE TABLE IF NOT EXISTS public.event_2
+(
+	eventid INTEGER NOT NULL  ENCODE az64
+	,venueid SMALLINT NOT NULL  ENCODE az64 distkey sortkey
+	,catid SMALLINT NOT NULL  ENCODE az64
+	,dateid SMALLINT NOT NULL  ENCODE RAW
+	,eventname VARCHAR(200)   ENCODE lzo
+	,starttime TIMESTAMP WITHOUT TIME ZONE   ENCODE az64
+);
+
+INSERT INTO event_2 (SELECT * FROM event);
+
+explain
+SELECT eventid, eventname, event_2.venueid, venuename
+FROM event_2, venue
+WHERE event_2.venueid = venue.venueid;
+
+analyze event_2;
+
+explain
+SELECT e.eventname, sum(pricepaid)
+FROM sales s
+INNER JOIN event e ON s.eventid = e.eventid
+GROUP BY e.eventname;
+
+explain
+SELECT sum(pricepaid)
+FROM sales s;
+
+SELECT *
+FROM pg_table_def
+WHERE tablename IN ('event');
+
+explain
+SELECT *
+FROM event;
+
+explain
+SELECT *
+FROM event
+ORDER BY eventid;
+
+explain
+SELECT *
+FROM event
+ORDER BY dateid;
+
+SELECT *
+FROM stl_alert_event_log;
+
+SELECT *
+FROM stl_query;
+
+
+
+### mandar datos a un archivo
+
+unload ('select * from unload_test_2')
+to 's3://mybucketredshiftsantiago/unload/unload_test_4'
+credentials 'aws_iam_role=arn:aws:iam::118590468211:role/MiRoleRedshift'
+ALLOWOVERWRITE
+delimiter ';'
+header
+maxfilesize 500 mb
+ZSTD
+manifest
+partition by (c_nation) INCLUDE 
+;
+
+
+
+#### TABLAS UTILES PARA ENTENDER EL COMPORTAMIENTO DE LOS DATOS:
+SELECT * FROM pg_table_def
+WHERE tablename = 'sales'; -- encode, distribucion, ordenamiento
+
+SELECT * FROM pg_catalog.stv_blocklist sb ; -- permite ver los bloques de datos
+
+SELECT * FROM pg_catalog.stl_load_errors ; -- logs de los errores
+
+SELECT * FROM pg_catalog.stl_load_commits ; -- logs de los commits quedaron bien
+
+SELECT * FROM stl_query; -- informacion de los queries
+
+SELECT * FROM stl_query
+WHERE query = 29;
+
+SELECT * FROM pg_catalog.svl_qlog  -- ver queries
+ORDER BY starttime desc;
+
+
+SELECT * FROM pg_catalog.svl_user_info ; -- informacion de los usuarios
+
+CREATE user invitado password 'Password123';
+
+SELECT * FROM svv_tables;
+
+SELECT * FROM svv_tables
+WHERE table_schema = 'public';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

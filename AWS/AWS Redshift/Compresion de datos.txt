@@ -1,0 +1,45 @@
+select * from venue limit 10;
+
+select count(0) from venue;
+
+create table cartesian_venue as (
+select venueid , venuename , venuecity , venuestate , venueseats
+from venue, listing );
+
+select count(0) from cartesian_venue;
+
+create table encoding_venue (
+nameraw varchar(100) encode raw,
+namebydict varchar(100) encode bytedict,
+namelzo varchar(100) encode lzo,
+namerunlength varchar(100) encode runlength,
+nametext255 varchar(100) encode text255,
+nametext32k varchar(100) encode text32k,
+namezstd varchar(100) encode zstd
+);
+
+insert into encoding_venue
+(
+select venuename,venuename,venuename,venuename,venuename,venuename,venuename
+from cartesian_venue
+);
+
+select count(0) from encoding_venue;
+
+select * from encoding_venue limit 10;
+
+
+select * from stv_tbl_perm 
+where name = 'encoding_venue'; --105626
+
+select col,max(blocknum) from pg_catalog.stv_blocklist
+where tbl = 105626 and col <= 6
+group by col order by col; --cual es el maximo bloque por cada columna -> es decir cada columna cuantos bloques esta usando
+
+
+-- aws nos da una funcion para hacer este analisis mucho mas rapida:
+
+analyze compression cartesian_venue;
+
+
+
