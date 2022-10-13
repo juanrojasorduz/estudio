@@ -1,0 +1,3 @@
+Instalar mypy usando py -m pip install mypy
+
+mypy palindrome.py --check-untyped-defs
