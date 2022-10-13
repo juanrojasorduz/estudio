@@ -1,0 +1,120 @@
+### Storage gateway
+-> Conectar un sistema on premises con la nube
+
+Inicio
+-> Abrir consola de administracion en aws
+-> Ir al servicio de AWS Storage Gateway
+-> Seleccionamos gateway
+-> Seleccionamos get started y llenamos formulario
+-> Seleccionamos gateway type y llenamos formulario
+	-> File gateway -> aplicaciones on-premise pueden acceder a storage a través de SMB o NFS
+	-> Volume gateway -> Almacena y administra datos locales en Amazon S3 en su nombre y opera en modo caché o modo almacenado.
+	-> Tape gateway -> reemplaza el backup en cintas aprovechando el cloud
+-> Seleccionamos host platform y llenamos formulario
+-> Seleccionamos connect to gateway y llenamos formulario
+-> Seleccionamos activate gateway y llenamos formulario
+-> Seleccionamos configure local disks y llenamos formulario
+Fin
+
+
+
+###  Elastic file system (EFS)
+-> El valor es por GB consumido. No por aprovisionado
+-> Aumento y reduccion automatica de su capacidad
+-> Concede acceso compartido paralelo masivo a miles de instancias
+-> puedo usarlo como un lugar centralizado para que varias instancias a la vez
+vean la misma ubicacion de almacenamiento
+
+Inicio
+-> Abrir consola de administracion de aws
+-> Ir al servicio de amazon elastic file system
+-> Seleccionamos crear un sistema de archivos
+-> Configuramos 
+-> Guardamos
+Fin
+
+
+#### Elastic block storage 
+-> Basado en bloques de archivos
+-> Instalar sistemas operativos
+-> Instalar aplicaciones
+
+"Disco duro virtual en la nube"
+
+-> Aprovisionar el tamaño en disco del sistema operativo
+-> Un EBS solo se puede asociar a una instancia de EC2
+
+
+
+Tipos de EBS: GP2 & IO1
+
+SSD GP2 (General purpose)
+
+Balance entre performance y precio. 3 IOPS por cada DB hasta 10.000 IOPS. Son de uso general.
+Hasta 3.000 IOPS para periodos cortos debajo de 1GB. Puede ser Boot de una instancia. Entre 1GB y 16TB.
+SSD IO1
+
+Diseñados para I/O intensiva. Se usan para más de 10.000 IOPS. Hasta 20.000 IOPS por volumen.
+Para BD no relacionales o uso intensivo I/O. Puede ser Boot de una instancia. Entre 4GB y 16TB.
+
+
+
+Tipos de EBS: ST1 & SC1
+
+HDD ST1
+
+BigData, Data Warehouse, Log Process o Streaming. No pueden ser Boot de una EC2.
+Entre 500GB y 16TB.
+HDD SC1
+
+Volumen de menor costo para cargas de acceso con poca frecuencia. No pueden ser Boot de una EC2.
+Escenarios donde el costo es importante. Entre 500GB y 16TB.
+Magnetic (standard)
+
+Es el que tiene la instancia por defecto al ser encendida. No es recomendable porque no garantiza el almacenamiento de la información luego de que se reinicie o se apague.
+
+
+
+
+###SNAPSHOTS
+Snapshots y AMI
+
+Los snapshots son incrementales. Se pueden programar con el lifecycle manager.
+Compatibles con cualquier sistema operativo.
+Diferencias entre Snapshots y AMIs
+La principal diferencia entre el snapshot y la AMI es, por decirlo de una manera informal, 
+una foto en el tiempo del servidor; en cambio la AMI la podríamos utilizar para crear una plantilla 
+de un Sistema Operativo para después replicarla. Por ejemplo, podemos crear una AMI que por defecto ya tenga una aplicación o un stack instalado 
+y cuando copiemos esa AMI a otra región y la despleguemos, ya sabemos que siempre va a estar esa aplicación o ese stack en las instancias que 
+despleguemos basadas en esa AMI. En el caso del snapshot, nos desplegaría el servidor que ya hemos estado utilizando con nuestra información
+, y en el caso de la AMI, podríamos venderla en el AWS MarketPlace compliendo algunas normas definidas por AWS.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

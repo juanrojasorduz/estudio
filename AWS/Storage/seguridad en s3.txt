@@ -1,0 +1,165 @@
+Seguridad en S3
+
+Este área es importante porque si vamos a utilizar S3 para almacenar información crítica, 
+debemos tomar todas las medidas necesarias para que esta información quede completamente segura y salvaguardada en S3.
+
+Protección de datos mediante cifrado en S3
+
+Server Side Encryption: Cuando AWS provee y administra las llaves de cifrado.
+SSE - S3
+SSE - KMS
+SSE - C
+Client Side Encryption: Cuando el cliente quiere hacer la encriptación de los objetos.
+SSE - S3
+
+AWS se encarga de generar las llaves de cifrado, administrarlas y almacenarlas.
+El sistema de cifrado utiliza AES-256 (Advanced Encryption Standard de 256 bits).
+Las llaves quedan almacenadas en IAM > Encryption Keys, y son agrupadas por servicios, por ejemplo: aws/ebs.
+
+¿Por qué vamos a usar este tipo en encriptación?
+
+Porque nosotros no queremos tener cargas de administración en el tema de la creación de las llaves o rotación de las llaves.
+Es completamente manejado por AWS, tanto la llave, como la rotación, como la encripción, como el almacenamiento de las llaves.
+
+
+
+
+SSE - KMS (Key Management Service)
+
+Este servicio se fundamenta de la siguiente forma:
+Tenemos nuestro archivo plano, y utilizamos KMS para cifrar el archivo. La principal diferencia con el servicio anterior es que en esta ocasión nosotros vamos a crear las llaves, aunque AWS la va a almacenar.
+
+Características
+
+Llaves: Se crea la llave en IAM, y se debe especificar quiénes puedes administrarlas y usarlas.
+Integración: Se encuentra integrado con CloudTrail para auditar el uso de las llaves.
+Rotación: La rotación de las llaves es responsabilidad del usuario, no de AWS.
+
+
+
+SSE - C
+En esta forma de encriptación, el usuario tiene mayor participación en cuanto a la administración de las llaves.
+
+El usuario proporciona las llaves de cifrado y AWS administra el cifrado de los objetos. AWS no almacena las llaves, lo hace el usuario y es totalmente su responsabilidad.
+Para las solicitudes se deben realizar con HTTPS o serán negadas por AWS.
+La rotación de las llaves es responsabilidad del usuario, no de AWS.
+
+
+
+
+diferencias de los 3 metodos de encroptacion:
+-> SSE-S3: Aws administra las llaves y el almacenamiento
+-> SSE-KMS: Nosotros administramos las llaves pero aws las almacena
+-> SSE-C: Nosotros administramos las llaves y las almacenamos en nuestro propio sistema
+
+
+
+
+
+##### DEMOS DE ENCRIPTACION:
+
+## Crear una llave con SSE-S3
+Inicio
+-> Abrir consola de administracion de AWS
+-> Ir al servicio de amazon S3 
+-> Crear un bucket ej: platziabc123
+-> Ir a propiedades
+-> Ir a cifrado predeterminado
+-> Habilitar AES-256(SSE-S3) -> Objetos nuevos seran encriptados
+-> Seleccionar guardar
+-> Ir al servicio de IAM
+-> Seleccionar encryption KEYS
+-> Verificar que la llave de encriptacion se encuentre creada
+Fin
+
+## Crear una llave con SSE-KMS
+Inicio
+-> Abrir consola de administracion de AWS
+-> Ir al servicio de IAM
+-> Seleccionar encryption KEYS
+-> Ir a crear llave
+	-> configuramos usuarios y/o roles que pueden administrar la llave
+	-> configuramos usuarios y/o roles que pueden encriptar y desencriptar los archivos
+	-> guardamos
+-> Ir al servicio de amazon S3 
+-> Crear un bucket ej: platziabc123
+-> Ir a propiedades
+-> Ir a cifrado predeterminado
+-> Habilitar AWS-KMS(SSE-KMS) -> Objetos nuevos seran encriptados
+	-> Seleccionamos la llave previamente creada
+-> Seleccionar guardar
+Fin
+
+
+### Configurar cifrado mediante SDK
+
+-> Podemos configurar el cifrado mediante la libreria boto3 para subir objetos a s3
+
+usamos la propiedad ej: ServerSideEncryption='AES256'|'aws:kms'
+
+
+
+
+
+### Politicas en S3
+
+-> Podemos crear politicas basadas en usuario/role mediante documentos json para el acceso y acciones sobre buckets en s3
+
+Inicio
+-> Abrir consola de administracion de aws
+-> Ir al servicio de amazon s3
+-> Crear bucket ej: platziabc123
+-> Ir a permisos
+-> Seleccionar politica del bucket
+-> Abrir generador de json de politica
+-> configurar la politica sobre usuarios y roles
+	-> especificar que acciones puede ejecutar sobre el bucket
+-> generar json
+-> pegar json en la politica
+-> guardar
+Fin
+
+
+ejemplo json
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PublicRead",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": [
+        "s3:GetObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::examplebucket/*"
+      ]
+    }
+  ]
+}
+
+
+
+### ACL en s3 -> Listas de control de acceso al bucket
+-> Si tambien configuré una politica es recomendable que se hablen con la lista de control de acceso
+
+Inicio
+-> Abrir consola de administracion de aws
+-> Ir al servicio de amazon s3
+-> Crear bucket ej: platziabc123
+-> Ir a permisos
+-> Seleccionar lista de control de accesos
+-> Ir a añadir cuenta
+-> configurar el acceso de la cuenta al bucket
+	-> añadimos el id o correo electronico de la cuenta
+	-> seleccionamos las acciones que puede hacer sobre nuestro bucket ej: escribir objetos
+	-> guardar
+Fin
+
+
+
+
+
+
+

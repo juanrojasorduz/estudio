@@ -1,0 +1,69 @@
+### Volumen EBS para windows
+Inicio
+-> Abrir consola de administracion de aws
+-> Ir al servicio de amazon EC2
+-> Seleccionamos launch instance
+-> Configuramos
+	-> Seleccionamos una instancia para windows
+	-> configuramos red
+	-> agregamos un volumen de storage tipo root con capacidad de 60 gb
+	-> agregamos un volumen de storage tipo EBS con capacidad de 100 gb
+	-> agragamos la llave
+-> Lanzamos instancia
+-> Vamos a actions para generar el password de administrador
+-> seleccionamos get windows password
+-> subimos la llave previamente creada
+-> Accedemos al servidor
+-> Vamos a Remote desktop connection
+-> Seleccionamos file and storage
+-> seleccionamos disks
+-> seleccionamos el disco ebs creado y le damos bring online
+-> esperamos un momento
+-> cuando este online le damos click derecho crear nuevo volumen
+-> creamos un nuevo volumen
+-> le damos crear
+-> verificamos que tengamos el disco añadido en nuestra instancia
+-> si queremos modificar el volumen vamos a la consola de ec2
+-> seleccionamos volumenes
+-> hacemos los ajustes que necesitemos ej: modify volume,create snapshot,delete volume etc
+-> si seleccionamos modificar volumen por ejemplo para que tenga 200 gb
+-> vamos a la vm esperamos que el cambio se refleje en el disks
+-> vamos a volumenes y le damos extender volumen sobre el volumen creado previamente
+-> verificamos que en this pc ya se refleje el cambio
+Fin
+
+
+
+### Volumen EBS Para Linux
+Aplicamos un metodo similar a windows con la diferencia de que nos debemos conectar a una herramienta como MobaXterm
+
+Aplicamos comandos:
+lsblk = revisamos volumenes montados
+
+sudo mkfs -t ext4 /dev/xdb = Este comando nos ayuda a dar formato al volumen.
+
+sudo mkdir platzi = Creamos punto o directorio de montaje de la ruta
+
+sudo mount /dev/xvdb platzi = Realizamos el montaje del volumen a punto de montaje que se indico anteriormente
+
+cd platzi = Aquí vamos al punto de montaje para poder escribir.
+
+Nota: El best practice es que se pueda editar el archivo /etc/fstab para agregar una linea donde se agrega el punto de montaje y así quedara de manera persistente en el SO.
+
+
+
+
+
+### Conclusiones curso storage:
+
+• Objetos -> S3
+• Data histórica -> Glacier, storage más económico
+• Versionamiento de archivos <- información importante y buscamos trazabilidad
+• Replicación entre buckets de forma asincrónica.
+• Ciclo de vida de storage gestión de objetos y ahorro, menor administración humana
+• Mantener objetos encriptados
+• Todos los buckets deben tener configurados con policy
+• Selección de volumen que se ajuste a nuestras necesidades de I/O, precio y uso.
+• En EFS podemos conectar mas de una instancia de EC2 a nuestro sistema de archivos, su costo será únicamente por lo usado.
+• Los snapshots son incrementales y podemos programarlos usando tags para los volúmenes EBS.
+• Carga multiparte, transferencia acelerada y eventos en S3.
