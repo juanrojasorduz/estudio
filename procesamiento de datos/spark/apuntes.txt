@@ -1,0 +1,16 @@
+Spark -> Framework para desarrollo de procesos de big data
+      -> Se preocupa por la velocidad de procesamiento
+      -> Se enfoca en el procesamiento desde memoria ram
+
+
+Estructuras de datos que se usan en spark:
+-> RDD (Resilient Distributed Datasets): Principal abstraccion de datos
+    -> son inmutables
+    -> permite controlar mejor el flujo de spark
+    -> si usamos python convertir a un conjunto permite mejor control de los datos
+-> DataFrame
+
+Nota: Una transformacion no se ejecuta hasta que se llama a una acción
+
+
+
