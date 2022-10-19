@@ -109,7 +109,11 @@ juandiegorojas@Diego:~$ source ~/.bashrc
 
 
 
-
+si no funcionan las variables de entorno usar:
+# Set spark environments
+import os
+os.environ['PYSPARK_PYTHON'] = '/usr/bin/python3'
+os.environ['PYSPARK_DRIVER_PYTHON'] = '/usr/bin/python3'
 
 
 
