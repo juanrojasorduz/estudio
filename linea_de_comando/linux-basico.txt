@@ -1,0 +1,239 @@
+*** copiar archivo:
+
+$ cp <nombre_copiado> <nombre_copia>
+
+*** cambiar nombre a carpeta:
+
+$ mv <nombre_carpeta> <nuevo_nombre_carpeta>
+
+*** eliminar archivo
+
+$ rm <nombre_archivo>
+
+** eliminar carpeta de manera recursiva
+
+$ rm -r <nombre_carpeta>
+
+** revisar documentacion sobre un comando especifico
+
+$ man <comando>
+
+ej: $ man ls
+
+** mostrar primeras n lineas o ultimas lineas
+
+$ head -n 5 <nombre_archivo>.<ext> 
+$ tail -n 5 <nombre_archivo>.<ext> 
+
+
+### permisos sobre archivos
+
+*listar archivos de la carpeta
+
+$ ls -l
+
+sintaxis:
+
+-rw-rw-r-- : sintaxis para archivo : 
+	- : notacion para archivo
+	rw- : notacion de lectura y escritura del usuario habilitadas
+	rw- : notacion de lectura y escritura del grupo habilitadas
+	r-- : notacion de lectura para otro usuario en el sistema operativo habilitada
+drwxrwxr-x : sintaxis para carpeta :
+	d : notacion para archivo
+	rwx : notacion de lectura,escritura y ejecucion del usuario habilitadas
+	rwx : notacion de lectura,escritura y ejecucion del grupo habilitadas 
+	r-x : notacion de lectura y ejecucion para otro usuario en el sistema operativo habilitadas
+
+
+** la notacion para asignar permisos se maneja asi:
+ugoa : u:usuario,g:grupo,o:otros,a:todos
+
+** de esta forma para asignar permisos usamos:
+
+$ chmod u+x archivo.txt  (agrego permisos de ejecucion al usuario sobre el archivo.txt)
+
+$ chmod g-w archivo.txt  (quito permisos de escritura al grupo sobre el archivo.txt)
+
+
+### propietarios de archivos
+
+$ sudo chown root:root archivo.txt
+
+-> nota: root:root denota <nuevo_usuario>:<nuevo_grupo> para cambiar propietario del archivo
+
+
+
+### COMANDO SUDO: permite al usuario ejecutar programas con los privilegios de seguridad de otro usuario (normalmente root)
+
+
+
+
+
+### TERMINALES
+
+* conectarme a una terminal de linux
+$ sudo chvt 3  
+
+* encontrar la consola donde estoy trabajando
+$ tty 
+
+* conectarme a otra terminall
+$ sudo chvt 5
+
+* mostrar informacion sobre usuarios conectados y lo que esta haciendo cada usuario
+$ w
+
+
+## Matar una conexion (proceso)
+
+* listar usuarios conectados y su TTY, buscar el nombre del TTY (terminal) que queremos desconectar
+$ w
+
+-> ej: tty1
+
+* Listar los procesos que se estan ejecutando en esa terminal, y seleccionar el PID del bash
+$ ps -ft tty1
+
+-> ej: PID = 18326
+
+* Matar el proceso con:
+$ kill -9 18326
+
+
+** crear una conexion con localhost
+$ ssh localhost
+
+** matar la conexion con localhost
+$ exit
+
+** verificar la documentacion sobre el comando ps
+$ man ps
+
+** verificar todos los procesos que se estan ejecutando con el sistema operativo
+$ ps aux
+
+** verificar los procesos que se estan ejecutano por ejemplo del usuario juanrojas
+$ ps aux | grep juanrojas
+ 
+
+
+** para cambiar de terminal
+
+control+alt+fx : donde x es la terminal, si es 5 entonces seria F5
+
+** modemos iniciar una tarea en un editos de carga, saliendo de ella con ctrol+z dejando esa tarea abierta dentro de la terminal
+$ vi platzi
+
+** podemos listar los jobs que se estan ejecutando en la terminal usando:
+$ jobs
+
+
+
+#### RETO CREAR SCRIPT Y EJECUTARLO
+
+* crea un script
+
+$ vi script.sh
+
+* inserto un contenido y lo guardo, por ejemplo:
+#!/bin/bash
+echo "hola"
+
+* verifico que mi archivo ya se encuentre guardado:
+$ ls -l
+
+* veo el contenido del script:
+$ cat script.sh
+
+* para ejecutar doy privilegios de ejecucion al usuario:
+$ chmod a+x script.sh
+
+* ejecuto ahora si el archivo:
+$ ./script.sh
+
+* para ejecutar y no perder la consola uso:
+$ ./script.sh &
+
+
+* otro comando para ejecutar proceso
+
+$ nohup ./script.sh & (genero una salida de lo que se va ejecutando con el script)
+$ cat nohup.out (verifico el contenido de la salida)
+
+
+
+
+### administrar cpu,memoria y disco duro
+
+** me muestra informacion del sistema operativo (%cpu,%mem) etc
+$ top
+
+
+** para ver procesadores del sistema operativo uso:
+$ cat /proc/cpuinfo | grep "processor"
+
+** para ver la informacion sobre la memoria (uso,libre etc) podemos usar:
+$ free -h
+
+** para ver uso del disco podemos usar:
+$ du -hsc /home/juanrojas
+
+
+** para ver los 5 procesos que mas cpu consumen usamos:
+
+$ sudo ps auxf | sort -nr -k 3 | head -5
+
+** para ver los 5 procesos que mas ram consumen usamos:
+
+$ sudo ps auxf | sort -nr -k 4 | head -5
+
+
+** otro paquete para revisar uso de recursos del servidor es htop
+
+$ htop
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
