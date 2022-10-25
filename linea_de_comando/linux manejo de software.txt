@@ -1,0 +1,115 @@
+*verifica cual es la direccion ip
+
+$ ifconfig
+$ ip a
+
+ip privada : inet 192.168.10.186 (solamente conexion desde mi propia red)
+
+
+* para ver el hostname
+$ hostname
+
+
+* para ver la puesta de enlace predeterminada del equipo para resolver problemas de red
+$ route -n
+
+
+* para ver la direccion ip de un dominio especifico podermos usar:
+$ nslookup google.com
+
+
+
+## INSTALACION DE PAQEUTES
+
+* listar paquetes instalados en la maquina
+$ dpkg -l
+
+
+* realizar instalacion de un paquete
+$ dpkg -i paquete.deb
+
+* remover un paquete del sistema
+$ dpkg -r paquete.deb
+
+
+
+
+
+
+### ACTUALIZAR PAQUETES DEL SISTEMA OPERATIVO
+$ sudo apt-get update
+$ sudo apt-get upgrade
+
+
+## RECONFIGURAR PAQUETES
+$ sudo dpkg-reconfigure <nombre_paquete>
+$ sudo dpkg-reconfigure tzdata
+
+
+
+## PARA VER COSAS DE SNAP
+$ sudo snap search aws-cli
+$ sudo snap info aws-cli
+
+
+
+#### Nagios: Desempaquetado, descompresión, compilación e instalación de paquetes
+
+$ sudo apt install build-essential libgd-dev openssl libssl-dev unzip apache2 php gcc libdbi-perl libdbd-mysql-perl (instalo paquetes necesarios)
+
+$ wget https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.4.4.tar.gz -O nagioscore.tar.gz (descargo el software)
+
+$ tar xvzf nagioscore.tar.gz (desempaqueto el archivo)
+
+$ cd nagios-4.4.4/ (me cambio al directorio del descomprimido)
+
+$ ls  (enlisto para ver los archivos que contiene)
+
+$ sudo ./configure --with-httpd-conf=/etc/apache2/sites-enabled  (configuro software para que se ejecute con apache)
+
+$ sudo make all (ejecucion de todo el codigo de configuracion)
+
+$ sudo make install (ejecutar la instalacion)
+
+$ sudo make install-init (instalacion de librerias para que el sistema operativo levante nagios)
+
+$ sudo make install-commandmode
+
+$ sudo make install-config
+
+$ sudo make install-webconf (generar relacion desde el sito de apache con nagios)
+
+$ curl localhost (consultar sitios en el sistema operativo)
+
+$ sudo systemctl status nagios (administrar servicios)
+
+$ sudo systemctl start nagios (levantar servicio de nagios)
+
+$ sudo systemctl stop nagios (levantar servicio de nagios)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
