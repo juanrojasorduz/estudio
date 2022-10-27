@@ -1,0 +1,53 @@
+1) IR AL SIGUIENTE LINK:
+https://www.microsoft.com/es-es/sql-server/sql-server-downloads#
+
+2) ABRIR EL ASISTENTE DE INSTALACION
+
+3) SELECCIONAR PERSONALIZADO
+
+4) SELECCIONAMOS INSTALAR
+
+5) SE ABRIRA UN ASISTENTE DE INSTALACION 
+
+6) SELECCIONAR INSTALLATION
+
+7) SELECCIONAR New SQL Server stand-alone installation ...
+
+8) DEJAMOS DEVELOPER COMO FREE EDITION
+
+9) SELECCIONAMOS Database Engine Services
+
+10) SELECCIONAMOS Windows authetication mode y add current user
+
+11) SELECCIONAMOS INSTALL
+
+
+#### DESCARGAR INTERFAZ GRAFICA
+
+1) Ir al siguiente link:
+https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16
+
+2) seleccionar free download
+
+3) abrimos el ejecutable
+
+para ingresar podemos usar dos metodos de autenticacion:
+
+el primero es windows auten.. 
+el segundo es sql server aute.. usando sa como username y la contraseña establecida
+
+
+##
+ir a firewall de windows
+-> Ir a firewall defender 
+-> crear regla de entrada con el puerto 1433 tipo tcp para permitir conexion
+-> crear regla de salida con el puerto 1433 tipo udp para permitir conexion
+
+ir a sql server configuration
+-> SQL SERVER NETWORK CONFIGURATION
+	-> PROTOCOLS
+	-> HABILITAR PROTOCOLOS
+-> sql server services 
+	-> iniciar todas las instancias
+
+
