@@ -51,3 +51,10 @@ ir a sql server configuration
 	-> iniciar todas las instancias
 
 
+credenciales sql sever
+
+hostname: localhost
+puerto: 1433
+database: -
+username: sa
+password: mssql123
