@@ -1,0 +1,27 @@
+*ir al siguiente link:
+
+https://www.postgresql.org/download/windows/
+
+
+*seleccionamos download de installer
+
+*seleccionamos la version de postgresql en windows que nos llame la atencion
+
+*abrimos el ejecutable
+
+*la especificacion es sencilla, dar en siguiente
+
+*seleccionar abrir con stack builder si deseamos agregar drivers, damos click en terminar
+
+credenciales
+
+host: localhost
+port: 5432
+database: 
+username: postgres
+password: F*****s
+
+
+para conexion en dbeaver tener en cuenta que se debe crear una conexion por base de datos
+
+si creamos una nueva hay que crear la conexion con esa base de datos
