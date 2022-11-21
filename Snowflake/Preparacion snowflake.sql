@@ -1,4 +1,4 @@
-https://quickstarts.snowflake.com/guide/getting_started_with_snowflake/index.html?index=..%2F..index#0
+--https://quickstarts.snowflake.com/guide/getting_started_with_snowflake/index.html?index=..%2F..index#0
 
 
 create or replace table trips
