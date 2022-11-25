@@ -1,0 +1,22 @@
+{
+  "city": "Bakersfield",
+  "first_name": "Portia",
+  "gender": "Male",
+  "id": 1,
+  "job": {
+    "salary": 32000,
+    "title": "Financial Analyst"
+  },
+  "last_name": "Gioani",
+  "prev_company": [],
+  "spoken_languages": [
+    {
+      "language": "Kazakh",
+      "level": "Advanced"
+    },
+    {
+      "language": "Lao",
+      "level": "Basic"
+    }
+  ]
+}
