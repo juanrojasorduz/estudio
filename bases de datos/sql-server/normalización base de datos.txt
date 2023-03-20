@@ -1,0 +1,62 @@
+NORMALIZACIÓN DE BASES DE DATOS
+
+
+TABLA PACIENTE (Estado Original)			
+			
+Nombre			        Pais	idMedico  medico
+Juan Carlos Ruber	    España	1	      PEREZ, Juan
+Carlos Andres Montoya	Mexico	1	      PEREZ, Juan
+Juan Sanchez		    Mexico	2	      Lopez, Monica
+Juan Sanchez		    Mexico	2	      Lopez, Monica
+
+Primera 1FN
+Cada atributo de la tabla debera tener un unico valor para cada ocurrencia de la entidad
+
+
+idPaciente(PK)	Nombre			        Pais	idMedico  medico
+1		        Juan Carlos Ruber	    España	1         PEREZ, Juan
+2		        Carlos Andres Montoya	Mexico	1	      PEREZ, Juan
+3		        Juan Sanchez		    Mexico	2	      Lopez, Monica
+4		        Juan Sanchez		    Mexico	2	      Lopez, Monica
+
+Segunda 2FN
+Se cumple 1FN y todos los atributos no clave dependen por completo de la clave primaria
+
+Tercera 3 FN
+Se cumple 2FN y y los atributos no clave son independientes entre si
+
+NORMALIZACIÓN
+
+TABLA PACIENTE: 
+idPaciente(PK)	Nombre			        idPais
+1		        Juan Carlos Ruber	    ESP
+2		        Carlos Andres Montoya	MEX
+3	        	Juan Sanchez		    MEX
+4	        	Juan Sanchez		    MEX
+
+TABLA PAIS:		
+idPais(PK)	Pais	
+MEX		    Mexico	
+ESP		    España	
+		
+TABLA MEDICO:				
+idMedico(PK)	Medico	
+1		        PEREZ, Juan	
+2		        Lopez, Monica	
+				
+TABLA TURNOPACIENTE		
+idTurno(PK)	idPaciente	idMedico
+1		    1		    1
+2		    2		    1
+3		    3		    2
+4		    4		    2
+
+
+
+
+
+
+
+
+
+
