@@ -1,0 +1,26 @@
+RELACIONES ENTRE TABLAS
+Las relaciones entre tablas no son obligatorias. Una base de datos puede no tener tablas 
+relacionadas.
+No obstante, una BD sin relaciones, corre el riesgo de perder la integridad de los datos en las tablas, ya 
+que no tiene definidas las Reglas de Integridad Referencial.
+¿Qué son éstas Reglas?
+ Son propiamente las relaciones entre tablas, en las que un campo Primary Key (PK) se relaciona 
+un campo de otra tabla (del mismo tipo de dato), al cuál llamamos Foreign Key (FK)
+¿De que me sirve crear esta relación?
+ Esta relación NO permitirá colocar un valor en el campo definido como FK, que no esté definido
+en la tabla definida con el campo PK.
+Veamos este ejemplo:
+Tabla Paciente (campo idpais FK)
+Tabla Pais (campo idpais PK)
+ Si tratamos de insertar un Paciente nuevo con un código de país que no existe en la tabla país, 
+devolverá error y no permitirá su grabación.
+¿Porqué no me permite insertar el registro?
+ Porque se ha definido la relación entre ambas tablas. Es una Regla de Integridad Referencial, y 
+previene que guardemos registros con valores indefinidos.
+ Esto hace que del lado de la interfaz de usuario, siempre se pueda visualizar información 
+consistente.
+¿Qué sucede si quiero eliminar un registro de la tabla Pais, cuyo país está asignado a un 
+Paciente?
+ Al igual que antes, la Regla de Integridad no nos permitirá eliminar el país, hasta que 
+cambiemos el país del Paciente por otro.
+ Esta es la característica principal de las Bases de Datos Relacionales.
