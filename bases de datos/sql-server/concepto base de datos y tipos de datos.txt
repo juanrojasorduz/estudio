@@ -1,11 +1,11 @@
 *** Base de datos -> Almacen estructurado de datos
-	Composición
+	Composiciï¿½n
 		Tablas -> Campos -> Propiedades (Columnas) 
 		       -> Registros -> Propiedades de una fila
 
 *** Unidades de Medida: 
 
-	->Bit = 0 ó 1
+	->Bit = 0 ï¿½ 1
 	->Byte = 8 bits
 	->Kilobyte = 1024 bytes
 	->Megabyte = 1024 kilobytes
@@ -16,7 +16,7 @@
 
 *** Tipos de datos SQL Server:
 
-	* Numéricos
+	* Numï¿½ricos
 		->Enteros: BIT, TINYINT, SMALLINT, INT, BIGINT
 		->Decimales: MONEY, DECIMAL
 
@@ -27,12 +27,12 @@
 		-> DATE, TIME, DATETIME, SMALLDATETIME
 
 
-*** Descripción Tipos de datos:
+*** Descripciï¿½n Tipos de datos:
 
 -> Numericos Enteros:
 
 	* BIT 1 byte
-		0 ó 1
+		0 ï¿½ 1
 		True o False
 
 	* TINYINT 1 byte
@@ -52,7 +52,7 @@
 	*MONEY 8 bytes
 		-922,337,203,685,477.5808 HASTA 922,337,203,685,477.5807
 
-	*DECIMAL(10,2) Precisión y Escala
+	*DECIMAL(10,2) Precisiï¿½n y Escala
 		1 a 9: 5 bytes
 		10 a 19: 9 bytes
 		20 a 28: 13 bytes
@@ -131,19 +131,6 @@ MyDecimalColumn	MyNumericColumn	MyVarcharColumn	MyIntColumn	MyBigIntColumn	MyDat
 --------
 
 
--- Inserción Fallida: Los datos insertados incumplen la definición previa del tipo de dato para cada campo de la tabla
+-- Inserciï¿½n Fallida: Los datos insertados incumplen la definiciï¿½n previa del tipo de dato para cada campo de la tabla
 GO  
 INSERT INTO dbo.MyTable VALUES (12345.12, 12345.12, 'abcderfghia', 2147483648, 9223372036854775808, '01-2024-12', '24:00:00.9999999', '2007-05-08 24:00:00.0000'); 
-
-
-
-
-
-
-
-
-
-
-
-
-
