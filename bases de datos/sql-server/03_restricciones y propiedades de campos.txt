@@ -1,0 +1,179 @@
+*** VALOR NULL 
+	Representa la ausencia de un valor en una columna de una tabla. 
+	Es un valor especial que indica que no se ha asignado ningún valor a la columna en cuestión.
+
+Ejemplo:
+
+DROP TABLE dbo.persons
+
+GO
+CREATE TABLE dbo.persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255) NOT NULL,
+    Age int NULL
+);
+
+-- Ejecución Exitosa
+GO
+INSERT INTO dbo.persons VALUES (1020,'Rojas','Juan',NULL)
+
+GO
+SELECT ID, LastName, FirstName, Age from dbo.persons;
+
+
+-- Ejecución Fallida
+GO
+INSERT INTO dbo.persons VALUES (1020,'Rojas',NULL,NULL)
+
+GO
+SELECT ID, LastName, FirstName, Age from dbo.persons;
+
+--resultado ejecución:
+ID	LastName	FirstName	Age
+1020	Rojas		Juan		NULL
+
+
+
+
+
+
+** PRIMARY KEY
+	identifica de forma unica a cada registro de una tablas
+	una tabla puede contener mas de una primary key "CLAVE COMPUESTA"
+** PROPIEDAD IDENTITY
+	Esta propiedad hara que el valor del campo idPaciente se incremente automaticamente a medida que insertamos registros en la tabla
+
+-- Ejecución Exitosa
+use TestData
+
+go
+drop table dbo.estudiantes_colegio
+
+go
+create table dbo.estudiantes_colegio
+(
+	id int primary key identity,
+	nombre varchar(100)
+)
+;
+go
+insert into dbo.estudiantes_colegio values ('Juan'),('Maria'),('Pedro')
+
+go
+select id, nombre from dbo.estudiantes_colegio
+
+--Resultado
+id	nombre
+1	Juan
+2	Maria
+3	Pedro
+
+
+
+
+
+
+*  FOREIGN KEY
+	es una relacion entre dos tablas
+	regla de integridad referencial =>> no puedo insertar un dato si no se encuentra dentro de su foreign key
+	es un campo (o colección de campos) en una tabla, que se refiere a la CLAVE PRIMARIA en otra tabla.
+	La tabla con la clave externa se denomina tabla secundaria, y la tabla con la clave principal se denomina tabla principal o de referencia.
+
+
+use TestData;
+
+go
+create table estudiantes
+(
+	id int primary key identity,
+	nombre varchar(100)
+)
+;
+
+go
+create table materias
+(
+	id int primary key identity,
+	nombre varchar(10)
+)
+;
+
+go
+create table estudiantesmaterias
+(
+estudiantesid int,
+materiasid int,
+constraint fk_estudiantesid foreign key (estudiantesid) references estudiantes(id),
+constraint fk_materiasid foreign key (materiasid) references materias(id),
+primary key(estudiantesid,materiasid)   --Cada nuevo registro insertado no pude duplicar un registro identico insertado previamente 
+)
+;
+
+go
+insert into testdata.dbo.estudiantes (nombre) 
+values ('Juan'),
+	   ('Maria'),
+	   ('Pedro');	  
+;
+
+go
+insert into testdata.dbo.materias (nombre) 
+values ('Algebra'),
+	   ('Geografia'),
+	   ('Fisica');	  
+;
+
+go
+insert into testdata.dbo.estudiantesmaterias (estudiantesid,materiasid) 
+values ('1','1'),
+	   ('1','2'),
+	   ('2','2'),
+	   ('2','3'),
+	   ('3','1'),
+	   ('3','3')
+;
+
+go
+select top 10 * from testdata.dbo.estudiantes; 
+
+go
+select top 10 * from testdata.dbo.materias;
+
+go
+select top 10 * from testdata.dbo.estudiantesmaterias;
+
+-- Al no tener un valor de 4 contenido en los campos referenciados por la llave foranea no se insertara el registro
+go
+INSERT INTO testdata.dbo.estudiantesmaterias (estudiantesid,materiasid) 
+VALUES ('4','4')
+
+
+-- Se elimina primero la tabla que haga referencia a una llave foranea externa
+go
+drop table testdata.dbo.estudiantesmaterias;
+
+go
+drop table testdata.dbo.estudiantes; 
+
+go
+drop table testdata.dbo.materias;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
