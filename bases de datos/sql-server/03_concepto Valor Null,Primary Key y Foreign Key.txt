@@ -1,0 +1,38 @@
+*** VALOR NULL 
+	Representa la ausencia de un valor en una columna de una tabla. 
+	Es un valor especial que indica que no se ha asignado ningún valor a la columna en cuestión.
+
+** PRIMARY KEY
+	identifica de forma unica a cada registro de una tablas
+	una tabla puede contener mas de una primary key "CLAVE COMPUESTA"
+
+** PROPIEDAD IDENTITY
+	Esta propiedad hara que el valor del campo idPaciente se incremente automaticamente a medida que insertamos registros en la tabla
+
+*  FOREIGN KEY
+	es una relacion entre dos tablas
+	regla de integridad referencial =>> no puedo insertar un dato si no se encuentra dentro de su foreign key
+	es un campo (o colección de campos) en una tabla, que se refiere a la CLAVE PRIMARIA en otra tabla.
+	La tabla con la clave externa se denomina tabla secundaria, y la tabla con la clave principal se denomina tabla principal o de referencia.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

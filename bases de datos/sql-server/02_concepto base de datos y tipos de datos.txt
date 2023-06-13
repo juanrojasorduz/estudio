@@ -1,5 +1,5 @@
-*** Base de datos -> Almacen estructurado de datos
-	Composici�n
+﻿*** Base de datos -> Almacen estructurado de datos
+	Composicion
 		Tablas -> Campos -> Propiedades (Columnas) 
 		       -> Registros -> Propiedades de una fila
 
@@ -16,7 +16,7 @@
 
 *** Tipos de datos SQL Server:
 
-	* Num�ricos
+	* Numericos
 		->Enteros: BIT, TINYINT, SMALLINT, INT, BIGINT
 		->Decimales: MONEY, DECIMAL
 
@@ -27,7 +27,7 @@
 		-> DATE, TIME, DATETIME, SMALLDATETIME
 
 
-*** Descripci�n Tipos de datos:
+*** Descripcion Tipos de datos:
 
 -> Numericos Enteros:
 
@@ -52,7 +52,7 @@
 	*MONEY 8 bytes
 		-922,337,203,685,477.5808 HASTA 922,337,203,685,477.5807
 
-	*DECIMAL(10,2) Precisi�n y Escala
+	*DECIMAL(10,2) Precision y Escala
 		1 a 9: 5 bytes
 		10 a 19: 9 bytes
 		20 a 28: 13 bytes
@@ -104,33 +104,4 @@
 		00:00:00 HASTA 23:59:59
 
 
---DROP TABLE dbo.MyTable 
 
-CREATE TABLE dbo.MyTable  
-(  
-  MyDecimalColumn DECIMAL(6,3)  
-,MyNumericColumn NUMERIC(6,3)
-,MyVarcharColumn VARCHAR(10)
-,MyIntColumn INT
-,MyBigIntColumn BIGINT
-,MyDateColumn DATE
-,MyTimeColumn TIME
-,MyDateTimeColumn DATETIME
-);  
-  
-GO  
-INSERT INTO dbo.MyTable VALUES (123.123, 123.1, 'abcderfghi', 2147483647, 9223372036854775807, '2021-12-01', '23:59:59.9999999', '2007-05-08 12:35:29.123');  
-
-GO  
-SELECT MyDecimalColumn, MyNumericColumn, MyVarcharColumn, MyIntColumn, MyBigIntColumn, MyDateColumn, MyTimeColumn, MyDateTimeColumn   
-FROM dbo.MyTable;
-
---------
-MyDecimalColumn	MyNumericColumn	MyVarcharColumn	MyIntColumn	MyBigIntColumn	MyDateColumn	MyTimeColumn	MyDateTimeColumn
-123.123	123.100	abcderfghi	2147483647	9223372036854775807	2021-12-01	23:59:59.9999999	2007-05-08 12:35:29.123
---------
-
-
--- Inserci�n Fallida: Los datos insertados incumplen la definici�n previa del tipo de dato para cada campo de la tabla
-GO  
-INSERT INTO dbo.MyTable VALUES (12345.12, 12345.12, 'abcderfghia', 2147483648, 9223372036854775808, '01-2024-12', '24:00:00.9999999', '2007-05-08 24:00:00.0000'); 
