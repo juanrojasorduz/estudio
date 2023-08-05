@@ -1,0 +1,49 @@
+SAS
+
+Type of Steps:
+
+*Data: A data step generally reads data from an input source,processes it, and creates a SAS table. 
+A data step might also filter rows,compute new columns,join tables, and perform other data manipulations 
+
+For this program the Data step is creating an output table and adding a new column:
+data myclass: 
+    set sashelp.class;
+    heightcm=height*2.54;
+run;
+	
+
+
+*Proc (Procedure): A PROC,or procedure step processes a SAS TABLE in an specific,predefined way.
+	For example to generate reports and graphs,manage data,or perform complex statistical analyses
+
+For this program the proc print step generates a list of all the rows and columns in the data
+
+proc print data=myclass;
+run;
+
+For this program the proc means step calculates basic summary statistics:
+
+proc means data=myclass;
+    var age heightcm;
+run;
+
+
+Each step consists of a sequence of statements 
+Most statements start with a keyword that's part of the SAS language 
+
+
+
+STEP #1 - KEYWORDS: data,set,run
+data myclass: STATEMENT #1
+    set sashelp.class; STATEMENT #2
+    heightcm=height*2.54; STATEMENT #3
+run; STATEMENT #4
+
+STEP #2 - KEYWORDS: proc,print,run
+proc print data=myclass; STATEMENT #1
+run; STATEMENT #2
+
+STEP #3 - KEYWORDS: proc,means,var,run
+proc means data=myclass; STATEMENT #1
+    var age heightcm; STATEMENT #2
+run; STATEMENT #3
