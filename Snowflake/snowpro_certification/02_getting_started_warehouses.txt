@@ -1,0 +1,88 @@
+### LAYERS IN SNOWFLAKE											
+												
+1-Cloud Services		
+"Brain of the system"									
+Managing infrastructure									
+Managing access control									
+Managing security									
+Managing optimizier									
+Managing Metadata									
+												
+												
+												
+2-Query Processing	
+Virtual Warehouse	
+"Muscle of the system"									
+It is where the queries are processed									
+It is where the virtual warehouse has come into play									
+Performs MMP (Massive Parallel Processing)	
+Very efficient in processing our queries								
+Queries can be processed by multiple servers at the same time								
+It is the virtual compute resource we can use to process all of our queries and all of the operations									
+												
+												
+3-Storage
+Hybrid Columnar Storage										
+Data is stored and compressed into blobs										
+												
+												
+#### VIRTUAL WAREHOUSE SIZE											
+are virtual compute instances of servers we can use to process the queries on our data										
+we can increase or decrease the warehouse size in order to process more eficiently the queries on our data										
+												
+												
+Size specifies the amount of compute resources available per cluster in a warehouse.										
+XS	1 server	Ideally for queries not complex									
+S	2 servers	One credit consumed per hour									
+M	4 servers	If we run it for 30 minutes or is active for 30 minutes, We only have of a credit consumed									
+L	8 servers										
+XL	16 servers										
+4XL	128 servers										
+												
+If there are multiple query executions and the warehouse cannot process them the queries will be proccessed in queue											
+												
+Multiclustering											
+Multi-cluster warehouses enable you to scale compute resources to manage your user and query concurrency needs as they change, such as during peak and off hours.										
+												
+Executing a Query											
+Select the appropiated role accoding to query 										
+Select the warehouse that will be used to execute the query										
+Select the database that will be used										
+												
+For creating or manipulate warehouses is neccesary to have the following roles											
+SYSADMIN										
+SECURITYADMIN										
+ACCOUNTADMIN										
+												
+												
+AutoScaling - They have a different time to start a new cluster									
+
+*********Scaling Policy 										
+**Standard (Default) 
+-Favors starting additional warehouses	
+	Prevents/minimizes queuing by faboring starting additional clusters over conserving credits	
+-Cluster Starts:Inmediately when either a query is queued or the system detects that there are more queries than can be executed by the currently available clusters	
+-Cluster Shuts Down: "After 2 to 3 consecutive successful checks
+	(Performed at minute intervals)
+	which determine whether the load on the least-loaded cluster could be redistributed to the other clusters"								
+
+**Economy
+-Favors conserving credits rather than starting additional warehouses"	
+	"Conserves credits by favoring keeping running clusters fully-loaded rather than starting additional clusters.
+	Result: May result in queries being queued and taking longer to complete"	
+-Cluster Starts: Only if the system estimates there's enough query load to keep the cluster busy for at least 6 minutes	
+-Cluster Shuts Down: After 5 to 6 consecutive succesful checks								
+												
+											
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
