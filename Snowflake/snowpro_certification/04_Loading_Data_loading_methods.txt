@@ -1,0 +1,34 @@
+Loading Data Methods
+
+* Bulk Loading (Batch loading)
+- Most frequent method
+- Uses warehouses
+- Loading from stages
+- COPY command
+- Transformations possible
+
+* Continuous Loading
+- Designed to load small volumes of data
+- Automatically once they are added to stages
+- Lates results for analysis
+- Snowpipe (Serverless feature)
+
+
+#### Stages
+Not to be confused with datawarehouses stages
+Database object that contains the location of data files where data can be loaded from 
+
+*External Stage
+- External cloud provider
+- S3
+- Google cloud plattform  (blob storage)
+- Microsoft Azure (blob storage)
+- Database object created in schema
+- CREATE STAGE (URL, access settings)
+Note: Additional costs may apply if region/platform differs
+External stages store the files in an external location (i.e. S3 bucket) that is referenced by the stage. 
+An external stage specifies location and credential information, if required, for the S3 bucket.
+
+*Internal Stage
+Internal stages store the files internally within Snowflake
+Local storage maintained by snowflake
