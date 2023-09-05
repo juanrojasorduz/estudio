@@ -1,0 +1,167 @@
+###### What is a data warehouse?
+
+Database that is used for reporting and data analysis
+
+The purpose of a data warehouse is to consolidate and integrate different data sources and use them 
+for reporting and data analysis
+
+ ______
+(      )
+| HR   |                                      ___________
+| Data | ====>>>      ___________	     |           |
+(______)             (           )    =====> | Reporting |
+Database             |           |           |___________|		
+ _______     ETL     | Data      |   	      ______________
+(       )            | Warehouse |    =====> |		    |	
+| Sales |            (___________)           | Data Science | 
+| Data  | ====>>>			     |______________|	
+(_______)                                     ____________
+Flat Files			      =====> |            |	
+					     | Other Apps |
+					     |____________|	
+
+
+*** Different Layers
+
+	 	       ___________	
+		      (           )   
+		      |           |          		
+		      | Data      |   	     
+		      | Warehouse |     		    	
+		      (___________)            	
+___________	     __________________          ______________
+|	   |	    | 		       |        |              |
+| Raw Data |  ===>> | Data Integration |  ===>> | Access Layer |
+|__________|        |__________________|        |______________|
+
+
+Raw Data (Staging area): Extract Data from the data sources
+Data Integration (Data Transformation): Integrate this data
+Access Layer: Make this data available to different solutions
+
+
+
+########## What is Cloud Computing
+
+
+                        ___
+* Application          	___|  Snowflake user is responsible for creating Databases,schemas,tables, etc
+* Software                 |
+* Data                     |  Snowflake | Managing data storage, virtual warehouses, upgrades/metadata etc
+* Operating System      ___|  
+* Physical servers         |
+* Virtual Machines         |  Cloud provider (AWS, Azure, GCP)
+* Physical storage      ___|
+
+Snowflake is a Software as a service
+
+
+
+######## Snowflake Editions
+
+* Standard: Introductory level
+* Enterprise: Additional features for the needs of large scale enterprises
+* Business Critical: even higher levels of data protection for organizations with extremely sensitive data
+* Virtual Private: highest level of security 
+
+If we want to explore a better detailed comparison go to:
+https://docs.snowflake.com/en/user-guide/intro-editions
+
+
+
+###### Snowflake Pricing
+
+Snowflake has decoupled the compute from the storage.
+
+Pay only what you need
+Scalable amout of storage at affordable cloud price
+Pricing depending on the region
+Compute and storage costs decoupled
+
+***Storage
+- Monthly storage fees
+- Based on average storage used per month
+- Cost calculated after compression
+- Cloud providers
+
+
+***Compute
+- Charged for active warehouses per hour
+- Depending on the size of the warehouse
+- Billed by second (minumum of 1min)
+- Charged in Snowflake credits
+
+
+We are charged in the so-called snowflake credits
+$/Euros  =====> Snowflake Credits
+
+The these credits are consumed depending on what we are using
+
+Depending of the snowflake edition we select the credit cost changes, for example:
+
+- Standard: $2/Credit
+- Enterprise: $3/Credit
+- Business Critical: $4/Credit
+- Virtual Private: Contact Snowflake
+
+
+This cost can changes according to the region we have selected and also the platform 
+
+If we have larger warehouses, the consumption of the credit per time goes up
+
+For storage is the same, we pay for the storage we use and the price changes according to the region we selected
+
+**On demand storage
+-Pay only for what you use
+-$45/TB
+
+**Capacity storage
+-Pay only for defined capacity upfront
+-$24.50/TB
+
+
+
+### Monitor Usage
+
+To see Snowflake pricing details see:
+
+snowflake.com/pricing/
+
+To monitor the credit use: 
+
+1) select the ACCOUNTADMIN role
+2) go to snowflake account
+3) go to admin
+4) select the warehouse we want to monitorize
+5) select if you want to monitor the compute or storage usage
+
+
+##### Roles in Snowflake
+
+*ORGADMIN (aka Organization Administrator)
+	Role that manages operations at the organization level.
+
+*ACCOUNTADMIN (aka Account Administrator)
+	SYSADMIN and SECURITYADMIN
+	Top Level role in the system
+
+*SECURITYADMIN (aka Security Administrator)
+	USERADMIN
+	Can manage users and roles
+	Cah manage any object grant globally
+
+*USERADMIN (aka User and Role Administrator)
+	Dedicated to user and role management only
+	Can create users and roles
+
+*SYSADMIN (aka System Administrator)
+	Create warehouses and databases (and more objects)
+	Recommended that all custom roles are assigned
+
+*PUBLIC (Pseudo-role)
+	Pseudo-role that is automatically granted to every user and every role in your account. The PUBLIC role can own securable objects, 
+	just like any other role; however, the objects owned by the role are, by definition, available to every other user and role in your account.
+
+
+Automatically granted to every user
+Can create own objects like every other role (available to every other user/role)
