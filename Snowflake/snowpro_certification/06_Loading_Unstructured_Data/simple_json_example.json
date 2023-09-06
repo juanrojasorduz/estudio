@@ -1,0 +1,29 @@
+{
+  "city": "Louny",
+  "first_name": "Dag",
+  "gender": "Male",
+  "id": 2,
+  "job": {
+    "salary": 43000,
+    "title": "Clinical Specialist"
+  },
+  "last_name": "Croney",
+  "prev_company": [
+    "MacGyver, Kessler and Corwin",
+    "Gerlach, Russel and Moen"
+  ],
+  "spoken_languages": [
+    {
+      "language": "Assamese",
+      "level": "Basic"
+    },
+    {
+      "language": "Papiamento",
+      "level": "Expert"
+    },
+    {
+      "language": "Telugu",
+      "level": "Basic"
+    }
+  ]
+}

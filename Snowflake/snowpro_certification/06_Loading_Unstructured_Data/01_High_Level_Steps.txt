@@ -1,0 +1,44 @@
+To load Unstructured data there are some steps we need to follow:
+
+1) Create Stage => To connect to the location where the file is stored
+2) Load raw data => Load the raw data into a separate table (Just one Column with a special data type "VARIANT")
+3) Analyse & Parse => Apply snowflake functions to analyse a parse  
+4) Flatten & Load => If this data is hierarchical we need to flatten this data
+
+Note: Data parsing is a method where one string of data gets converted into a different type of data
+
+**For example we can have this JSON:
+
+{
+	"city": "Grinmshaw",
+	"first_name": "Richi",
+	"gender": "Female",
+	"id": 1
+}
+
+We have four atributes (city,first_name,gender,id) and also the values for those atributes like for example "Female" for gender
+
+**For multiple objects it would be:
+
+{"city": "Grinmshaw","first_name": "Richi","gender": "Female","id": 1},
+{"city": "Cali","first_name": "Juan","gender": "Male","id": 2},
+{"city": "Bogota","first_name": "Maria","gender": "Female","id": 3}
+
+
+**We can also have this case this case in which there are nested data and arrays:
+{
+	"city": "Grinmshaw",
+	"first_name": "Richi",
+	"gender": "Female",
+	"id": 1,
+	"prev_company": ["Witting LLC","Kessler","Bailey and Berge"]
+	"job": {
+		"salary": 15200,
+		"title": "Accounting Assitant II"
+		},
+	"last_name": "Kinningley",
+	"spoken_languajes": [
+		{"languaje":"Kashmiri","level":"Advanced"},
+		{"languaje":"Punjabi","level":"Basic"}
+			    ]
+}
