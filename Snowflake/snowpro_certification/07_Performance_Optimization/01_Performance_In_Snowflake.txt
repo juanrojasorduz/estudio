@@ -1,0 +1,149 @@
+If we are creating data warehouses it is important to optimize performance
+The purpose is to run queries faster and reduce costs
+
+**Traditional Methods to optimize performance
+- Add indexes, primary keys
+- Create table partitions
+- Analyze the query execution table plan
+- Remove unnecessary full table scans
+
+
+**How does it work in Snowflake?
+Automatically managed micro-partitions
+
+
+**What is our job?
+Assigning appropriate data types
+Sizing virtual warehouses
+Cluster keys
+
+**Our Job
+Create Dedicated virtual warehouses
+Separated according to different workloads for each group need
+Scaling up for known patterns of high work load
+Scaling out Dynamically for unknown patters of work load
+Scale up by resizing a warehouse. Scale out by adding clusters to a multi-cluster warehouse
+Maximize cache usage: Automatic caching can be maximized
+Cluster Keys: For large tables
+
+
+
+#### Create dedicated virtual warehouse
+Create dedicated warehouses for different kind of user groups 
+				or different kind of work groups
+
+1) Identify & Clasify
+Identify & Classify groups of workload/users
+example: BI Team, Data Sciencie Team, Marketing department
+
+2) Create dedicated virtual warehouses
+For every class of workload & assign users
+
+Considerations:
+- Not too many VM: Avoid underutilization
+- Refine classifications: Work patterns can change
+
+#### Implement Scaling Up
+Changing the size of the virtual warehouse
+depending on different work loads in different periods
+
+Uses Cases:
+- ETL at certain times (for example between 4pm and 8pm)
+- Special business event with more work load
+
+Note: Common scenario is increased query complexity
+Not more users (then scaling out would be better)
+- Increasing the size of virtual warehouses
+- More complex query
+
+######### Implement Scaling Out
+- Using addition warehouses/multicluster warehouses
+- More concurrent users/queries
+- Handling performance related to large numbers of concurrent users
+- Automation the process if you have fluctuating number of users
+
+Considerations
+- If you use at least enterprise edition all warehouses should be Multi-Cluster
+- Minimum: Default should be 1
+- Maximum: Can be very high
+
+
+###### Implement Caching
+Automatical process to speed up the execution of queries
+If we have a query that has been executed before, then this result is cached
+If query is executed twice, results are cached and can be re-used
+Results are cached for 24 hours or until underlying data has changed
+This process is automatically handle by snowflake
+
+## What can we do?
+Ensure that similar queries go on the same warehouse
+Example: Team of data scientists run similar queries, so they should all use the same warehouse
+
+
+
+
+##### CLUSTERING IN SNOWFLAKE
+
+*** What is a cluster key?
+-Subset of rows to locate the data in micro-partions
+-For large tables this improves the scan efficiency in our queries
+-Snowflake is creating cluster keys on certain columns to create subsets of rows to locate them in so-called micro partitions, this helps
+us to avoid full table scans or in general just improves the efficiency of the table, especially if we are dealing with very large tables
+-This works perfectly for large tables
+-Snowflake automatically maintains these cluster keys
+-Snowflake is managing this automatically, so we can reduce the work for Database administrators
+-In general snowflake produces well-clustered tables
+-Cluster Keys are not always ideal and can change over time
+-Manually customize these cluster keys
+
+
+EXAMPLE:
+
+Here we have an Events Table:
+
+Event Date  Event_ID  Customers  City      ___
+2021-03-12  134583    ...        ...	      |	
+2021-12-04  134586    ...        ...          |
+2021-11-04  134588    ...        ...	      | Partition Nr 1
+2021-04-05  134589    ...        ...       ___|	
+2021-06-07  134594    ...        ...          | Partition Nr 2 
+2021-07-03  134597    ...        ...	   ___|
+2021-03-04  134598    ...        ...          |
+2021-08-03  134599    ...        ...	      | Partition Nr 3
+2021-08-04  134601    ...        ...	   ___|
+
+It's clustered by the event_id
+ 
+ 
+Select count(*)
+where event_date > '2021-07-01'
+and event_date < '2021-08-01'
+
+In this case event_id in the filter, so in this case we could not use cluster method
+because we should scan the full table, so we need to do partitions using another field like for example
+event_date
+
+Clustering is not for all tables
+
+Mainly very large tables of multiple terabytes can benefit
+
+The question to answer is which column should we use to filter or to cluster our table and create these
+micro partitions by?
+
+How to cluster?
+- Columns that are used most frequently in where-clauses (often date columns for event tables)
+- If you typically use filters on two columns then the table can also benefit from two cluster keys
+- Column that is frequently used in joins
+- Large enough number of distinct values to enable effective grouping
+- Small enough number of distinct values to allow effective grouping
+
+
+CREATE TABLE <name> .... CLUSTER BY ( <column1> [, <column2> ... ])
+CREATE TABLE <name> .... CLUSTER BY ( <expression> )     --- Example MONTH function 
+ALTER TABLE <name> CLUSTER BY ( <expr1> [, <expr2> ... ] )  -- This would be if we have already created the table and we want to redifine a new cluster key
+ALTER TABLE <name> DROP CLUSTERING KEY
+
+
+
+
+
