@@ -1,0 +1,97 @@
+#### Create an Azure Account
+1) Verify the free layer 
+2) Configurate the profile fields
+3) Introduce the card information 
+4) Click on create
+
+
+#### Create a storage account under which we create the container
+
+1) Go to Storage Account
+2) Select create storage account in here
+3) Create a new resource group if we do not have
+	- Assign a name, for example jd_snow_resource_group
+4) provide a global unique storage account name, for example jdsnowstorageaccount
+5) Select the same region that the account to avoid costs
+6) Select standard for performance
+7) Select locally-redundant storage (LRS) since I don't need very much data protection
+8) Select next (Advanced)
+9) We don't need to do changes
+10) Select next: net working
+11) Select next: data protection
+12) Select next: Encryption
+13) Select next: Tags
+14) Select next: review
+15) Select create
+16) Go to storage account to verify if the storage account was created
+17) Select the storage account 
+18) View the containers
+
+
+### Create a container to load the files
+1) Go to storage account to verify if the storage account was created
+2) Select the storage account 
+3) View the containers
+4) Select create container
+	- Provide a name for the container
+Note: In our case we will create two containers for csv and json (jdsnowflakecsv,jdsnowflakejson)
+5) Select create
+6) Select each container and upload the files
+
+
+#### Create an integration object to make the access to containers available
+1) Lookup the AZURE_TENANT_ID
+	go to azure active directory
+	copy the TENANT_ID, In my case: a8e855ef-303a-4a47-816e-c709a721c7df
+2) Define the storage location using 'azure://<your-account>.blob.core.windows.net/<your-container>/<path>/<data>'
+	In my example:
+		<your-account>:storage_account_name:jdsnowstorageaccount
+		<your-container>:container_name:jdsnowflakecsv or jdsnowflakejson
+		<path>/<data>: Null
+3) We create an integration object with these query:
+
+-- create integration object that contains the access information
+CREATE STORAGE INTEGRATION azure_integration   --- We provide the name "azure_integration"
+  TYPE = EXTERNAL_STAGE
+  STORAGE_PROVIDER = AZURE
+  ENABLED = TRUE  -- We enable the integration object using TRUE as value for this field
+  AZURE_TENANT_ID = 'a8e855ef-303a-4a47-816e-c709a721c7df'  --
+  STORAGE_ALLOWED_LOCATIONS = ('azure://jdsnowstorageaccount.blob.core.windows.net/jdsnowflakecsv', 'azure://jdsnowstorageaccount.blob.core.windows.net/jdsnowflakejson');
+    -- Note: We can add multiple containers to this integration object
+  
+-- Describe integration object to provide access
+DESC STORAGE integration azure_integration;
+
+4) Once we execute that query we go to AZURE_CONSENT_URL and then click on the URL in the property value
+5) We select "Consent on behalf of your organization" and then click on accept in order to grant access to snowflake to the container
+6) Select the storage account
+7) Go to Access Control (IAM)
+8) Select add 
+9) Select add role assignment
+	Select "storage blob data contributor"
+10) Select next
+11) Select "User, group or service principal" for Assign access to
+12) Select member and paste the AZURE_MULTI_TENANT_APP_NAME which you get when you execute the query: DESC STORAGE integration azure_integration;
+	Click on select
+13) Select next
+14) Select Review + Assign
+	
+
+### Create stage object
+---- Create file format & stage objects ----
+
+-- create file format
+create or replace file format manage_db.public.fileformat_azure
+    TYPE = CSV
+    FIELD_DELIMITER = ','
+    SKIP_HEADER = 1;
+
+-- create stage object
+create or replace stage manage_db.public.stage_azure
+    STORAGE_INTEGRATION = azure_integration  -- the name of the integration we created
+    URL = 'azure://jdsnowstorageaccount.blob.core.windows.net/jdsnowflakecsv'
+    FILE_FORMAT = fileformat_azure;
+    
+
+-- list files
+LIST @manage_db.public.stage_azure;
