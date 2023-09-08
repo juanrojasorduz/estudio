@@ -1,0 +1,75 @@
+## Creating an account
+1) Go to AWS Free tier
+2) Select Create a Free Account
+3) Follow the steps and then select Basic support - Free for support plan
+4) Select complete Sign Up
+
+## Creating a bucket 
+1) Go to Amazon S3 Service
+2) Select create bucket
+3) Provide a name for the bucket example: bucketforsnowflakejd
+4) Select the same region that we have for the account to avoid transfer costs
+5) Select Create Bucket
+6) Once the bucket is created select it and then create folders and upload files according to our needs
+
+
+## Creating a Policy to connect the bucket and snowflake
+1) Go to IAM service (Identity and Access Management)
+2) Select Roles
+3) Select Create Role
+4) Select AWS Account
+5) Select Another AWS account
+6) Paste our account ID
+	To get this account ID: 
+		-go our username
+		-select security credentials
+		-copy the AWS account ID
+7) Select Require external ID 
+8) Paste a dummy external ID, for example 00000
+9) Select Next
+10) Select the permissions for this role
+	Look up s3 and select "AmazonS3FullAccess"
+11) Select Next
+12) Paste the name for the role, for example: snowflake-access-role-jd
+13) Paste a description for the role, for example: This is a role used to grant access for snowflake
+14) Select Create Role
+
+## Creating integration object
+We want to create the integration object that is used to store the credentials and
+all the access information from snowflake to our AWS account, so that we can fetch data from our 
+S3 buckets
+
+In this case the object name is s3_int
+- Select the ACCOUNT ADMIN role to do this change and then execute the query
+
+create or replace storage integration s3_int
+  TYPE = EXTERNAL_STAGE
+  STORAGE_PROVIDER = S3
+  ENABLED = TRUE  -- To enable object
+  STORAGE_AWS_ROLE_ARN = 'arn:aws:iam::850740812278:role/snowflake-access-role-jd'  -- Look up the role ARN in the role that we created and then paste it in this section
+  STORAGE_ALLOWED_LOCATIONS = ('s3://bucketforsnowflakejd/csv/', 's3://bucketforsnowflakejd/json/') --Copy the S3 URI for every bucket we need
+  COMMENT = 'This an optional comment' ;
+   
+   
+// See storage integration properties to fetch external_id so we can update it in S3
+DESC integration s3_int;
+
+--- After executing the previous query take the property values for these properties:
+- STORAGE_AWS_IAM_USER_ARN
+- STORAGE_AWS_EXTERNAL_ID
+
+-- After that, modify the trust relationships for the role created pasting the previous values
+STORAGE_AWS_IAM_USER_ARN => "AWS"
+STORAGE_AWS_EXTERNAL_ID => "sts:ExternalId"
+
+
+
+
+
+
+
+
+
+
+
+
