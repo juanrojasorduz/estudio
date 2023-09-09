@@ -1,0 +1,120 @@
+1) Ir a amazon s3
+
+2) Seleccionar create bucket
+
+3) Configurar bucket
+-> La region de aws debe coincidir con la de snowflake para no generar costo adicional ej: US East (N.Virginia)
+-> Dar un nombre al bucket acompañado de S3 bucket name: bucketfordatajds3
+
+4) seleccionar el nombre del bucket dentro de los buckets creados
+
+5) creamos dos folders dentro del bucket con los siguientes nombres:
+-> csv
+-> json
+
+6) subimos los archivos a cada carpeta segun el tipo (json,csv)
+netflix_titles.csv
+Musical_Instruments_5.json
+
+7) vamos al servicio IAM (Manage access to AWS resources)
+
+8) seleccionamos roles
+
+9) seleccionamos create role
+
+10) configuramos el role
+-> seleccionar AWS Account para Trusted entity type
+-> seleccionamos another AWS account para (an AWS account)
+-> ponemos nuestro account id
+-> seleccionamos require external id
+-> ingresamos un numero aleatorio ej: 3247141
+-> damos click en next
+-> seleccionamos los permisos que damos a este rol
+	-> AmazonS3FullAccess
+-> damos click en next
+-> damos nombre al rol: ej: awssupport
+-> seleccionamos create role
+
+11) Una vez creado el rol lo seleccionamos
+
+12) Seleccionamos Trust relationships
+
+13) Damos click en edit trust policy
+
+14) Modificamos la trust policy
+
+antes (este es el valor por default):
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Effect": "Allow",
+			"Principal": {
+				"AWS": "arn:aws:iam::850740812278:root"
+			},
+			"Action": "sts:AssumeRole",
+			"Condition": {
+				"StringEquals": {
+					"sts:ExternalId": "3247141"
+				}
+			}
+		}
+	]
+}
+
+
+despues:
+
+-> primero crear la integracion y ejecutar la sentencia desc para traer el arn y external id desde snowflake
+
+	-- create storage integration 
+
+	create or replace storage integration s3_int
+	type = external_stage
+	storage_provider = s3
+	enabled = true
+	storage_aws_role_arn = 'arn:aws:iam::850740812278:role/awssupport'
+	storage_allowed_locations = ('s3://bucketfordatajds3/csv/', 's3://bucketfordatajds3/json/')
+	comment = 'optional';
+
+
+	--See storage integration properties to fetch external_id so we can update it in S3
+
+	desc integration s3_int;
+
+
+-> despues de ejecutar "desc integration s3_int" seleccionamos los valores:
+
+STORAGE_AWS_IAM_USER_ARN = arn:aws:iam::098139807280:user/f1z20000-s
+STORAGE_AWS_EXTERNAL_ID = PWB49473_SFCRole=2_CzJOpVi2LbYokdbGMxnlSv1naW8=
+
+de tal forma la trust policy queda:
+
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::098139807280:user/f1z20000-s"
+            },
+            "Action": "sts:AssumeRole",
+            "Condition": {
+                "StringEquals": {
+                    "sts:ExternalId": "PWB49473_SFCRole=2_CzJOpVi2LbYokdbGMxnlSv1naW8="
+                }
+            }
+        }
+    ]
+}
+
+
+
+
+
+
+
+
+
+
