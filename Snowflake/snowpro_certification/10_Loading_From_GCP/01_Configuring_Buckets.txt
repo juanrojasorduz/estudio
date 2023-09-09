@@ -1,0 +1,62 @@
+
+#### Creating an Account
+1) Select get started for free
+2) Select the email
+3) Register the personal information
+
+
+#### Creating a Bucket
+1) Select on the left panel Cloud Storage 
+2) Select create bucket
+3) Asignar un nombre al bucket example: jdsnowflakebucket
+4) Select further
+5) Click continue and leave all the default values
+6) Select create
+7) Upload the files in each bucket
+
+Note create another bucket if you need example: jdsnowflakebucketf
+
+
+#### Setting Up a connection between GCP and Snowflake using an integration object
+USE ROLE ACCOUNTADMIN;
+
+1) create integration object that contains the access information
+
+CREATE STORAGE INTEGRATION gcp_integration
+  TYPE = EXTERNAL_STAGE
+  STORAGE_PROVIDER = GCS
+  ENABLED = TRUE
+  STORAGE_ALLOWED_LOCATIONS = ('gcs://jdsnowflakebucket/', 'gcs://jdsnowflakebucketf/'); -- Provide the bucket locations using: 'gcs://bucket/path' 
+
+  
+2) Describe integration object to provide access
+DESC STORAGE integration gcp_integration;
+3) Select the value for the property STORAGE_GCP_SERVICE_ACCOUNT 
+4) Go to Buckets Section, and select both buckets
+5) Then Select Permissions
+6) Select add principal
+7) Paste the in new meber using STORAGE_GCP_SERVICE_ACCOUNT VALUE
+8) Select role CLOUD_STORAGE > STORAGE_ADMINISTRATOR
+9) Select Save
+
+
+
+##### Create an stage 
+
+-- create file format
+create or replace file format manage_db.public.fileformat_gcp
+    TYPE = CSV
+    FIELD_DELIMITER = ','
+    SKIP_HEADER = 1;
+
+-- create stage object
+create or replace stage manage_db.public.stage_gcp
+    STORAGE_INTEGRATION = gcp_integration
+    URL = 'gcs://jdsnowflakebucket'
+    FILE_FORMAT = fileformat_gcp;
+
+-- list the files in bucket    
+LIST @manage_db.public.stage_gcp;
+
+
+
