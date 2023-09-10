@@ -1,0 +1,23 @@
+
+###### What is a Snowpipe?
+
+Enables automatically loading data once a file appears in a bucket
+When a new file is added to that bucket, we can automatically don't have to do anything
+But automatically this file is loaded into the given table
+This feature is great If data needs to be available immediately for analysis
+Snowpipe uses serverless features instead of warehouses, so compute resources will be automatically managed by snowflake itself
+
+We have here this snowpipe created which serverless loads the data in our table once the notification that there is a new file in
+our bucket has been received by the snowpipe
+
+### High Level Steps
+1) Create Stage (To have the connection)
+2) Test COPY COMMAND (To make sure it works)
+Location to the external stage that we want to copy data from
+3) Create Pipe (Create pipe as object with COPY COMMAND)
+Contains copy command definition
+4) S3 Notification (To trigger snowpipe)
+We should set up an event notification
+This event is just telling the pipe that there is a new object in this bucket and that it can start loading these files
+
+We are Ready, the pipe will be working!!
