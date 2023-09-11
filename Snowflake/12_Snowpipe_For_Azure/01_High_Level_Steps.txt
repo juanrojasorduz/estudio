@@ -1,0 +1,14 @@
+### Setting Up Snowpipe (Steps)
+
+1) Storage Integration
+Connection details to container
+Grant Permissions
+2) Create Stage
+Location to container
+3) Queue + Notification
+To trigger snowpipe
+4) Notification Integration
+Notification can be received by snowflake
+Grant permissions
+5) Create Pipe
+Create pipe as object with COPY COMMAND
