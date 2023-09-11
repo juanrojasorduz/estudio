@@ -1,0 +1,24 @@
+
+**We can see hom many days of retention time have a table after being created using this query:
+
+SHOW TABLES
+
+**We can alter the days for retention using this command:
+
+ALTER TABLE OUR_FIRST_DB.PUBLIC.CUSTOMERS
+SET DATA_RETENTION_TIME_IN_DAYS = 2;
+
+This changes the default value which is 1
+
+
+**We can set the retention time when creating the table, for example:
+
+CREATE OR REPLACE TABLE OUR_FIRST_DB.PUBLIC.ret_example (
+	id int,
+	first_name string,
+	phone string
+        )
+	DATA_RETENTION_TIME_IN_DAYS = 3;
+
+
+If retention time is 0 we cannot do time travel and undrop
