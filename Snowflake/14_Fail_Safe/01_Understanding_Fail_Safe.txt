@@ -1,0 +1,21 @@
+Another component that is also part of the data protection lifecycle in Snowflake
+
+So the purpose of fail safe is that it serves as a data protection of our data in case of a disaster
+
+### Fail Safe
+* Protection of historical data in case of disaster
+* We get a non configurable seven day period for permanent tables
+* Period starts immediately after time travel periods ends
+* So once this time travel period has endend, this table gets moved into this failsafe area
+* Its important to say that we cannot restore this data by ourselves, but we have to contact snowflake
+* We cannot query this data directly
+* This feature contributes to storage cost
+
+Access and query data     Undrop		 No user operations/queries
+		          Select.. at before	 Recovery beyond time travel
+						 Restoring only by snowflake support
+	 
+current data storage   >> time travel         >> Fail Safe
+			  (0-90 days)		 transient: 0 days
+						 permanent: 7 days
+

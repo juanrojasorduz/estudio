@@ -1,0 +1,26 @@
+
+
+#### TABLE TYPES
+
+** Permanent: CREATE TABLE
+- Time Travel Retention Period (0-90 days)
+- Fail Safe
+- Exists until dropped
+- This is for permanent data (Production...)
+
+** Transient: CREATE TRANSIENT TABLE
+- Time travel Retention Period (0-1 day)
+- Not Fail Safe
+- Exists until dropped
+- Only for data that does not need to be protected
+
+** Temporary: CREATE TEMPORARY TABLE 
+- Time travel Retention Period (0-1 day)
+- Not Fail Safe
+- Exists only in current session
+- This is for Non-permanent data
+
+
+IMPORTANT: 
+-These Types are also available for other database objects (database,schema etc)
+-For temporary table no naming conflicts with permanent/transient tables! ==> Other tables will be effectively hidden!!
