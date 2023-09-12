@@ -1,0 +1,46 @@
+##### ZERO COPY Cloning
+
+This enables us to easily create copies of database, schemas, tables and other objects
+We would have to copy the complete structure, all of the metadata, the primary keys and everything, we can do it with a simple clone command
+
+clone command => metadata operation => Referencing all the metadata of the original table => We do not additional cost in terms of our storage
+											  => The cost only increases if we have data updated or changed
+
+
+
+* Cloned object is independent from original table
+
+* Easy to copy all meta data & improved storage management
+
+* Creating backups for development purposes
+
+* Works with time travel also
+
+
+COMMAND:
+
+CREATE TABLE <name>
+	CLONE <source_table_name>
+	
+
+For time travel:
+
+CREATE TABLE <name>
+	CLONE <source_table_name>
+	BEFORE ( TIMESTAMP => <timestamp> )
+
+
+###### ADDITIONAL RULES
+
+- Any structure of the object and meta data is inherited:
+	including clustering keys, comments etc
+- Is available to clone Data Storage Objects (Permanent and transient):
+	- Databases
+	- Schemas
+	- Tables
+- Its posible to clone other Configuration objects like:
+	- Stages
+	- File Formats
+	- Tasks
+
+
