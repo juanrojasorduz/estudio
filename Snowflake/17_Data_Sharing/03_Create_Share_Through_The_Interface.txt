@@ -1,0 +1,21 @@
+1) Select the ACCOUNTADMIN ROLE
+
+2) Go to Data >> Private Sharing
+	Select SHARED WITH YOU or SHARED BY YOUR ACCOUNT and we can
+		add consumers
+		edit
+		drop
+
+## Creating a share using the interface
+1) Select the ACCOUNTADMIN ROLE
+2) Go to Data >> Private Sharing
+3) Select Shared by your account
+4) Select Share >> Create a Direct Share
+5) Select data: Database > Schema > Table
+6) Add a consumer using the account name, for example: EVCZBCG
+
+Go to the consumer account
+1) Select the ACCOUNTADMIN ROLE
+2) Go to Data >> Private Sharing
+3) Select Shared With You
+4) Select Download Data

@@ -1,0 +1,12 @@
+### Sharing with Non Snowflake Users
+
+**** Steps
+1) New Reader Account
+- Independent instance with own url & own compute resources
+2) Share data
+- Share database & table
+In reader account:
+4) Create Users
+- As administrator create user & roles
+3) Create database 
+- In reader account create database from share

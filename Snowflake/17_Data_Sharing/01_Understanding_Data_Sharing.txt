@@ -1,0 +1,15 @@
+
+## Data sharing
+- Usually this can be also a rather complicated process
+- Data Sharing without actual copy of the data & uptodate
+-Usually we would take physically a copy of the data and then if there are some changes, we need to extract the data and update the data
+-Similar to the cloning, we can share data without actually taking a copy of the data
+-Data sharing will be just enabling a consumption of the data that is always up to date and inmediatelly up to date
+-Shared data can be consumed by the own compute resources, so own compute resources of the one that is consuming this data
+-Non-snowflake-users can also access through a reader account
+
+
+## There are two ways to share data
+
+- Query Statements
+- Interface
