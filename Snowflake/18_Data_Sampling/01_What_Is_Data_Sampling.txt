@@ -1,0 +1,19 @@
+### Data Sampling
+Instead of querying on the complete database, we would take a random sample out of this database and then just use
+this sample to develop, to reduce compute costs.
+
+-Use-cases: Query development,data analysis
+-Faster & more cost efficient (less compute resources)
+
+
+### Data Sampling Methods
+
+** Row or Bernoulli method
+Every row is chosen with percentage p
+More "randomness"
+Smaller tables
+
+** Block or System method
+Every block "micro partitions" is chosen with percentage p
+More effective processing
+Larger tables
