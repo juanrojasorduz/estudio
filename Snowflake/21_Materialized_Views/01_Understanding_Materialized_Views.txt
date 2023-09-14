@@ -1,0 +1,25 @@
+### Materialized Views
+- We have a view that is queried frequently and take a long time to be processed
+- We can create a materialized view to solve that problem
+- Use any select-statement to create this MV
+- Results will be stored in a separate table and this will be updated automatically based on the base table
+
+
+### When to use MV?
+View would take a long time to be processed and is used frequently
+Underlaying data is change not frequently and on a rather irregular basis
+If the data is updated on a very regular basis using tasks & streams could be a better alternative
+
+Don't use materialized view if data changes are very frequent
+Keep maintenance cost in mind
+Consider leveraging tasks & streams instead
+
+
+### Limitations
+- Only available for enterprise edition
+- Joins Including self-joins are not supported
+- Limited amount of aggregation functions 
+- No use of UDFs
+- No use of Having clauses
+- No use of Order by clause
+- No use of limit clause
