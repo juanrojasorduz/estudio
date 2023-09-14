@@ -1,0 +1,16 @@
+
+** What is a task?
+A task is just a object that stores a certain sql statement and this will be 
+then executed at a specific time or in a certain interval that we can specify 
+We can create standalone tasks and trees of tasks
+
+
+Tasks can be used to schedule SQL statements
+Standalone tasks (just one secure statement) and trees of tasks (one task will be executed after another task has been completed) 
+								(dependencies)
+
+
+Understand tasks - create tasks - schedule tasks - Tree of tasks - Check task history
+
+
+
