@@ -1,0 +1,36 @@
+### What are the streams?
+- Object that records (DML-) changes made to a table
+- This process is called change data capture (CDC)
+
+                    TABLE
+		    ________
+		   |__|__|__|  DELETE	
+Stream Object ===> |__|__|__|  INSERT
+		   |__|__|__|  UPDATE
+
+
+The changes in that table are captured and include operations like DELETE,INSERT,UPDATE statements
+The stream object will capture these rows that have been updated,inserted or deleted
+Additional to the columns that has the target table, there are three more columns for metadata which are:
+
+- METADATA$ACTION
+- METADATA$UPDATE
+- METADATA$ROW_ID
+
+That metadata will be then telling us whether this data has been updated,inserted or deleted
+The storage will not increase for stream object because is just retrieved from the original table
+
+
+
+CREATE STREAM <stream name>
+ ON TABLE <table name>
+
+SELECT * FROM <stream name>
+
+We can directly query from this stream
+
+ 
+
+
+
+
