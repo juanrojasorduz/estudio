@@ -1,0 +1,25 @@
+### Download Tableau
+1) Lookup in your browser "Download Tableau"
+2) Select the first link
+3) Write your business email
+4) Select download free trial
+5) There will be a executable download
+6) Open the .exe
+7) Select Install
+8) Restart our machine
+9) Fill out the format
+10) Click on start free trial period
+
+
+### Connect Tableau and Snowflake
+1) Go to Connect >> More >> Snowflake 
+2) Write the server name: example: https://rxb51221.us-east-1.snowflakecomputing.com
+3) Select "Username and Password" for authentication
+4) Write the snowflake username and password
+5) Select sign in
+6) Select the warehouse (Optional): COMPUTE_WH
+7) Select the datatabse
+8) Select the schema
+9) Select the table and paste them in the chart giving a relationship
+10) Select each table and select Update Now
+11) Select the connection type: Live (Directly connect to the data) or Extract (Extract the data and then will be imported into the Tableau's engine)

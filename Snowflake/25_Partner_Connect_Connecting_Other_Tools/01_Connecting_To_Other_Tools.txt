@@ -1,0 +1,12 @@
+### To connect to other tools, we can use using snowflake
+
+1) For this purpose use the account admin role
+2) Go to Admin >> Usage >> Partner Connect
+3) Lookup if there is a partnership with other tools to make direct connections
+
+
+### Connnect to ETL tool
+1) For this purpose use the account admin role
+2) Go to Admin >> Usage >> Partner Connect
+3) Lookup if there is a partnership with other tools to make direct connections
+4) Select an ETL tool, for example Snaplogic, Informatica etc

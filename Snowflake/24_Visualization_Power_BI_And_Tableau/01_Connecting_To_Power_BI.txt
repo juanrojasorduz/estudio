@@ -1,0 +1,31 @@
+### Download Power BI
+
+1) Go to powerbi.microsoft.com
+2) Go to products
+3) Select Power BI Desktop
+4) Select Download free
+5) Select PBIDesktopSetup.exe
+6) Select next
+7) Open the .exe
+8) Select Install
+9) Select Finish
+
+### Connect Power BI and Snowflake
+1) Open Power BI desktop
+2) Go to get data
+3) Select more 
+4) Select database
+5) Lookup snowflake
+6) Select connect
+	- Write the account URL: https://rxb51221.us-east-1.snowflakecomputing.com
+	- Select the warehouse: COMPUTE_WH
+	- Select the Data Connectivity mode: DirectQuery (Import all of the data in Snowflake) (Query or data will be processed on our machine locally)
+7) Select OK
+8) Select snowflake log-in credentials: 
+		username
+		password
+9) Select Connect
+10) Select the tables we are going to use
+11) Select load
+12) Select DirectQuery
+13) Select OK
