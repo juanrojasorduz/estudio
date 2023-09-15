@@ -1,0 +1,68 @@
+#### BEST PRACTICES TO USE SNOWFLAKE AND REDUCE COSTS:
+
+****** Virtual Warehouses
+-Enable Auto-Suspend => AUTO_SUSPEND = 600 (Seconds) 
+-Enable Auto-Resume => AUTO_RESUME = TRUE 
+-Set appropiate timeouts
+-Choose the appropiate size for the warehouse
+
+
+****** Table design
+-Choose an appropiate table type
+	- Staging tables - Use Transient
+	- Productive tables - Use Permanent
+	- Development tables - Use Transient
+-Choose an appropiate data type
+	- For snowflake Varchar = Varchar(N)
+-Set cluster keys only if neccesary just for large tables
+	-Most query time for table scan
+-Using dimensions
+
+
+****** Monitoring (Use the ACCOUNT ADMIN)
+-- Table Storage
+
+SELECT * FROM "SNOWFLAKE"."ACCOUNT_USAGE"."TABLE_STORAGE_METRICS";
+
+-- How much is queried in databases
+SELECT * FROM "SNOWFLAKE"."ACCOUNT_USAGE"."QUERY_HISTORY";
+
+SELECT 
+DATABASE_NAME,
+COUNT(*) AS NUMBER_OF_QUERIES,
+SUM(CREDITS_USED_CLOUD_SERVICES)
+FROM "SNOWFLAKE"."ACCOUNT_USAGE"."QUERY_HISTORY"
+GROUP BY DATABASE_NAME;
+
+
+-- Usage of credits by warehouses
+SELECT * FROM "SNOWFLAKE"."ACCOUNT_USAGE"."WAREHOUSE_METERING_HISTORY";
+
+-- Usage of credits by warehouses // Grouped by day
+SELECT 
+DATE(START_TIME),
+SUM(CREDITS_USED)
+FROM "SNOWFLAKE"."ACCOUNT_USAGE"."WAREHOUSE_METERING_HISTORY"
+GROUP BY DATE(START_TIME);
+
+-- Usage of credits by warehouses // Grouped by warehouse
+SELECT
+WAREHOUSE_NAME,
+SUM(CREDITS_USED)
+FROM "SNOWFLAKE"."ACCOUNT_USAGE"."WAREHOUSE_METERING_HISTORY"
+GROUP BY WAREHOUSE_NAME;
+
+-- Usage of credits by warehouses // Grouped by warehouse & day
+SELECT
+DATE(START_TIME),
+WAREHOUSE_NAME,
+SUM(CREDITS_USED)
+FROM "SNOWFLAKE"."ACCOUNT_USAGE"."WAREHOUSE_METERING_HISTORY"
+GROUP BY WAREHOUSE_NAME,DATE(START_TIME);
+
+
+
+****** Retention period
+-Staging database - 0 days (transient)
+-Production - (4-7) days (1 day min)
+-Large high-churn tables-0 days (transient)
