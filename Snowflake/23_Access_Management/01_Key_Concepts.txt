@@ -1,0 +1,108 @@
+
+
+### Access Control
+
+* Who can access and perform operations on objects in snowflake
+* Two aspects of access control combined:
+
+1) Discretionary Access Control (DAC)
+-Each object has an owner who can grant access to that object
+
+2) Role-based Access Control (RBAC)
+-Access privileges are assigned to roles, which are in turn assigned to users
+
+
+* Every object owned by a single role (multiple users)
+* Owner (role) has all privileges per default
+
+
+
+USER => People or systems
+ROLE => Entity to which privileges are granted (role hierarchy)
+PRIVILEGE => Level of access to an object (SELECT, DROP, CREATE etc)
+SECURABLE OBJECT => Objects to which privileges can be granted (Database, Table, Warehouse etc)
+
+
+
+### Roles Overview
+
+There are 5 system defined roles:
+1) ACCOUNTADMIN
+	- SYSADMIN AND SECURITYADMIN
+	- top-level role in the system
+	- should be granted only to a limited number of users
+2) SECURITYADMIN
+	- USERADMIN role is granted to SECURITYADMIN 
+	- Can Manage users and roles
+	- Can Manage any object grant globally 
+3) SYSADMIN
+	- Create warehouses and databases (and more objects)
+	- Recommended that all custom roles are assigned
+4) USERADMIN
+	- Dedicated to user and role management only
+	- Can create users and roles
+5) PUBLIC
+	- Automatically granted to every user
+	- Can create own objects like every other role (available to every other user/role)
+
+
+####### ACCOUNTADMIN
+Top-Level-Role
+- Manage & View all objects
+- All configurations on account level
+- Account operations (create reader account)
+
+- First user will have this role assigned
+- The purpose of this object is do initial setup & managing account level objects
+
+** Best practices
+- Very controlled assignment strongly recommended!
+- Use multifactor authentication
+- At least two users should be assigned to that role
+- Avoid creating objects with that role unless you have to
+
+
+####### SECURUTYADMIN
+- Account admin tab
+- Create & manage users and roles
+- Grant and revoke privileges to roles
+
+####### SYSADMIN
+- Create and manage objects
+- Create and manage warehouses, databases, tables etc.
+- Custom roles should be assigned to the SYSADMIN role as the parent
+
+Then this role also has the ability to grant privileges on warehouses, databases, 
+and other objects to the custom roles.
+
+####### USERADMIN
+- Create Users & Roles (User & Role Management)
+- Not for granting privileges (only the one that is owns)
+
+
+###### PUBLIC
+- Least privileged role (bottom of hierarchy)
+- Every user is automatically assgined to his role
+- Can own objects
+- These objects are then available to everyone
+
+
+####### Custom roles
+- Customize roles to our needs and create own hierarchies
+- Custom roles are usually created by SECURITYADMIN
+- Should be leading up to the SYSADMIN role
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
