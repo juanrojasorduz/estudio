@@ -10,14 +10,10 @@ terraform {
 }
 
 provider "aws" {
-  region  = "us-west-2"
+  region  = "us-east-1"
 }
 
-resource "aws_instance" "app_server" {
-  ami           = "ami-830c94e3"
-  instance_type = "t2.micro"
-
-  tags = {
-    Name = "ExampleAppServerInstance"
-  }
+resource "aws_s3_bucket" "my_bucket" {
+  bucket = "buckettotestterraformjdrojas"  # Replace with a globally unique bucket name
+  acl    = "private"  # Optional: Default access control list (ACL) for the bucket
 }
