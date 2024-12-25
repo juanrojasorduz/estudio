@@ -1,0 +1,38 @@
+########### TERRAFORM (Infrastructure as code tool) (Herramienta para administrar Infraestructura como codigo)
+
+1) It enables users to define, provision, and manage infrastructure across:
+* Multiple cloud providers (e.g., AWS, Azure, Google Cloud), private clouds. 
+* On-premise data centers. 
+
+2) It enables users to automate and manage your infrastructure using a declarative configuration language.
+
+3) It Manage infrastructure through configuration files (Not graphical user interface)
+
+4) It allows you to track resource changes throughout your deployment
+
+
+########### STEPS TO DEPLOY INFRASTRUCTURE WITH TERRAFORM:
+1-Define your scope. Identify the infrastructure to be used by your project.
+ 
+2-Author. Write the configuration to define your infrastructure.
+
+3-Initialize. Install the required terraform providers.
+
+4-Plan: Preview the changes Terraform will make to match your configuration.
+
+5-Apply: Make the changes to your infrastructure.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

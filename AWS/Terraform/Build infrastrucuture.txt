@@ -1,0 +1,33 @@
+Build infrastructure
+############ Prerequisites
+1) The Terraform CLI (1.2.0+) installed.
+2) The AWS CLI installed.
+3) AWS account and associated credentials that allow you to create resources.
+Create new Access Key and aws Secret Access Key in IAM
+
+############ Configure AWS credentials and region settings to interact with AWS services via the CLI
+$ aws configure
+$ export AWS_ACCESS_KEY_ID=....
+$ export AWS_SECRET_ACCESS_KEY=....
+
+
+############ Write configuration
+$ mkdir learn-terraform-aws-instance
+$ cd learn-terraform-aws-instance
+$ touch main.tf
+
+Open main.tf in your text editor, paste in the configuration below, and save the file.
+Note: See main.tf details in file
+
+############ Initialize the directory
+$ terraform init
+############ Format and validate the configuration
+$ terraform fmt
+$ terraform validate
+############ Create infrastructure
+$ terraform apply
+Enter a value: yes
+############ Inspect state
+$ terraform show
+############ Manually Managing State
+$ terraform state list
