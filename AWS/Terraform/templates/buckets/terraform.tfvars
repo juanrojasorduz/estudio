@@ -1,4 +1,6 @@
 # terraform.tfvars
 
-bucket_one_name = "my-first-bucket"
-bucket_two_name = "my-second-bucket"
+bucket_one_name = "buckettestjdparta"
+bucket_two_name = "buckettestjdpartab"
+bucket_three_name = "buckettestjdpartabc"
+bucket_four_name = "buckettestjdpartabcd"

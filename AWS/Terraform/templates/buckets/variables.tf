@@ -9,3 +9,13 @@ variable "bucket_two_name" {
   description = "The name of the second S3 bucket"
   type        = string
 }
+
+variable "bucket_three_name" {
+  description = "The name of the second S3 bucket"
+  type        = string
+}
+
+variable "bucket_four_name" {
+  description = "The name of the second S3 bucket"
+  type        = string
+}
