@@ -14,6 +14,6 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "my_bucket" {
-  bucket = "buckettotestterraformjdrojas"  # Replace with a globally unique bucket name
+  bucket =  var.bucket_name  # Replace with a globally unique bucket name
   acl    = "private"  # Optional: Default access control list (ACL) for the bucket
 }

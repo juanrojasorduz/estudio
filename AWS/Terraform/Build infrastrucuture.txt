@@ -26,6 +26,7 @@ $ terraform fmt
 $ terraform validate
 ############ Create infrastructure
 $ terraform apply
+$ terraform apply -var 'bucket_name=jdexampleforbucketw'  ## To use variable
 Enter a value: yes
 ############ Inspect state
 $ terraform show
@@ -59,6 +60,14 @@ resource "aws_s3_bucket" "my_bucket" {
 }
 ----------------------
 
+############ Example Code variables.tf
+----------------------
+variable "bucket_name" {
+  description = "Name for bucket"
+  type        = string
+  default     = "buckettotestterraformjdrojas"
+}
+----------------------
 
 ###### Terraform Block: Contains Terraform settings including the required providers Terraform will use to provision your infrastructure
 required_providers: Specifies the providers that Terraform will use for provisioning infrastructure.
