@@ -5,6 +5,10 @@ Build infrastructure
 3) AWS account and associated credentials that allow you to create resources.
 Create new Access Key and aws Secret Access Key in IAM
 
+############ Documentation
+https://developer.hashicorp.com/terraform/tutorials/aws-get-started
+https://registry.terraform.io/modules/terraform-aws-modules
+
 ############ Configure AWS credentials and region settings to interact with AWS services via the CLI
 $ aws configure
 $ AWS_ACCESS_KEY_ID=<SET_VALUE>
