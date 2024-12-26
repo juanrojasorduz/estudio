@@ -34,6 +34,8 @@ $ terraform show
 $ terraform state list
 ############ Destroy infrastructure
 $ terraform destroy
+############ Show Output values (Use this command after terraform apply)
+$ terraform output
 
 
 
@@ -66,6 +68,25 @@ variable "bucket_name" {
   description = "Name for bucket"
   type        = string
   default     = "buckettotestterraformjdrojas"
+}
+----------------------
+
+############ Example Code outputs.tf
+----------------------
+output "bucket_name" {
+  value = aws_s3_bucket.my_bucket.bucket
+}
+
+output "bucket_arn" {
+  value = aws_s3_bucket.my_bucket.arn
+}
+
+output "bucket_domain_name" {
+  value = aws_s3_bucket.my_bucket.bucket_regional_domain_name
+}
+
+output "bucket_id" {
+  value = aws_s3_bucket.my_bucket.id
 }
 ----------------------
 
