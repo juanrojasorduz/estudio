@@ -1,0 +1,21 @@
+Version – Specify the version of the policy language that you want to use. 
+We recommend that you use the latest 2012-10-17 version. For more information, see IAM JSON policy elements: Version
+
+
+****Statement – Use this main policy element as a container for the following elements. You can include more than one statement in a policy.
+
+*Sid (Optional) – Include an optional statement ID to differentiate between your statements.
+
+*Effect – Use Allow or Deny to indicate whether the policy allows or denies access.
+
+*Principal (Required in some circumstances) – If you create a resource-based policy, you must indicate the account, 
+user, role, or federated user to which you would like to allow or deny access. If you are creating an IAM permissions policy to attach to a user or role, 
+you cannot include this element. The principal is implied as that user or role.
+
+*Action – Include a list of actions that the policy allows or denies.
+
+*Resource (Required in some circumstances) – If you create an IAM permissions policy, 
+you must specify a list of resources to which the actions apply. If you create a resource-based policy, 
+it depends on the resource you're using as to whether this element is required or not.
+
+*Condition (Optional) – Specify the circumstances under which the policy grants permission.
