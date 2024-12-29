@@ -1,0 +1,27 @@
+########## AWS Organizations
+AWS Organizations helps you centrally manage and govern your environment as you grow and scale your AWS resources. 
+Using Organizations, you can create accounts and allocate resources, group accounts to organize your workflows, 
+apply policies for governance, and simplify billing by using a single payment method for all of your accounts.
+
+### Steps to create multiple business units for a organization and associate an account.
+Example of business units
+*prod unit
+*test unit
+*dev unit
+
+*Steps:
+Select AWS Organizations
+Select create AWS organization
+Select root
+Select actions
+Select Create new business unit
+Give a name to business unit
+Select Create
+Select business unit
+Select add aws account
+Add an email to manage root user
+Select Create
+Copy the link for access to account
+Select forgot password
+Reset Password
+Sign in to root account
