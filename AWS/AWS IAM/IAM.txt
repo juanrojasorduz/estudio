@@ -1,0 +1,76 @@
+############## IAM AWS Identity and Access Management Documentation
+It is a web service for securely controlling access to AWS services. 
+With IAM, you can centrally manage users, security credentials such as access keys, and permissions that control which AWS resources users and applications can access.
+
+
+
+############## Root User
+Definition: The root user is the initial account created when you sign up for AWS. It has complete, unrestricted access to all AWS services and resources in the account.
+
+Characteristics:
+*It has full administrative privileges for all AWS resources and services.
+*The root user is tied to the email address used to sign up for AWS.
+*AWS recommends limiting the use of the root user for everyday tasks. Instead, you should create and use IAM users with specific permissions for regular tasks.
+
+Best Practices:
+*Enable Multi-Factor Authentication (MFA) for the root user.
+*Use the root user only for account and billing-related tasks, and avoid using it for regular administration of services.
+
+
+############## IAM User
+Definition: An IAM (Identity and Access Management) user is an entity within AWS that represents a person or application that interacts with AWS resources.
+
+Characteristics:
+*Each IAM user has its own credentials (username/password for the AWS Management Console, or access keys for API/CLI access).
+*IAM users inherit permissions from policies attached to them, either directly or via groups.
+*Users are created and managed by the AWS root user or other IAM users with appropriate permissions.
+*IAM users cannot be deleted or modified by the root user unless they have been granted the proper permissions.
+
+Best Practices:
+*Grant users the least privileges necessary for their tasks (principle of least privilege).
+*Enable MFA on IAM users for added security.
+
+
+############## IAM Policy
+Definition: An IAM policy is a document that defines permissions to allow or deny actions on AWS resources. 
+Policies are written in JSON format and consist of one or more statements.
+
+Characteristics:
+*A policy specifies what actions are allowed or denied on which resources (e.g., S3 buckets, EC2 instances).
+*Policies can be attached to IAM users, groups, or roles to control their access to AWS resources.
+*There are two types of policies: 
+-Managed Policies (AWS provides them, and they can be either AWS-managed or customer-managed)
+-Inline Policies (attached directly to a specific IAM user, group, or role).
+
+Best Practices:
+*Always follow the principle of least privilege when assigning policies.
+*Use AWS managed policies whenever possible, as they are maintained and updated by AWS.
+*Regularly review and audit IAM policies for compliance and security.
+
+
+############## IAM Role
+Definition: An IAM role is a set of permissions that define what actions are allowed or denied by an entity (such as an IAM user, AWS service, or external identity provider). 
+Unlike IAM users, roles are not associated with a specific person or application. Instead, they can be assumed by trusted entities that need temporary access to AWS resources.
+
+Characteristics:
+*Roles can be assumed by IAM users, applications, AWS services (like EC2), or even external users (through federated identity providers).
+*When an entity assumes a role, it temporarily gains the permissions granted to that role.
+*Roles are commonly used in scenarios like EC2 instances needing access to other AWS resources (e.g., an EC2 instance assumes a role to access an S3 bucket).
+
+Best Practices:
+*Use IAM roles instead of sharing long-term credentials (like access keys) across applications.
+*Use roles for applications or AWS services that need temporary access to specific resources.
+*Always set up trust relationships properly to ensure only trusted entities can assume the role.
+
+
+
+
+
+
+
+
+
+
+
+
+
