@@ -1,0 +1,48 @@
+######## Using CRON expressions to schedule a DAG
+One way to configure your DAG for a basic schedule is by defining its schedule argument using 
+either a cron expression or selecting one of the available cron "presets".
+
+None          Don’t schedule, use for exclusively “externally triggered” DAGs
+@once          Schedule once and only once
+@hourly          Run once an hour at the end of the hour
+@daily          Run once a day at midnight (24:00)
+@weekly          Run once a week at midnight (24:00) on Sunday
+@monthly          Run once a month at midnight (24:00) of the first day of the month
+@quarterly        Run once a quarter at midnight (24:00) on the first day
+@yearly          Run once a year at midnight (24:00) of January 1
+
+
+example:
+from airflow.decorators import dag, task
+import pendulum
+
+
+@dag(
+   'scheduling_demo_1',
+   schedule = '@hourly,
+   start_date = pendulum.datetime(2023,3,10),
+   catchup = True
+)
+
+def scheduling_demo_1():
+   @task
+   def _my_task():
+       print('Hello World')
+   _my_task()
+
+scheduling_demo_1()
+
+
+
+######## Using CRON Expressions
+schedule='35 14 10 3 *'
+schedule='42 14 10 3 *'
+
+
+
+######## Using Time Delta
+from datetime import timedelta
+schedule = timedelta(weeks=2)
+
+
+

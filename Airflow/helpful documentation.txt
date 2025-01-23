@@ -1,0 +1,4 @@
+https://registry.astronomer.io/
+https://airflow.apache.org/docs/
+https://crontab.guru/
+https://pypi.org

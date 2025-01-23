@@ -1,0 +1,7 @@
+
+## To execute dag each 3 days we can use timedelta function
+schedule_interval=timedelta(days=3)
+
+-- Catchup
+-- backfill
+airflow dags backfill --start-date START_DATE --end-date END_DATE dag_id

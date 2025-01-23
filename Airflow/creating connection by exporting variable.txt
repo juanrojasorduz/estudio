@@ -1,0 +1,19 @@
+Use file .env to export
+
+Astro CLI brings the .env file in order to export environment variables in your Astro project
+
+
+.env Example:
+-------
+AIRFLOW_CONN_SNOWFLAKE='snowflake://user:password@/db-schema?account=account&database=snow-db&region=us-east&warehouse=snow-warehouse'
+
+
+-------
+
+
+To export this environment variable in the local astro project just restart astro project:
+astro dev restart
+
+
+to export env you can use:
+astro deployment variable create --deployment-id cl03oiq7fdashakjfsdkgfdg --load --env .env

@@ -1,0 +1,14 @@
+## Creating and API connection
+Open Airflow UI
+Select Admin
+Select Connections
+Select add (+)
+Be sure to have provider installed (Could be AWS, SQL server etc)
+Example:
+Connection Id: calendar_api
+Connection Type: HTTP
+Description: API
+Host: https://calendarific.com/api/v2
+API Key: {"api_key": "3ed7543f6096b46345332240d578378df7e7cdfd"}}
+Paste it in Password
+

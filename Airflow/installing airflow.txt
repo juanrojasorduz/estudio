@@ -1,0 +1,43 @@
+1# Install Docker Desktop:
+https://www.docker.com/products/docker-desktop/
+
+2# Install Astro CLI:
+https://www.astronomer.io/docs/astro/cli/install-cli
+
+3# Check: Astro Version:
+astro version
+
+4# Run Docker Desktop
+
+5# Create a folder for airflow project
+mkdir airflow_project
+cd airflow_project
+
+6# Create an astro project:
+https://www.astronomer.io/docs/astro/cli/get-started-cli#step-2-create-an-astro-project
+astro dev init
+
+7# Verify that airflow instance is not running yet
+astro dev ps
+
+8# Run an astro project:
+astro dev start
+astro dev start --wait 30m
+
+9# Go to airflow UI:
+paste on browser: http://localhost:8080
+enter with: username: admin, password: admin
+
+10# Stop or restart instance:
+astro dev stop
+astro dev restart 
+
+12# Download visual studio code extension: Dev Containers
+
+13# Open scheduler since visual studio code:
+Go to visual studio code
+Select open a remote window 
+Select atatch to running container
+Select scheduler
+Wait until it finishs
+Go to file > open file > /usr/local/airflow/ > ok
