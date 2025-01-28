@@ -1,0 +1,183 @@
+# Sensors
+
+The purpose of a Sensor is to wait for an event.
+
+That can be useful for many different use cases, such as:
+
+Processing files from an S3 bucket as they arrive while waiting for them.
+Running different tasks at different times but within the same DAG.
+Triggering a data pipeline when another one completes.
+Ensuring an API is available to make requests.
+Transforming data as soon as data are present in a SQL table.
+
+
+
+A Sensor is a particular operator that waits for a condition to be true. 
+If the condition is true, the task is marked successful , and the next task runs. 
+If the condition is false, the sensor waits for another interval until it times out and fails.
+
+Implementing a Sensor is as simple as shown below:
+
+
+------Example------------------------------------:
+from airflow import DAG
+from airflow.sensors.python import PythonSensor
+
+def _condition():
+    return False
+
+with DAG(
+    dag_id="sensor",
+    start_date=datetime(2021, 1, 1),
+    schedule="@daily",
+    catchup=False,
+):
+    waiting_for_condition = PythonSensor(
+        task_id="waiting_for_condition",
+        python_callable=_condition,
+        poke_interval=60,
+        timeout=7 * 24 * 60 * 60
+    )
+---------------------------------------------------
+
+
+##### BEST PRACTICES
+By default, a sensor waits for 7 days before timing out, which can lead to an issue... Not being able to run any more tasks!
+
+
+Practice
+To show you what happens if you run too many Sensors without being careful with your resources, open .env and add the following value:
+
+AIRFLOW__CORE__PARALLELISM=3
+ 
+This environment variable overwrites the parallelism to limit the maximum number of concurrent tasks to 3. That means you can't have more than 3 tasks running in parallel.
+In the folder dags, create a new file fist_dag.py
+
+------------fist_dag.py------------------------------
+from airflow.decorators import dag, task
+from airflow.sensors.filesystem import FileSensor
+from datetime import datetime
+
+@dag(
+    schedule=None,
+    start_date=datetime(2023, 1, 1),
+    tags=['sensor'],
+    catchup=False
+)
+def first_dag():
+
+    wait_for_files = FileSensor.partial(
+        task_id='wait_for_files',
+        fs_conn_id='fs_default',
+    ).expand(
+        filepath=['data_1.csv', 'data_2.csv', 'data_3.csv']
+    )
+
+    @task
+    def process_file():
+        print("I processed the file!")
+
+    wait_for_files >> process_file()
+
+first_dag()
+-------------------------------------------------------
+
+------------second_dag.py------------------------------
+from airflow.decorators import dag, task
+from airflow.sensors.filesystem import FileSensor
+from datetime import datetime
+
+@dag(
+    schedule=None,
+    start_date=datetime(2023, 1, 1),
+    tags=['sensor'],
+    catchup=False
+)
+def second_dag():
+
+    @task
+    def runme():
+        print("Hi")
+
+    runme()
+
+second_dag()
+-------------------------------------------------------
+
+Once you have everything set up, restart the Airflow instance with astro dev restart in the terminal.
+
+
+RESULTS:
+Manually trigger the DAG first_dag, wait for having 3 tasks running then trigger the DAG second_dag
+What's the task's state of runme in second_dag?
+scheduled
+
+
+How many worker slots are used?
+3
+
+
+Turn off the schedule of both DAGs and delete the two DAG runs by going to Browse and DAG Runs.
+The DAG view should look like that:
+Now,
+Open the file first_dag.py
+Add a new parameter mode='reschedule' in partial()
+Save the file
+Manually trigger first_dag
+
+
+What is the status of the three tasks waiting_for_files?
+up_for_reschedule
+How many worker slots are running?
+0
+Manually trigger the DAG second_dag
+Does the task runme run?
+Yes
+
+Create a new empty file data_1.csv in the folder include
+
+Go back to the Airflow UI and wait a minute.
+
+What do you see?
+1 sensor has been successfully executed
+
+
+
+
+
+##################  Best practices with Sensors
+When using sensors, keep the following in mind to avoid potential performance issues:
+
+Always define a meaningful timeout parameter for your sensor. The default for this parameter is seven days, which is a long time for your sensor to be running. When you implement a sensor, consider your use case and how long you expect the sensor to wait and then define the sensor's timeout accurately.
+Whenever possible and especially for long-running sensors, use the reschedule mode so your sensor is not constantly occupying a worker slot. This helps avoid deadlocks in Airflow where sensors take all of the available worker slots.
+If your poke_interval is very short (less than about 5 minutes), use the poke mode. Using reschedule mode in this case can overload your scheduler.
+Define a meaningful poke_interval based on your use case. There is no need for a task to check a condition every 60 seconds (the default) if you know the total amount of wait time will be 30 minutes.
+
+
+
+
+
+
+##################  Wrap up
+Key takeaways:
+
+Sensors wait for an event/condition to be met to complete
+By default, a Sensor times out after 7 days. You should define a better value with the timeout parameter
+A sensor checks an event/condition at every poke_interval (60 seconds by default)
+While a sensor waits, it continuously takes a work slot
+If you have many sensors or expect them to take time before complete, use the reschedule mode
+With the reschedule mode, while a sensor is waiting, its status will be up_for_reschedule
+You can create a sensor with @task.sensor 
+
+
+
+
+
+
+
+
+
+
+
+
+

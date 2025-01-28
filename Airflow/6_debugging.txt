@@ -1,0 +1,144 @@
+#### Module Error Checks
+astro dev run dags list
+astro dev logs -s
+astro dev run dags list-import-errors
+ImportError
+ModuleNotFoundError
+
+
+#### Scheduler Error Checks
+Go to Docker Desktop
+Select Containers
+Select Project
+Select scheduler to see logs
+
+Example: If there is a dependency not installed in requirements
+We can find an error like: No module named 'airflow.providers.hashcorp'
+
+
+#### Module Management
+verify modules installed to avoid issues with duplicate modules like this example
+
+---circular2.py---
+from airflow.decorators import dag, task
+from pendulum import datetime
+from pandas import task1
+
+@dag(
+    start_date = datetime(2023,3,1),
+    catchup = False		
+) 
+def circular2():
+
+    @task
+    def task2():
+	return 'Task2'
+    task2()
+circular2()
+-------------------
+
+	
+---pandas.py---
+from airflow.decorators import dag, task
+from pendulum import datetime
+
+@dag(
+    start_date = datetime(2023,3,1),
+    catchup = False		
+) 
+def pandas():
+
+    @task
+    def task1():
+	return 'Task1'
+    task1()
+
+pandas()
+-------------------
+
+
+To review dependencies:
+astro dev bash
+pip freeze | grep pandas
+
+
+##### Practice: Organizing your Airflow instance
+
+
+1. In the folder dags/my_packages create an __init__.py as below:
+
+---dags/my_packages/__init__.py-------------
+# __init__.py
+
+# required contents of the package that you create.
+# it can also be empty.
+
+# Airflow expects that this file exists for all packages you added
+--------------------------------------------
+
+
+2. Now create a folder module_a under dags/my_packages/packages_a and create an __init__.py there as well
+
+
+---dags/my_packages/packages_a/module_a.py-------------
+import datetime
+
+class TestClass():
+
+   def my_time():
+       return datetime.datetime.now()
+--------------------------------------------
+
+
+---dags/my_packages/packages_a/__init__.py-------------
+# __init__.py
+
+# required contents of the package that you create.
+# it can also be empty.
+
+# Airflow expects that this file exists for all packages you added
+--------------------------------------------
+
+
+3. Also the DAG file under the dags/test_module.py should look like this
+
+
+---dags/test_module.py----------------------
+from airflow.decorators import dag, task
+import pendulum
+from my_packages.packages_a.module_a import TestClass
+
+@dag(schedule = None, start_date = pendulum.datetime(2023, 3, 1), catchup = False)
+
+def test_module():
+
+   @task
+
+   def test_task():
+       print(TestClass.my_time())
+
+   test_task()
+
+dag = test_module()
+--------------------------------------------
+
+
+##### Verify all connections created
+astro dev bash
+env
+
+
+##### Resolve a Dependency Conflict
+DAGs not running properly - Dependency Conflicts
+Using different dependencies than your Airflow environment is a frequent occurrence. Your task may require a specific Python version that differs from the core Airflow, or it may have packages that clash with other tasks.
+To handle these situations, running tasks in a separate environment can be beneficial as it can effectively manage dependency conflicts and ensure compatibility with your execution environments.
+Airflow offers several alternatives for executing tasks in separate environments:
+=> One option is the KubernetesPodOperator, which is suitable for users who operate Airflow on Kubernetes and require greater control over the resources and infrastructure used to run the task, in addition to package management. However, there are some drawbacks, such as a more complicated setup and increased task latency.
+=> The ExternalPythonOperator is another choice that enables you to execute certain tasks with a different set of Python libraries than others and the primary Airflow environment. This may be a virtual environment or any pre-installed Python installation that is accessible in the Airflow task's execution environment.
+=> Another option is the PythonVirtualenvOperator, which functions similarly as the ExternalPythonOperator . However, it generates and deletes a new virtual environment for each task. This operator is ideal if you don't want to retain your virtual environment. The disadvantage of this operator is that it takes more time to generate the environment each time the task is executed, resulting in higher task latency.
+
+
+
+
+
+

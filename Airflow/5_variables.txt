@@ -1,0 +1,22 @@
+#### Variable Composed by:
+##Key: Unique identifier to your variable.
+##Value: Value that we need to store.
+##Description: Description of variable.
+#Note: Variable has to be JSON serializable
+
+
+##### How to create a variable using Airflow UI
+### Admin > Variables > (+)
+### Example:
+# Key: ml_model_parameters
+# Val: {"param": [100, 150, 200]}
+# If we use something like 'api_key','password','secret' etc, value is automatically hidden
+# Description: machine-learning model parameters to try 
+# Actions: Delete & Export
+
+
+##### How to create a variable exporting variable
+# Include a line in the .env file like this:
+# AIRFLOW_VAR_ML_MODEL_PARAMETERS='{"param": [100, 150, 200]}'  ## No visible in Airflow UI
+
+

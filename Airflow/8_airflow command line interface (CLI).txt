@@ -1,0 +1,82 @@
+First of all, we have to evaluate the ENVIRONMENT in which we are running airflow 
+
+*Astro CLI
+*Airflow installed by PIP
+*Have it running on docker or even Kubernetes
+
+*At the end we just want to apply certain Airflow CLI commands
+
+
+### If are running Airflow by PIP, just execute commands in the terminal.
+
+#### If our Airflow is running on docker:
+>docker ps
+>copy the container ID of scheduler
+>docker exec -it e14hrjhf12 sh
+>airflow info
+
+#### If we are running Airflow on kubernetes:
+Log in the scheduler pod and run commands there
+>kubectl exec -it scheduler pod name -- sh
+Then once we are in the container of the scheduler we can execute Airflow commands
+
+#### If you want to log into the container while using Astro CLI:
+astro dev bash
+airflow info
+or Directly by 
+astro dev run run
+astro dev run info (In which 'airflow info' = 'run info')
+
+
+
+##### airflow commands:
+first of all, log into the scheduler:
+>astro dev bash
+
+then, apply any command you need:
+>airflow db init # initialize the Airflow metadata database
+>airflow users create -e caxe@example.com -f caxe -l caxe -p caxe -r Viewer # Create a new user
+roles: (Admin, Viewer, User, Op, Custom, Public) assign or create one according to best security practices
+>airflow standalone # used to start Apache Airflow in a simplified, self-contained setup
+
+
+##### Know your Airflow Environment
+>airflow version # check the version of Apache Airflow installed on your system
+>airflow info # provides detailed information about your Airflow installation
+>airflow config list # lists all the configuration options and their current values for your Apache Airflow installation
+>airflow config get-value core max_active_runs_per_dag # used to retrieve the value of a specific configuration setting from the Airflow configuration file (airflow.cfg
+
+
+##### Other Common Commands
+>airflow cheat-sheet # refers to a condensed reference guide that provides a quick overview of commonly used commands and functions in Apache Airflow
+>airflow variables export variables.json
+>cat variables.json
+>airflow variables import variables.json
+>airflow dags trigger backfill_trigger_dag --conf '{"dag_id": "example_dag_basic", "date_start": 20230401, "date_end": 20230405}'
+
+##### Test your tasks
+>airflow tasks test <dag_id> <task_id> <logical_date>
+example: airflow tasks test cli my_task 2023-01-01
+
+As a best practice, each time you add a task in a DAG, test it with 
+>airflow tasks test
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
