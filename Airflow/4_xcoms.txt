@@ -1,0 +1,15 @@
+
+XCOM: Mechanism that allows tasks to exchange messages or data during the execution of a DAG. 
+It provides a way for one task to push data, which can then be pulled by another task.
+
+push === Airflow Meta Database ==> pull 
+Task A ==========================> Task B
+
+Content:
+-key: XCOM identifier. its name
+-value: JSON serializable value
+-task_id: From which task the XCOM was created
+-dag_id: From which DAG the XCOM was created
+-timestamp: When the XCOM was created
+-logical_date/execution_date: DAG Run data_interval_start
+
