@@ -1,0 +1,32 @@
+########### Airflow Architecture Core Components
+					
+1-Web Server: It provides a user interface (UI) for interacting with Airflow			
+						
+2-Metadata Database: It stores all the metadata related to the Airflow instance			
+						
+3-Scheduler: It monitors all tasks and all DAGs	and triggers the task instances whose dependencies have been met		
+>>Executor: It determines how tasks are executed. 		
+Which systems?	
+How much resources?	
+It decides where and when a task should run based on resources available								
+>>>Queue: It holds tasks that are ready to be executed	
+It makes sure that tasks run in the correct order
+						
+4-Worker: Pull out the tasks from the queue in order to execute them			
+It carries out the instructions defined in the task			
+
+
+########### How Does Airflow Run a DAG?
+1-DAG file is saved on DAGs directory								
+2-The scheduler constantly scans the DAGs directory for new files. (Every five minutes by default)				
+3-Once the DAG is detected by the scheduler			
+4-It gets processed and serialized into the metadata database		
+5-While your DAG is stored in the metadata database				
+6-The scheduler scans for DAGs that are ready to run every five seconds			
+7-If DAG is ready to be triggered			
+8-The scheduler will send the tasks of DAG into the executor Queue		
+9-Executor defines how and on which system to execute tasks		
+10-As soon as the worker is available this worker will pull out the task from the queue in order to execute it		
+11-While the tasks of your DAG are being executed by the workers the metadata database will be updated by some airflow components 		
+12-like workers, the scheduler, executor,	
+13-as web server has access to the metadata database it will reflect changes on UI
