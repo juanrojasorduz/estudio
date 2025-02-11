@@ -1,4 +1,4 @@
-1) IR AL SIGUIENTE LINK:
+1) IR AL SIGUIENTE LINK (DESCARGAR version 2019):
 https://www.microsoft.com/es-es/sql-server/sql-server-downloads#
 
 2) ABRIR EL ASISTENTE DE INSTALACION
