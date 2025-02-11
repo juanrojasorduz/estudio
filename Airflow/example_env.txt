@@ -1,0 +1,4 @@
+AIRFLOW_VAR_TIMEZONE='America/Bogota'
+AIRFLOW_VAR_NAME='{"first_name":"Juan", "last_name":"Rojas"}'
+AIRFLOW_CONN_AWS_S3='{"conn_type": "aws", "description": "Example Connection For S3", "host": "", "login": "AKIA4MFAL6JYLMCXEXAMPLE", "password": "rtbK/I45/0Q1JV+3yy57D06ELdSao7M4bEXAMPLE", "schema": "", "extra": {"region_name": "us-east-1", "config_kwargs": {"retries": {"mode": "standard", "max_attempts": 10}}}}'
+AIRFLOW_CONN_MSSQL_DEFAULT='mssql://sa:123@host.docker.internal:1433/master'
