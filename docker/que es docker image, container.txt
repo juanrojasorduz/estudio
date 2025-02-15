@@ -1,0 +1,35 @@
+###### Docker Image (Receta: Ingredientes y pasos):
+Es una plantilla de solo lectura que contiene todo lo necesario para crear un contenedor
+Es almacenable en un sistema de registro
+etiqueta o tags
+-latest
+-1.0
+-beta
+
+###### Docker Container (Plato Cocinado: prepara la receta usando ingredientes e instrucciones)
+Es una instancia en ejecución de una imagen
+Su objetivo es ejecutar aplicaciones dentro de un entorno aislado.
+
+
+###### Docker Engine
+Docker Engine es el software que gestiona las imágenes, los contenedores y todos los procesos relacionados 
+con la ejecución de aplicaciones dentro de un entorno de contenedor.
+Componentes:
+
+1-Docker Daemon:
+Corre en segundo plano en el sistema operativo y gestiona las imágenes, los contenedores, las redes y los volúmenes.
+Escucha las solicitudes de los usuarios a través de la Docker API.
+ 
+2-Docker CLI:
+Es la interfaz de línea de comandos que utilizamos los usuarios para interactuar con Docker.
+A través de comandos como docker run, docker build, docker ps, etc., el CLI envía las solicitudes al Docker Daemon, que las procesa
+
+3-Docker API:
+Es una interfaz de programación de aplicaciones (API) que permite que otros programas o servicios interactúen con Docker de manera programática.
+La API se comunica con el daemon para gestionar los contenedores, imágenes y demás recursos.
+
+4-Docker Registry:
+Es un sistema para almacenar y distribuir imágenes de Docker.
+ Docker Hub es el registro público por defecto, pero también puedes usar registros privados.
+El Docker Daemon se comunica con los registros para descargar imágenes con el comando docker pull o subir imágenes con docker push
+

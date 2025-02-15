@@ -1,0 +1,43 @@
+## Docker registries:
+Docker Hub
+Google Container Registry
+Codefresh Registry
+Amazon ECR
+JFrog Bintray
+
+
+## Dockerfile: Conjunto de instrucciones que Docker utiliza para construir una imagen de contenedor
+                                          ________   
+ ________           ________             /_______/|
+|        |         |        |           |       |||	
+|        | ======> |  Image | ========> |       |||
+|________|  build  |________|   run     |_______|/
+
+Dockerfile         Docker Image         Docker Containers
+
+Dockerfile: all commands to assemble an image         
+Docker Image:  static, persisted container Image         
+Docker Containers: Image-instance running an app process in same system
+
+Componentes clave de un Dockerfile:
+## FROM: Define la imagen base sobre la cual se construirá la nueva imagen. Es el punto de partida para el contenedor.
+Ejemplo: FROM ubuntu:20.04
+
+## RUN: Ejecuta comandos dentro de la imagen, como la instalación de paquetes o la configuración del entorno.
+Ejemplo: RUN apt-get update && apt-get install -y python3
+
+## COPY: Copia archivos y directorios desde el host (máquina local) hacia el contenedor.
+Ejemplo: COPY . /app
+
+## ADD: Similar a COPY, pero con más capacidades, como descomprimir archivos tar automáticamente.
+Ejemplo: ADD app.tar.gz /app
+
+## WORKDIR: Establece el directorio de trabajo dentro del contenedor.
+Ejemplo: WORKDIR /app
+
+## EXPOSE: Expone puertos dentro del contenedor para que sean accesibles desde el exterior.
+Ejemplo: EXPOSE 8080
+
+## CMD: Especifica el comando que se ejecutará cuando se inicie el contenedor. Esto puede ser un comando o un script.
+Ejemplo: CMD ["python3", "app.py"]
+
