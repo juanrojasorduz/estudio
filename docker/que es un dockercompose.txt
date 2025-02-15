@@ -1,0 +1,49 @@
+Docker Compose es una herramienta que permite definir y ejecutar aplicaciones de Docker que requieren múltiples contenedores. 
+En lugar de tener que gestionar contenedores de manera individual, Docker Compose facilita la configuración, 
+el lanzamiento y la orquestación de varios contenedores de forma conjunta, usando un solo archivo de configuración
+
+
+Docker Compose utiliza un archivo de configuración YAML (generalmente llamado docker-compose.yml) donde puedes definir los diferentes 
+servicios, redes y volúmenes que forman parte de tu aplicación. Esto te permite describir todos los contenedores y cómo deben interactuar entre sí, 
+en lugar de tener que ejecutar comandos docker run separados para cada uno.
+
+
+Caracteristicas:
+
+1-Definir múltiples contenedores
+Puedes definir diferentes servicios (contenedores) que componen tu aplicación en un solo archivo. Esto incluye configuraciones de redes, puertos, volúmenes y variables de entorno
+
+2-Orquestación de contenedores:
+Docker Compose permite gestionar la interacción entre contenedores, como por ejemplo, cómo 
+deben comunicarse entre sí (por ejemplo, contenedores de base de datos y contenedores de aplicaciones web).
+
+3-Facilidad para entornos de desarrollo y producción:
+Docker Compose es útil tanto para entornos de desarrollo (para probar aplicaciones locales) como para producción, porque te permite 
+automatizar y replicar fácilmente el entorno completo con todos los contenedores configurados.
+
+4-Comandos simples para gestionar contenedores:
+Con Docker Compose, puedes gestionar todo el ciclo de vida de los contenedores a través de comandos sencillos como docker-compose up, 
+docker-compose down, docker-compose logs, etc.
+
+Ejemplo docker-compose.yml
+--------------------------------------------------------
+version: '3'  # Define la versión de Compose
+
+services:
+  web:
+    image: nginx:latest  # Usa la imagen de Nginx
+    ports:
+      - "80:80"  # Exponer el puerto 80
+    volumes:
+      - ./html:/usr/share/nginx/html  # Mapea un volumen
+
+  db:
+    image: postgres:latest  # Usa la imagen de PostgreSQL
+    environment:
+      POSTGRES_PASSWORD: example  # Configura la contraseña del DB
+--------------------------------------------------------
+
+En este ejemplo, tenemos dos servicios:
+web: un contenedor basado en la imagen de Nginx, que sirve contenido en el puerto 80.
+db: un contenedor basado en la imagen de PostgreSQL, con una variable de entorno para configurar la contraseña de la base de datos.
+
