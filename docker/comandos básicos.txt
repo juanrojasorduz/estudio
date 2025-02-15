@@ -1,0 +1,123 @@
+############# General
+# Iniciar Docker
+$ docker -d
+
+# Obtener ayuda con Docker. También puedes usar el comando help en todos los sucomandos.
+$ docker --help
+
+
+############# Imágenes
+# Construir una imagen desde un Dockerfile
+$ docker build -t <imagine_name>
+
+# Construir una imagen desde un Docker le sin el caché
+$ docker build -t <imagine_name> . -no-cache
+
+# Lista de imágenes locales
+$ docker images
+
+# Eliminar una imagen
+$ docker rmi <image_name>
+
+# Remover las imágenes sin usar
+$ docker image prune
+
+
+############# Registro de contenedores
+# Iniciar sesión en Docker
+ $  docker  login  -u  <username>
+
+# Publicar una imagen en Docker Hub
+$ docker push <username>/<imagine_name>:<tag>
+
+# Buscar en Hub una imagen
+$ docker search <image_name>
+
+# Descargar una imagen de Docker Hub
+$ docker pull <image_name>:<tag>
+
+# Renombrar una imagen existente de Docker 
+$ docker tag  <imagename><newname>:<version>
+
+
+############# Estado
+# Estado de todos los contenedores de Docker
+$ docker stats --all
+
+# Mostrar los procesos en ejecución de un contenedor
+$ docker top <container_name or cantainer_id>
+
+# Mostrar el historial de una imagen de Docker
+$ docker history <imagename or imageid>
+
+
+############# Contenedores
+# Crear y ejecutar un contenedor desde  una imagen con un nombre personalizado
+$ docker run --name <container_name> <image_name>
+
+# Ejecutar un contenedor en segundo plano
+$ docker run -d <image_name>
+
+# Ejecutar un contenedor y publicar sus puertos en el host
+$ docker run -p <host_port>:<container_port> <image_name>
+
+# Iniciar o detener un contenedor existente
+$ docker start|stop <container_name> (or container-id>)
+
+# Eliminar un contenedor detenido
+$ docker rm <container_name>  
+
+# Abrir/ Adjuntar una shell dentro de un contenedor en ejecución 
+$ docker exec -it <container_name> sh
+
+# Matar/ Detener un contenedor en ejecución
+$ docker kill <container_id>
+
+# Obtener y seguir los logs de un contenedor
+$ docker logs -f <container_name>
+
+# Para inspeccionar un contenedor en ejecución
+$ docker inspect <container_name> (or<container_id>)
+
+# Para listar los contenedores que se están ejecutando actualmente
+$ docker ps
+
+# Listar todos los contenedores Docker (en ejecución y detenidos)
+$ docker ps --all
+
+# Ver estadísticas de uso de recursos
+$ docker container stats
+
+
+############# Networking
+# Listar todas las redes
+$ docker network ls
+
+# Crear una nueva red
+$ docker network create --driver <driver-name> <bridge-name>
+
+# Conectar un contenedor en ejecución a una red
+$ docker network connect <network-name> <container -name>
+
+# Desconectar un contenedor de una red
+$ docker network disconnet <network-name> <container-name>
+
+# Eliminar una red
+$ docker network rm <network-name>
+
+
+############# Composición de Docker
+Crear e iniciar contenedores
+$ docker compose up
+
+Detener y eliminar contenedores, redes
+$ docker compose down
+
+Ver la salida de los contenedores
+$ docker compose logs
+
+Recibir eventos en tiempo real de los contenedores
+$ docker compose events
+
+Listar los contenedores lanzados como parte de Compose
+$ docker compose ps
