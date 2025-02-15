@@ -1,0 +1,59 @@
+cd C:\Users\hp\Documents\docker\django-docker-demo
+
+docker build -t djangowords .
+docker run -it --name djangowords -p 8000:8000 -v ${PWD}:/app djangowords bash
+python manage.py migrate
+python manage.py collectstatic
+python manage.py createsuperuser
+username:juanrojas
+correo:jdrojaso@hotmail.com
+password:123
+python manage.py makemigrations
+python manage.py migrate
+exit
+docker build -t djangowords .
+docker rm djangowords
+docker run -it --name djangowords -p 8000:8000 djangowords
+go to link
+localhost:8000/admin/words/word/add/
+ej add word
+word: wake up
+meaning: levantarse
+
+word: burn out
+meaning: detener algo
+
+-----------------
+
+
+docker run -it --name djangowords -p 8000:8000 -v ${PWD}:/app djangowords bash
+ls
+
+si no hay projecto creado
+django-admin startproject djangophrasalverbs .
+python manage.py startapp words
+ls
+mkdir data
+ls
+
+python manage.py migrate
+python manage.py collectstatic
+python manage.py createsuperuser
+username: sergio
+email address: sergio@programadores.io
+password: 123
+ls
+
+exit
+docker build -t djangowords . 
+
+borrar contenedor creado
+docker rm djangowords
+docker run -it --name djangowords -p 8000:8000 djangowords
+docker start djangowords
+python manage.py makemigrations
+python manage.py migrate
+
+
+
+
