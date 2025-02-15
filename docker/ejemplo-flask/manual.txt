@@ -1,0 +1,27 @@
+cd C:\Users\hp\Documents\docker\ejemplo-flask
+
+docker run -it --name ejemploflask -p 5000:5000 -v ${PWD}:/app python:latest bash
+
+once we are in batch:
+python --version
+pip install flask
+ls
+cd app
+ls
+cat flask-hola-mundo.py
+agregar variables de entorno requeridas para flask
+export FLASK_APP=flask-hola-mundo.py
+export FLASK_DEBUG=1
+
+flask run --host=0.0.0.0
+
+ir al anfitrion, es decir maquina local, 
+buscar en browser el link http://127.0.0.1:5000
+buscar en browser el link http://127.0.0.1:5000/hello?name=JuanRojas
+
+al contenedor estar ejecutandose, cada cambio hecho al archivo.py se va a reflejar en la app sin necesidad
+de reiniciar el contenedor
+
+para detener la ejecucion del contenedor:
+exit
+exit

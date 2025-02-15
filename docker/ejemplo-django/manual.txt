@@ -1,0 +1,26 @@
+cd C:\Users\hp\Documents\docker\ejemplo-django
+
+docker run -it --name ejemplodjango -p 8000:8000 -v ${PWD}:/app python:3 bash
+
+cd app
+
+intentar
+django-admin
+
+si no esta instalado, instalar usando
+pip install django
+
+
+## para iniciar projecto puedo usar:
+django-admin startproject helloworld .
+ls
+python manage.py runserver 0.0.0.0:8000
+go to browser an look for 127.0.0.1:8000
+
+##para usar lo que tenemos:
+python manage.py runserver 0.0.0.0:8000
+go to browser an look for 127.0.0.1:8000
+
+para salir:
+exit
+exit

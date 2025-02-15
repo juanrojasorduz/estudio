@@ -1,0 +1,27 @@
+cd C:\Users\hp\Documents\docker\ejemplo-jupyter
+
+To pull image jupyter/datascience-notebook from dockerhub
+docker run -it --name ejemplojupyter -p 8888:8888 -v ${PWD}:/home/jovyan/work -e JUPYTER_ENABLE_LAB=yes jupyter/datascience-notebook 
+
+go to browser and look for link provided, in our case was:
+http://127.0.0.1:8888/lab?token=44eb45ab42333359e89103496d6bf3ad63912ab6f1346033
+
+podemos agregar archivos sin problema
+
+salir del contenedor
+control + c
+exit
+
+para volver a utilizar la imagen ya creada:
+docker start -ia ejemplojupyter
+
+luego tomar el link que se provee
+http://127.0.0.1:8888/lab?token=5fe0b76b79ef9260a6c79060f62fe058c14001984335b769
+
+salir del contenedor
+control + c
+exit
+
+
+
+

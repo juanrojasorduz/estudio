@@ -1,0 +1,12 @@
+cd C:\Users\hp\Documents\docker\ejemplo-fastapi
+docker run -it --name ejemplofastapi -p 8000:8000 -v ${PWD}:/app python:3.12 bash
+cd app
+ls
+pip install fastapi
+pip install "uvicorn[standard]"
+uvicorn main:app --host 0.0.0.0 --port 8000
+look for this link in browser http://127.0.0.1:8000/
+look for this docs link in browser http://127.0.0.1:8000/docs
+
+para salir:
+exit

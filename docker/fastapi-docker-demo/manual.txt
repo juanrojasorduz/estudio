@@ -1,0 +1,93 @@
+crear directorio con archivos:
+ej: 
+mkdir fastapi-docker-demo
+cd fastapi-docker-demo
+touch Dockerfile
+touch requirements.txt
+touch main.py
+mkdir assets
+cd assets
+touch curated_facts.txt
+
+agregar contenidos usando una herramienta de codigo
+cd C:\Users\hp\Documents\docker\fastapi-docker-demo
+
+construir una imagen Docker usando el Dockerfile en el directorio actual y la etiqueta con el nombre chucksays
+docker build -t chucksays .
+
+Este comando crea y ejecuta un contenedor en segundo plano a partir de la imagen chucksays, 
+le asigna el nombre fastchucksays, y expone el puerto 8000 del contenedor en el puerto 8000 de tu máquina local. 
+Esto podría ser útil, por ejemplo, si tienes un servicio web corriendo en el contenedor 
+y quieres acceder a él desde tu navegador o una aplicación externa
+docker run -d --name fastchucksays -p 8000:8000 chucksays
+
+ir al browser e insertar link del endpoint:
+http://localhost:8000/
+http://localhost:8000/docs ## Note: For this case try it out > execute
+
+
+### Hacer push a dockerhub
+# Loguearse
+docker login
+
+# Hacer push
+docker push juanrojasorduz/chucksays:0.1
+nota: recrear imagen con el nombre de juanrojasorduz/chucksays:0.1 y luego si hacer el push
+ej:
+docker build -t juanrojasorduz/chucksays:0.1 .
+docker run -d --name fastchucksays -p 8000:8000 juanrojasorduz/chucksays:0.1
+docker push juanrojasorduz/chucksays:0.1
+
+
+# Ir a dockerhub y validar que la imagen este creada e ir a tags para conseguir link que hace pull
+por ejemplo:
+docker pull juanrojasorduz/chucksays:0.1
+docker pull juanrojasorduz/chucksays:0.2 etc
+
+ej: conectarse a una maquina de linux y:
+hace pull de la imagen y la ejecuta dentro de un contenedor
+Este comando ejecuta un contenedor a partir de la imagen juanrojasorduz/chucksays:0.1 en modo interactivo, 
+expone el puerto 8000 del contenedor al puerto 8000 de tu máquina local, y elimina el contenedor cuando termine su ejecución
+docker run -it --rm -p 8000:8000 juanrojasorduz/chucksays:0.1
+
+
+
+### Explicación DockerFile
+FROM python:3.12  ## Especifica que la imagen base será la versión 3.12 de Python
+
+WORKDIR /app  ## Establece el directorio de trabajo dentro del contenedor a /app
+
+COPY ./requirements.txt /app/requirements.txt  ## Copia el archivo requirements.txt de tu máquina local al contenedor, específicamente en el directorio /app
+
+RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt  ## RUN ejecuta comandos dentro del contenedor durante la construcción de la imagen.
+								   ## --no-cache-dir asegura que pip no guarde las versiones de los paquetes descargados en la caché (lo que ayuda a mantener la imagen más liviana).
+								   ## --upgrade garantiza que las dependencias se actualicen a la última versión disponible si es necesario 		 
+COPY . /app  ## Copia todo el contenido del directorio actual (donde está el Dockerfile) desde tu máquina local al directorio /app dentro del contenedor.
+
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]  ##
+
+CMD especifica el comando que se ejecutará cuando se inicie el contenedor.
+En este caso, el comando es uvicorn, que es un servidor ASGI utilizado para ejecutar aplicaciones web basadas en Python, como FastAPI.
+"main:app" especifica que se debe ejecutar el objeto app definido en el archivo main.py (que debería estar en el directorio /app).
+--host 0.0.0.0 le dice a uvicorn que escuche en todas las interfaces de red, lo cual es necesario para que sea accesible desde fuera del contenedor.
+--port 8000 especifica que el servidor debe escuchar en el puerto 8000.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
