@@ -1,0 +1,84 @@
+mkdir hello-project
+
+añadir archivo python
+-------------hello-world.py----------------------------
+from os import getenv
+
+
+if name := getenv('NAME'):
+    print(f"Hola {name}!")
+else:
+    print("Hola")
+-------------------------------------------------------
+
+añadir archivo dockerfile
+-------------Dockerfile--------------------------------
+FROM ubuntu:latest            
+
+RUN apt update && apt upgrade -y
+
+LABEL author="Juan Diego Rojas"
+
+WORKDIR /app
+
+ENV NAME Juan
+
+RUN apt install python3.10 -y
+
+COPY *.py /app/
+
+CMD [ "python3.10", "hello-world.py" ]
+--------------------------------------------------------
+
+#### Explicación:
+1. FROM ubuntu:latest
+Esta instrucción establece la imagen base para el contenedor. En este caso, se está utilizando la última versión disponible de Ubuntu como base. 
+Esto significa que el contenedor comenzará con una instalación limpia de Ubuntu
+
+2. RUN apt update && apt upgrade -y
+Este comando ejecuta un apt update para actualizar la lista de paquetes disponibles y 
+luego apt upgrade para asegurarse de que todos los paquetes instalados estén actualizados.
+-y significa que se aceptan automáticamente las actualizaciones sin intervención del usuario.
+
+3. LABEL author="Juan Diego Rojas"
+Esta instrucción añade una etiqueta de metadatos al contenedor con el nombre del autor (en este caso, Juan Diego Rojas). 
+Las etiquetas son útiles para añadir información adicional a la imagen, como el autor, la versión o el propósito
+
+4. WORKDIR /app
+Establece el directorio de trabajo dentro del contenedor en /app. Esto significa que cualquier comando que se 
+ejecute después de esta instrucción se ejecutará en ese directorio, y cualquier archivo copiado o creado se colocará dentro de /app.
+
+5. ENV NAME Juan
+Establece una variable de entorno llamada NAME con el valor Juan. 
+Esta variable puede ser utilizada dentro del contenedor por cualquier aplicación que lo necesite.
+
+6. RUN apt install python3.10 -y
+Este comando instala Python 3.10 en el contenedor. Específicamente, se ejecuta la instrucción 
+para instalar la versión 3.10 de Python en la imagen de Ubuntu.
+-y nuevamente acepta la instalación sin intervención del usuario
+
+7. COPY *.py /app/
+Esta instrucción copia todos los archivos .py (archivos de Python) desde el directorio en el que se encuentra el 
+Dockerfile hacia el directorio /app dentro del contenedor.
+Esto supone que en el contexto de construcción del Dockerfile (la carpeta donde se ejecuta el comando docker build) 
+hay archivos .py que serán copiados al contenedor.
+
+8. CMD [ "python3.10", "hello-world.py" ]
+Establece el comando que se ejecutará cuando se inicie el contenedor. En este caso, se ejecuta 
+Python 3.10 para correr el archivo hello-world.py.
+Este es el comando predeterminado que se ejecuta cuando el contenedor se inicia. 
+Si el contenedor se ejecuta sin comandos adicionales, Python ejecutará el script hello-world.py.
+
+
+Crear imagen y ejecutar contenedor
+docker build -t juanrojasorduz/hello-project .
+docker run juanrojasorduz/hello-project
+docker run -e NAME="a todos" juanrojasorduz/hello-project
+
+
+
+
+
+
+
+
