@@ -1,0 +1,32 @@
+cd C:\Users\hp\Documents\docker\ejemplo-fastapi-docker-init
+
+añadir archivo con la aplicacion
+ej: main.py
+
+añadir archivo con dependencias
+ej: requirements.txt
+
+construir plantilla
+docker init
+
+configuramos
+? What version of Python do you want to use? 3.10.11
+? What version of Python do you want to use? 3.10.11
+? What port do you want your app to listen on? (8000)
+? What port do you want your app to listen on? 8000
+? What is the command you use to run your app? (uvicorn 'main:app' --host=0.0.0.0 --port=8000)
+? What is the command you use to run your app? uvicorn 'main:app' --host=0.0.0.0 --port=8000
+
+nos crea un directorio plantilla con archivos:
+Created → .dockerignore
+Created → Dockerfile
+Created → compose.yaml
+Created → README.Docker.md
+
+Crear e iniciar contenedores
+docker compose up --build
+
+go to url http://localhost:8000/
+go to url http://localhost:8000/docs
+
+exit
