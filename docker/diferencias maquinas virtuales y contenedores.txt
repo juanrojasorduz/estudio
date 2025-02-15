@@ -1,0 +1,38 @@
+###### DIFERENCIAS ENTRE MAQUINAS VIRTUALES Y CONTENEDORES
+Son tecnologías de virtualización que se utilizan para ejecutar aplicaciones de manera aislada
+_____________________________
+Aplicationes en maquinas virtuales
+
+[VM 1    ][VM 2    ][VM 3    ] 
+[APP A   ][APP B   ][APP C   ]
+[Guest OS][Guest OS][Guest OS] ej: Windows 10, Ubuntu Linux, MacOS
+[        Hypervisor          ]
+[  Host Operating System     ] ej: Linux (Ubuntu)
+[      Infrastructure        ]
+_____________________________
+
+_____________________________
+Aplicationes en contenedores
+ 
+[ APP A ][ APP B ][ APP C ][ APP D  ]  
+[ Docker - Guest Operating System   ] ej: Alpine Linux
+[      Host Operating System        ] ej: Linux (Ubuntu)
+[           Infrastructure          ]
+_____________________________
+
+##Maquinas virtuales:
+Mayor aislamiento, al tener sistema operativo propio por cada VM
+La VM se ejecuta sobre un hipervisor, que es un software que gestiona y distribuye los recursos entre las diferentes VMs
+Consume más recursos (memoria, CPU, almacenamiento) al tener su propio SO, siendo mas lentas y caras en terminos de hardware
+Menor velocidad de arranque
+Escalabilidad mas costosa y lenta
+Casos de uso: Applicaciones que requieren alto grado de aislamiento entre sus componentes
+
+##Contenedores:
+Menor aislamiento al compartir el mismo sistema operativo subyacente (el kernel del host)
+cada contenedor ejecuta solo la aplicación y sus dependencias haciendolo mas ligero
+gestionados por un motor de contenedores como Docker
+Mayor velocidad de arranque
+Facilmente escalables, replicables y orquestables a traves de herramientas como Kubernetes
+Casos de uso: Ideales para microservicios, aplicaciones en la nube, desarrollo y despliegue continuo, y 
+cuando se necesita agilidad y eficiencia en el uso de recursos
