@@ -1,0 +1,274 @@
+
+
+#### Docker Compose para el proyecto: Hello Project
+
+
+
+cd hello-project-compose
+
+touch docker-compose.yml
+
+add following content to file:
+----------docker-compose.yml--------------------------
+services:
+  mysql:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=nousesestepassword
+    ports:
+      - 3306:3306
+    volumes:
+      - dbdata:/var/lib/mysql
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+volumes:
+  dbdata:
+-------------------------------------------------------
+
+
+
+----------docker-compose.yml--------------------------
+services:
+  database:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=nousesestepassword
+    volumes:
+      - db-data:/var/lib/mysql
+  cache:
+    image: redis
+  webserver:
+    image: nginx:alpine
+    ports:
+      - 8080:80
+    depends_on:
+      - database
+      - cache
+volumes:
+  db-data:
+-------------------------------------------------------
+
+docker compose up -d
+
+docker compose logs
+
+docker compose logs --tail=1
+
+docker compose stop
+
+docker compose start
+
+docker compose down
+
+
+#### Detalles del archivo docker-compose.yml
+
+## 1
+----------docker-compose.yml--------------------------
+services:
+  app:
+    build: .
+-------------------------------------------------------
+
+construye el contenedor usando el dockerfile
+docker compose up -d
+para eliminarlo
+docker compose down
+
+## 2
+----------docker-compose.yml--------------------------
+services:
+  app:
+    build:
+		context: .
+		dockerfile: Dockerfile
+-------------------------------------------------------
+docker compose up -d
+docker compose down
+
+## 3
+----------docker-compose.yml--------------------------
+services:
+  app:
+    build: .
+	image: ubuntu:latest
+-------------------------------------------------------
+docker compose up
+docker compose down
+
+## 4
+----------docker-compose.yml--------------------------
+services:
+  app:
+    build: .
+	environment:
+	  - NAME=sergioinfante
+-------------------------------------------------------
+docker compose up
+docker compose down
+
+## 5
+add file .env
+----------.env-----------------------------------------
+NAME=sergio_infante
+-------------------------------------------------------
+
+----------docker-compose.yml--------------------------
+services:
+  app:
+    build: .
+	env_file:
+	  - .env
+-------------------------------------------------------
+docker compose up
+docker compose down
+
+## 6
+----------docker-compose.yml---------------------------
+services:
+  database:
+    image: mysql
+  webserver:
+    image: nginx:alpine
+    depends_on:
+      - cache
+      - database
+  cache:
+    image: redis
+-------------------------------------------------------
+docker compose up # Error expected
+docker compose down
+
+## 7
+----------docker-compose.yml---------------------------
+services:
+  database:
+    image: nginx
+    ports:
+      - 8080:80
+-------------------------------------------------------
+
+docker compose up
+docker compose down
+
+
+## 8
+----------docker-compose.yml---------------------------
+services:
+  database:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=nousesestepassword
+    volumes:
+      - dbdata:/var/lib/mysql
+  webserver:
+    image: nginx:alpine
+    depends_on:
+      - cache
+      - database
+  cache:
+    image: redis
+volumes:
+  dbdata:
+-------------------------------------------------------
+
+docker compose up
+docker compose down
+
+verificar docker desktop para ver recursos creados
+-Contenedores
+-Imagenes
+-Volumenes
+
+
+#### Docker compose de ejemplo: Mysql + Adminer
+limpiar entorno de contenedores, volumenes, etc
+----------docker-compose.yml---------------------------
+services:
+  database:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=nousesestepassword
+    volumes:
+      - dbdata:/var/lib/mysql
+  webserver:
+    image: nginx:alpine
+    depends_on:
+      - cache
+      - database
+  cache:
+    image: redis
+volumes:
+  dbdata:
+-------------------------------------------------------
+docker compose up
+-- Nos dice que esta listo para ser usado, o para crear conexiones
+cd hello-project-compose
+docker compose config
+abrir navegador web:
+http://localhost:8080/
+system: mysql
+server: mysql
+username: root
+password: nousesestepassword
+
+docker compose down
+
+
+#### Docker compose de ejemplo para el proyecto Django: Django Phrasal Verbs
+
+cp -r django-docker-demo django-docker-compose
+
+cd django-docker-compose
+
+ls
+
+touch docker-compose.yml
+
+
+
+----------------------Dockerfile------------------------------------------------------------------
+FROM python:3.12
+
+WORKDIR /app
+
+COPY . /app/
+
+RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
+
+VOLUME /data
+
+RUN python manage.py collectstatic --noinput
+
+CMD [ "uvicorn", "djangophrasalverbs.asgi.application", "--host", "0.0.0.0", "--port"", "8000"]
+
+-------------------------------------------------------------------------------------------------
+
+
+
+version: '3'
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - dbdata:/var/lib/postgresql
+  web:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+volumes:
+  dbdata:
+
