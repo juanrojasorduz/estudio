@@ -1,0 +1,64 @@
+How does it work when you want to share data between your tasks
+with the kubernetes Pod operator, as you are going to see it's slightly different.
+
+You have a very simple data pipeline with two tasks, one with the kpo and another
+one with the Python operator.
+
+And obviously you have a Kubernetes cluster.
+The first step when you want to share data with the KPO is to turn on the parameter,
+do xcom push.
+
+It indicates that this task is going to store value that you want to share with other tasks
+in the metadatabase of airflow.
+
+That being said, the second step is to modify a little bit the docker image.
+That contains your task.
+
+Let's say that this Docker image has a script, like a Python script that you want to run.
+
+You need to modify that docker image.
+It means that this image has to create a file return.json .
+This file contains the xcom, the data that you want to share with other tasks.
+It is extremely important that your docker image creates that file.
+
+Next, you run the script, the Python script that you want to execute, so your task, and
+somewhere in the script you are going to write the data the you want to share in the file return.json .
+
+Finally when the task finishes, that triggers a SideCar container. 
+Basically it is another container in the Kubernetes Pod.
+And the only purpose of that side car is to print on the standard output.
+The content of the file return.json.
+
+The data that you want to share.
+Indeed, by default airflow stores the last line that is printed on the standard output by a task in a xcom.
+
+So that being said, the Kubernetes Pod Operator doesn't create only one xcom that contains the data you want
+to share, but it actually creates three xcoms, one with the pod name, another one with the pod namespace.
+And finally, the last one with the key return value and the data that you want to share.
+That is how the xcom is created. 
+
+By the way, the xcom pod name and pod name space the are always created even if you turn off the parameter, 
+do xcom push.
+
+Finally, the last step is to pull data from the python operator and you have succesfully shared data between the
+Kubernetes Pod Operator and another task.
+
+To sum, you have three steps.
+First, you have to turn on the parameter, do xcom push.
+Then you need to create the file, return.json in the docker image that corresponds to your task.
+Finally, the task that you run in the docker image has to write the data that you want to share in the
+file return.json 
+
+There is one thing that you have to keep in mind, which is xcoms are limited in size.
+Indeed, if you use mysql, you are limited to 32 kilobytes.
+If you use postgress, you are limited to one gigabytes and so on.
+
+So if you want to share more than one gigabyte of data, if you use postgres, then it might be interesting to use
+an external service like a s3 bucket or something else instead of storing the data in the file return.json
+
+
+
+
+
+
+

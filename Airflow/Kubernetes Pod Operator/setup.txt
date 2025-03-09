@@ -1,0 +1,59 @@
+add this dependency to requirements.txt
+apache-airflow-providers-cncf-kubernetes
+
+
+#### set up your local kubernetes cluster
+go to settings
+select kubernetes
+select apply & restart
+select install kubernetes cluster installation
+
+once docker is running again, you should see at the bottom left corner kubernetes
+to be sure kubernetes is running go to terminal and run following command:
+kubectl get nodes
+
+create a folder
+mkdir kpo
+
+initialize our local development environment
+astro dev init
+
+copy the kube config file, which is the configuration file of the single node
+Kubernetes cluster into the folder include of our astro project
+This file contains all the information that the kubernetes pod operator needs to connect
+to the kubernetes cluster.
+cd include
+mkdir .kube
+cp ../.kube/config include/.kube
+
+run airflow
+go to root directory which is kpo/ and run command
+astro dev start
+
+
+Set up your local docker registry
+Now you have a local Kubernetes cluster ready, you will set up a local Docker registry.
+The purpose of the Docker registry is to store the Docker images you built (your tasks) so that the KubernetesPodOperator can download and run them.
+Open a terminal and run the following command:
+
+docker run -d -p 5000:5000 --restart=always --name registry registry:2
+
+That's it. The registry is now ready to use.
+
+
+Example of use:
+run DAG pod_dag.py
+
+that DAG runs the hello-world docker image in a pod with
+the Kubernetes Pod Operator
+
+check pods running on the kubernetes cluster
+kubectl get pods
+
+
+
+
+
+
+
+

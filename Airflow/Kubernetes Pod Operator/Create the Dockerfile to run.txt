@@ -1,0 +1,49 @@
+In this lesson, we are going to create Docker Image that:
+
+1-Creates the file return.json
+2-Runs a python script (our task)
+
+Once the Docker Image is ready, we will push it into the local Docker registry so the KubernetesPodOperator can access it.
+
+
+#### At the root of your Astro project, create a folder simple_app
+mkdir simple_app
+
+
+#### In that folder, create a Dockerfile with the following content:
+---------------------Dockerfile------------------
+FROM python:3.8
+
+WORKDIR /
+
+# creating the file to write XComs to
+RUN mkdir -p airflow/xcom         
+RUN touch airflow/xcom/return.json
+
+COPY app.py ./
+
+CMD ["python", "./app.py"]
+--------------------------------------------------
+
+#### That Dockerfile creates the file return.json that we need to share data and run the Python script app.py
+In the same folder, create a file app.py with the following code:
+-----------------------------app.py------------------
+import os
+import json
+
+# that will create a XCOM with the key return_value and the JSON in it
+xcom = {
+        "output": 42
+    }
+
+# write to the file checked by Airflow for XComs
+with open('./airflow/xcom/return.json', 'w') as f:
+    json.dump(xcom, f)
+-----------------------------------------------------
+This Python script creates a JSON dictionary and writes it into the return.json file.
+
+That will create an XCOM with the key return_value and the value {"output": 42}
+
+The Dockerfile is ready. Time to build and publish it to the local Docker registry!
+
+

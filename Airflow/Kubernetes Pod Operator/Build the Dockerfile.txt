@@ -1,0 +1,12 @@
+Now it's time to build a Docker image based on that docker file in order to use it in the 
+Kubernetes Pod operator.
+
+### make sure that you are at the root of your astro project (kpo).Then:
+cd simple_app
+docker build -t localhost:5000/simple_app .
+
+
+### publish that docker image into the local docker registry so that image is accessible by
+the Kubernetes Pod Operator.
+docker push localhost:5000/simple_app
+
