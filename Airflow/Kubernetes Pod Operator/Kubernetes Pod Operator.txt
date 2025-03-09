@@ -1,0 +1,50 @@
+Kubernetes Pod Operator
+
+Runs a Docker image in a dedicated Kubernetes POD
+
+What is the Kubernetes Pod Operator
+as you are going to see it is simple
+
+Basically, the Kubernetes Pod Operator allows you to run a docker image in a dedicated
+Kubernetes Pod 
+It means that the Kubernetes Pod Operator launches its own task in a Kubernetes Pod with
+its own configuration
+
+Concretely, if you want to run a task in another language, or if you want to run a task
+with different resources or if you want to attach a specific configuration to that task,
+you can do that. Because the task runs in isolated Kubernetes Pod and it doesn't impact your
+airflow instance, or the other tasks that are running
+
+That is why the Kubernetes Pod Operator is so useful
+
+####### How does it work?
+
+                                         _______________________
+                                        | Kubernetes Cluster    |
+     __________________                 |  __________________   |
+    |		       |                | |	             |  | 
+    | KPO              |                | | POD              |  |
+    | ______________   |    Runs        | | ______________   |  |
+    ||		    |  |==============> | ||              |  |  |
+    || Docker Image |  |                | || Docker Image |  |  |
+    ||______________|  |                | ||______________|  |  |
+    |__________________|                | |__________________|  |
+                                        |                       |
+					|_______________________|
+
+You have one Kubernetes cluster and the kpo
+
+In the case of you have your airflow instance running inside the Kubernetes cluster. In that case the KPO will be
+in the Kubernetes cluster on the right.
+
+but in this case, we have the airflow instance on one side and the kubernetes cluster on the other side.
+
+That said, when the KPO runs, that triggers a Kubernetes Pod in the Kubernetes cluster with the docker image
+corresponding to the task.
+
+So obviously you need to have a Kubernetes cluster and you need to install the following provider to access the
+Kubernetes Pod operator  
+
+apache-airflow-providers-cncf-kubernetes
+
+

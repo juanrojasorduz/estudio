@@ -1,0 +1,40 @@
+
+How can you troubleshoot your tasks within the Kubernetes Pod Operator?
+
+First you have a couple of parameters that you can use and the first 
+
+*id_delete_operator_pod=True
+*id_delete_operator_pod=False
+
+when that parameter is set to true, when the task with the Kubernetes Pod Operator completes, airflow
+removes the pod.
+
+We have two kind of logs within the Kubernetes Pod Operator:
+1-Logs of the task itself (so of the docker image that we run in the pod)
+2-Logs of the pod, of the Kubernetes pod.
+
+If airflow deletes the pod, then we do not have access to the logs of the Kubernetes pod anymore
+
+you can change that by turning off that parameter with false
+That said, I do recommend you to only keep that parameter set to true when the task fails. Otherwise, keep it to false because
+you are going to end up with a lot of inactive pods on your Kubernetes cluster.
+
+
+*get_logs=True 
+this parameter give us access to the task logs from the airflow UI
+
+*log_events_on_failure=True
+this parameter is useful if the Kubernetes Pod fails and we want to know why from the airflow UI
+without using the kubernetes command line interface
+
+
+In addition we can dive deeper in the logs by accessing the kubectl tool, the kubernetes command line interface in
+the terminal
+
+find all the pods that have been completed, then take the number of the pod we are interested
+> kubectl get pods -n default
+
+if we want to access additional information and the events of our kubernetes Pod
+> kubectl describe pod <pod_name> -n default
+
+
