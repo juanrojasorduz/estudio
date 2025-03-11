@@ -1,0 +1,73 @@
+#### Build DAG
+
+-----------------------------DAG------------------------------------------------------------- 
+from airflow import DAG
+from airflow.providers.cncf.kubernetes.operators.kubernetes_pod import KubernetesPodOperator
+from airflow.decorators import task
+from datetime import datetime
+
+with DAG(
+    dag_id="share_pod_dag",
+    start_date=datetime(2022, 1, 1),
+    schedule="@once",
+    catchup=False
+):
+    
+    @task
+    def push_data():
+        return 100
+    
+    run_simple_app = KubernetesPodOperator(
+        task_id="run_simple_app",
+        namespace="default",
+        image="localhost:5000/simple_app",
+        name="airflow-test-pod",
+        env_vars={"DATA_POINT": """{{ ti.xcom_pull(task_ids='push_data') }}"""},
+        do_xcom_push=True,
+        in_cluster=False,
+        cluster_context="docker-desktop",
+        config_file="/usr/local/airflow/include/.kube/config",
+        is_delete_operator_pod=False,
+        get_logs=True,
+        log_events_on_failure=False
+    )
+    
+    @task
+    def pull_data(ti=None):
+        print(ti.xcom_pull(task_ids='run_simple_app'))
+        
+    push_data() >> run_simple_app >> pull_data()
+------------------------------------------------------------------------------------------------
+
+
+##### modify app.py with the following code:
+-----------------------------app.py-----------------------
+import os
+import json
+
+# import the XCOM of the previous task as an environment variable
+data_point = os.environ['DATA_POINT']
+
+# multiply the data point by 42 and package the result into a json 
+multiplied_data_point = str(42 * int(data_point))
+
+# that will create a XCOM with the key return_value and the JSON in it
+xcom = {
+        "output": 42
+    }
+
+# write to the file checked by Airflow for XComs
+with open('./airflow/xcom/return.json', 'w') as f:
+    json.dump(xcom, f)
+-----------------------------------------------------------
+
+
+#### Build Image
+cd kpo/simple_app
+docker build -t localhost:5000/simple_app .
+
+
+#### Push that Docker image to the registry
+docker push localhost:5000/simple_app
+
+#### Trigger DAG

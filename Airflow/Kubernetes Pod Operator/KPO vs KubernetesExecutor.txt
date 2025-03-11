@@ -1,0 +1,25 @@
+The Kubernetes executor and the KubernetesPodOperaor dynamically launch and terminate Pods to run Airflow tasks.
+
+Both can use the Kubernetes API to create Pods for running tasks.
+
+Differences:
+#### KubernetesPodOperator
+Requires a Docker image
+Defines one task (others don't have to run in Pods)
+Higher abstraction, easier to config
+Can run any valid Docker image
+Better control over the environment in which the task runs
+
+
+#### KubernetesExecutor
+Does not require a Docker image
+Applies to all tasks (all tasks run in their own Pod)
+Less abstraction, harder to config (executor_config argument)
+Custom Docker images must have Airflow installed
+Better control over the resource utilization across tasks
+
+
+It's common to use both in the same Airflow environment, where all tasks need to run on Kubernetes, but only some tasks require additional environment configurations (handled by the KPO)
+
+
+
