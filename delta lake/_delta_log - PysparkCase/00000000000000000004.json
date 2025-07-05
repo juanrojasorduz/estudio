@@ -1,0 +1,49 @@
+{
+	"commitInfo": {
+		"timestamp": 1751731235121,
+		"operation": "DELETE",
+		"operationParameters": {
+			"predicate": "[\"(firstname#5175 = Gendry)\"]"
+		},
+		"readVersion": 3,
+		"isolationLevel": "Serializable",
+		"isBlindAppend": false,
+		"operationMetrics": {
+			"numRemovedFiles": "1",
+			"numRemovedBytes": "1562",
+			"numCopiedRows": "2",
+			"numDeletionVectorsAdded": "0",
+			"numDeletionVectorsRemoved": "0",
+			"numAddedChangeFiles": "0",
+			"executionTimeMs": "1309",
+			"numDeletionVectorsUpdated": "0",
+			"numDeletedRows": "1",
+			"scanTimeMs": "1029",
+			"numAddedFiles": "1",
+			"numAddedBytes": "1496",
+			"rewriteTimeMs": "278"
+		},
+		"engineInfo": "Apache-Spark/3.5.0 Delta-Lake/3.0.0",
+		"txnId": "f7ba9675-8357-4d51-a73c-9c4f30398be6"
+	}
+}
+{
+	"remove": {
+		"path": "part-00000-d9bacfc4-32c0-4c5e-9236-d5154f184e87-c000.snappy.parquet",
+		"deletionTimestamp": 1751731235084,
+		"dataChange": true,
+		"extendedFileMetadata": true,
+		"partitionValues": {},
+		"size": 1562
+	}
+}
+{
+	"add": {
+		"path": "part-00000-f33fa77b-8725-42cd-b39f-579e87f67c01-c000.snappy.parquet",
+		"partitionValues": {},
+		"size": 1496,
+		"modificationTime": 1751731235047,
+		"dataChange": true,
+		"stats": "{\"numRecords\":2,\"minValues\":{\"firstname\":\"Jamie\",\"lastname\":\"Lannister\",\"house\":\"Lannister\",\"location\":\"Casterly Rock\",\"age\":21},\"maxValues\":{\"firstname\":\"Jon\",\"lastname\":\"Snow\",\"house\":\"Stark\",\"location\":\"Winterfell\",\"age\":36},\"nullCount\":{\"firstname\":0,\"lastname\":0,\"house\":0,\"location\":0,\"age\":0}}"
+	}
+}

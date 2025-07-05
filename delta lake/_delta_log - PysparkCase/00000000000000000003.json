@@ -1,0 +1,58 @@
+{
+	"commitInfo": {
+		"timestamp": 1751731105791,
+		"operation": "MERGE",
+		"operationParameters": {
+			"predicate": "[\"(firstname#3718 = firstname#3814)\"]",
+			"matchedPredicates": "[{\"actionType\":\"update\"}]",
+			"notMatchedPredicates": "[{\"actionType\":\"insert\"}]",
+			"notMatchedBySourcePredicates": "[]"
+		},
+		"readVersion": 2,
+		"isolationLevel": "Serializable",
+		"isBlindAppend": false,
+		"operationMetrics": {
+			"numTargetRowsCopied": "0",
+			"numTargetRowsDeleted": "0",
+			"numTargetFilesAdded": "1",
+			"numTargetBytesAdded": "1562",
+			"numTargetBytesRemoved": "1571",
+			"numTargetRowsMatchedUpdated": "1",
+			"executionTimeMs": "2958",
+			"numTargetRowsInserted": "2",
+			"numTargetRowsMatchedDeleted": "0",
+			"scanTimeMs": "1826",
+			"numTargetRowsUpdated": "1",
+			"numOutputRows": "3",
+			"numTargetRowsNotMatchedBySourceUpdated": "0",
+			"numTargetChangeFilesAdded": "0",
+			"numSourceRows": "3",
+			"numTargetFilesRemoved": "1",
+			"numTargetRowsNotMatchedBySourceDeleted": "0",
+			"rewriteTimeMs": "891"
+		},
+		"engineInfo": "Apache-Spark/3.5.0 Delta-Lake/3.0.0",
+		"txnId": "004d103e-337c-4e83-843b-3ed48f3caf69"
+	}
+}
+{
+	"remove": {
+		"path": "part-00000-680c1834-84e9-4d5c-820f-bb16c8199957-c000.snappy.parquet",
+		"deletionTimestamp": 1751731105765,
+		"dataChange": true,
+		"extendedFileMetadata": true,
+		"partitionValues": {},
+		"size": 1571,
+		"stats": "{\"numRecords\":1}"
+	}
+}
+{
+	"add": {
+		"path": "part-00000-d9bacfc4-32c0-4c5e-9236-d5154f184e87-c000.snappy.parquet",
+		"partitionValues": {},
+		"size": 1562,
+		"modificationTime": 1751731105737,
+		"dataChange": true,
+		"stats": "{\"numRecords\":3,\"minValues\":{\"firstname\":\"Gendry\",\"lastname\":\"Baratheon\",\"house\":\"Baratheon\",\"location\":\"Casterly Rock\",\"age\":19},\"maxValues\":{\"firstname\":\"Jon\",\"lastname\":\"Snow\",\"house\":\"Stark\",\"location\":\"Winterfell\",\"age\":36},\"nullCount\":{\"firstname\":0,\"lastname\":0,\"house\":0,\"location\":0,\"age\":0}}"
+	}
+}

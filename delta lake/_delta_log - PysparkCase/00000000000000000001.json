@@ -1,0 +1,80 @@
+{
+	"commitInfo": {
+		"timestamp": 1751730818046,
+		"operation": "WRITE",
+		"operationParameters": {
+			"mode": "Overwrite",
+			"partitionBy": "[]"
+		},
+		"readVersion": 0,
+		"isolationLevel": "Serializable",
+		"isBlindAppend": false,
+		"operationMetrics": {
+			"numFiles": "4",
+			"numOutputRows": "3",
+			"numOutputBytes": "5285"
+		},
+		"engineInfo": "Apache-Spark/3.5.0 Delta-Lake/3.0.0",
+		"txnId": "213d5cc7-0657-4a98-bbb9-9dce4323fbed"
+	}
+}
+{
+	"add": {
+		"path": "part-00001-9df8c6c2-1fc7-430b-9a48-95387bef0bbf-c000.snappy.parquet",
+		"partitionValues": {},
+		"size": 1555,
+		"modificationTime": 1751730816955,
+		"dataChange": true,
+		"stats": "{\"numRecords\":1,\"minValues\":{\"firstname\":\"Robert\",\"lastname\":\"Baratheon\",\"house\":\"Baratheon\",\"location\":\"Storms End\",\"age\":49},\"maxValues\":{\"firstname\":\"Robert\",\"lastname\":\"Baratheon\",\"house\":\"Baratheon\",\"location\":\"Storms End\",\"age\":49},\"nullCount\":{\"firstname\":0,\"lastname\":0,\"house\":0,\"location\":0,\"age\":0}}"
+	}
+}
+{
+	"add": {
+		"path": "part-00002-fdc1a001-bea5-47cf-b3f1-2f0b2cd673a5-c000.snappy.parquet",
+		"partitionValues": {},
+		"size": 1501,
+		"modificationTime": 1751730816935,
+		"dataChange": true,
+		"stats": "{\"numRecords\":1,\"minValues\":{\"firstname\":\"Eddard\",\"lastname\":\"Stark\",\"house\":\"Stark\",\"location\":\"Winterfell\",\"age\":47},\"maxValues\":{\"firstname\":\"Eddard\",\"lastname\":\"Stark\",\"house\":\"Stark\",\"location\":\"Winterfell\",\"age\":47},\"nullCount\":{\"firstname\":0,\"lastname\":0,\"house\":0,\"location\":0,\"age\":0}}"
+	}
+}
+{
+	"add": {
+		"path": "part-00003-ea982ff9-9a53-4917-a057-c430dd427e59-c000.snappy.parquet",
+		"partitionValues": {},
+		"size": 1571,
+		"modificationTime": 1751730816955,
+		"dataChange": true,
+		"stats": "{\"numRecords\":1,\"minValues\":{\"firstname\":\"Jamie\",\"lastname\":\"Lannister\",\"house\":\"Lannister\",\"location\":\"Casterly Rock\",\"age\":30},\"maxValues\":{\"firstname\":\"Jamie\",\"lastname\":\"Lannister\",\"house\":\"Lannister\",\"location\":\"Casterly Rock\",\"age\":30},\"nullCount\":{\"firstname\":0,\"lastname\":0,\"house\":0,\"location\":0,\"age\":0}}"
+	}
+}
+{
+	"remove": {
+		"path": "part-00001-17076419-8873-43b6-b108-f29838eb0a1b-c000.snappy.parquet",
+		"deletionTimestamp": 1751730818044,
+		"dataChange": true,
+		"extendedFileMetadata": true,
+		"partitionValues": {},
+		"size": 1555
+	}
+}
+{
+	"remove": {
+		"path": "part-00003-f926e5c9-39f5-431f-921d-d9f597d16b22-c000.snappy.parquet",
+		"deletionTimestamp": 1751730818045,
+		"dataChange": true,
+		"extendedFileMetadata": true,
+		"partitionValues": {},
+		"size": 1571
+	}
+}
+{
+	"remove": {
+		"path": "part-00002-e67d167c-f3c4-49ab-97ec-1765f07cfb08-c000.snappy.parquet",
+		"deletionTimestamp": 1751730818045,
+		"dataChange": true,
+		"extendedFileMetadata": true,
+		"partitionValues": {},
+		"size": 1501
+	}
+}

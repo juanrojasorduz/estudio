@@ -1,0 +1,49 @@
+{
+	"commitInfo": {
+		"timestamp": 1751730933198,
+		"operation": "UPDATE",
+		"operationParameters": {
+			"predicate": "[\"(firstname#2296 = Jamie)\"]"
+		},
+		"readVersion": 1,
+		"isolationLevel": "Serializable",
+		"isBlindAppend": false,
+		"operationMetrics": {
+			"numRemovedFiles": "1",
+			"numRemovedBytes": "1571",
+			"numCopiedRows": "0",
+			"numDeletionVectorsAdded": "0",
+			"numDeletionVectorsRemoved": "0",
+			"numAddedChangeFiles": "0",
+			"executionTimeMs": "2087",
+			"numDeletionVectorsUpdated": "0",
+			"scanTimeMs": "1755",
+			"numAddedFiles": "1",
+			"numUpdatedRows": "1",
+			"numAddedBytes": "1571",
+			"rewriteTimeMs": "327"
+		},
+		"engineInfo": "Apache-Spark/3.5.0 Delta-Lake/3.0.0",
+		"txnId": "96bab52a-adfc-414a-bbd7-66d494478aea"
+	}
+}
+{
+	"add": {
+		"path": "part-00000-680c1834-84e9-4d5c-820f-bb16c8199957-c000.snappy.parquet",
+		"partitionValues": {},
+		"size": 1571,
+		"modificationTime": 1751730933156,
+		"dataChange": true,
+		"stats": "{\"numRecords\":1,\"minValues\":{\"firstname\":\"Jamie\",\"lastname\":\"Lannister\",\"house\":\"Lannister\",\"location\":\"Kings Landing\",\"age\":37},\"maxValues\":{\"firstname\":\"Jamie\",\"lastname\":\"Lannister\",\"house\":\"Lannister\",\"location\":\"Kings Landing\",\"age\":37},\"nullCount\":{\"firstname\":0,\"lastname\":0,\"house\":0,\"location\":0,\"age\":0}}"
+	}
+}
+{
+	"remove": {
+		"path": "part-00003-ea982ff9-9a53-4917-a057-c430dd427e59-c000.snappy.parquet",
+		"deletionTimestamp": 1751730933183,
+		"dataChange": true,
+		"extendedFileMetadata": true,
+		"partitionValues": {},
+		"size": 1571
+	}
+}

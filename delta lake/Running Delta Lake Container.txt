@@ -1,0 +1,32 @@
+## Documentation: 
+https://github.com/delta-io/delta-docs/tree/main/static/quickstart_docker
+https://medium.com/@ansabiqbal/delta-lake-introduction-with-examples-using-pyspark-cb2a0d7a549d
+
+
+## 1- install and open docker desktop
+
+## 2- clone repository
+git clone https://github.com/delta-io/delta-docs.git
+
+## 3- change directory
+cd .\delta-docs\static\quickstart_docker
+
+## 4- add this line to dockerfile "Dockerfile_delta_quickstart" (do it at line 70)
+RUN sed -i 's/\r$//' /opt/spark/work-dir/startup.sh
+
+## 5- build docker image
+docker build -t delta_quickstart -f Dockerfile_delta_quickstart .
+
+## 6- run a container
+
+# Option A
+docker run --name delta_quickstart --rm -it --entrypoint bash delta_quickstart
+python3
+exit()
+ls -lsgA /tmp/delta-table/_delta_log (to see delta logs files)
+
+
+# Option B (Jupyter Notebook) (Recommended)
+docker run --name delta_quickstart --rm -it -p 8888-8889:8888-8889 delta_quickstart
+
+Open on browser link provided (Example: http://127.0.0.1:8888/lab?token=e368d4b7f12e07601cb5c2768e12f714c86f99d4210d7e26)
