@@ -1,0 +1,65 @@
+gh copilot explain "sudo apt-get"
+
+
+winget install GitHub.Copilot
+
+
+## Install github CLI
+https://github.com/cli/cli/blob/trunk/docs/install_windows.md#winget
+
+## Restart shell and verify version
+gh --version
+
+## do the Login to GitHub account
+gh auth login
+
+
+## Install copilot CLI
+winget install GitHub.Copilot
+
+
+https://docs.github.com/en/copilot/how-tos/copilot-cli/cli-getting-started
+
+
+extensiones visual studio code
+GitHub Copilot
+GitHub Copilot Chat
+Iniciar session en cuenta de GitHub
+Go to GitHub copilot menu in the right side above 
+
+
+installing python and pip
+encontrar el interprete de python
+
+Run in cmd
+where python
+C:\Python312\python.exe
+C:\Users\jdroj\AppData\Local\Microsoft\WindowsApps\python.exe
+C:\Users\jdroj\AppData\Local\Python\bin\python.exe
+
+
+Extensiones Python
+Python
+
+select python interpreter
+Ctrl+Shift+P
+>Python: Select Interpreter
+
+python --version
+python test.py
+
+
+abrir chat copilot
+Ctrl+Alt+I
+
+
+crear un nuevo proyecto
+crea un nuevo proyecto en Python que muestre un "Hola mundo"
+
+@newWorkspace crea un nuevo proyecto en Python que muestre un "Hola mundo"
+
+
+
+
+
+
