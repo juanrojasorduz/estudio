@@ -1,0 +1,62 @@
+## Course roadmap
+1-Meet Claude: What is Claude, how do you talk to it, and how do you get great results?
+2-Organizing your work: How do Projects, Artifacts, and Skills give Claude structure and reusable knowledge?
+3-Expanding Claude's reach: How do Connectors, Enterprise Search, and Research bring your tools and the web into the conversation?
+4-Putting it all together: What does Claude look like in action across roles, and where else can you work with it?
+5-Conclusion & certificate: Where do you go from here, and how do you earn your certificate?
+
+## What is claude
+Claude is an AI assistant designed to be your thinking partner
+
+Claude is an AI assistant designed around the principles of being helpful, harmless, and honest. 
+Using an approach called Constitutional AI, it is trained to align with human values, avoid harmful or 
+unethical behavior, and operate transparently.
+
+Beyond basic chatbot functions, Claude can perform a wide range of tasks, including summarization, search, 
+writing, question answering, coding, and problem-solving. It is intended to act as a collaborative thought 
+partner that helps users work through complex challenges.
+
+Claude is also designed to be highly steerable, allowing users to easily adjust its tone, personality, and 
+behavior to fit their needs. This makes interactions more natural and helps users achieve desired results with less effort.
+
+Finally, Claude is accessible across multiple platforms and plans, including Free, Pro, Max, Team, and Enterprise. 
+Users can access it through web, desktop, and mobile apps, with conversations, projects, memory, and preferences synchronized across devices when signed in.
+
+
+## Claude's capabilities
+Claude is designed to support both **automation and collaboration** across a wide range of tasks. Its key strengths include:
+
+Writing and content creation: Claude can help draft, edit, and refine content such as emails, reports, and social media 
+posts while adapting to your preferred tone and style.
+
+Research and analysis: It can analyze large amounts of information, summarize documents, identify insights, and work with 
+extensive materials thanks to its large context window, which can process hundreds of pages of text in a single conversation.
+
+Coding assistance: Claude can help write, debug, explain, and improve code across multiple programming languages, making it 
+useful for software development tasks.
+
+Problem-solving and reasoning: It supports complex reasoning, strategic thinking, mathematical analysis, and research. 
+Its advanced reasoning modes allow it to work through problems step by step when deeper analysis is needed.
+
+Learning and skill development: Claude can act as a learning companion, adapting to different learning styles and helping 
+users build understanding and critical-thinking skills rather than simply providing answers.
+
+Overall, Claude functions as a versatile AI partner that assists with creative work, analysis, coding, decision-making, and learning.
+
+
+## Ways to access claude
+Claude can be accessed through several interfaces, each designed for different types of work:
+
+Claude.ai (web, desktop, and mobile apps): The primary platform for interacting with Claude. It supports conversations, brainstorming, 
+writing, research, analysis, document creation, and many other general-purpose tasks.
+
+Claude Code: A developer-focused tool that can directly edit files, execute commands, and create commits, making it useful for 
+coding and desktop file management workflows.
+
+Claude and Slack: Integrates Claude into Slack, allowing users to interact with it in channels, conversations, or threads. 
+It can also search connected workspace content, including messages and files, to provide more context-aware assistance.
+
+Claude for Excel: Integrates Claude into Microsoft Excel, enabling users to analyze, modify, and create spreadsheets. 
+It is particularly useful for financial modeling, formula explanations, troubleshooting errors, and navigating complex workbooks.
+
+While Claude is available across multiple tools and environments, the primary focus of the course is using Claude.ai as the main interface for everyday AI-assisted work.
