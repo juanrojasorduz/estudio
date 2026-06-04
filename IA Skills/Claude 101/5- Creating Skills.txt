@@ -1,3 +1,11 @@
+Learning objectives
+By the end of this lesson, you will be able to:
+
+Explain what Skills are and how Claude uses them
+Identify Anthropic's built-in Skills for document creation
+Enable and manage Skills in your settings
+
+
 What are Skills?
 Skills are folders of instructions, scripts, and resources that Claude loads dynamically to improve performance on specialized tasks. Think of them as expertise packages—they teach Claude how to complete specific tasks in a repeatable way.
 
@@ -84,3 +92,11 @@ Purpose: Define processes Claude executes
 Best for: Repeatable workflows, multi-step tasks, consistent methodology
 Example: Process guidelines (like brand or legal), Blog drafting, PDF creation
 Persistance: Instructions applied when the skill is invoked
+
+
+Lesson reflection
+Before moving on, consider:
+
+What types of documents do you create regularly that could benefit from Claude's built-in Skills?
+Are there repetitive workflows in your work that might be good candidates for custom Skills?
+How might Skills change the way you think about document creation and data analysis?

@@ -1,3 +1,11 @@
+Learning objectives
+By the end of this lesson, you will be able to:
+
+Explain what artifacts are and when Claude creates them
+Share artifacts with colleagues and publish them publicly
+Troubleshoot common artifact issues
+
+
 What are artifacts?
 Artifacts are standalone, interactive outputs that Claude creates in a dedicated window alongside your conversation. Instead of getting a long block of code or text buried in the chat, you see your content rendered and ready to use—whether that's a working website, an interactive chart, or a document you can immediately download.
 
@@ -55,3 +63,11 @@ Describe the end user. Telling Claude who will use the artifact helps it make ap
 Iterate incrementally. Ask Claude to add one feature or make one change at a time. This makes it easier to identify what's working and catch issues early.
 
 Request artifacts when needed. If you ask for something substantial and Claude responds in the chat instead of creating an artifact, just say "Please create that as an artifact."
+
+
+Lesson reflection
+Before moving on, consider:
+
+What recurring work could benefit from having an interactive artifact you can reuse?
+Are there processes in your work that would be clearer as a flowchart or diagram?
+What prototype or tool would help you test an idea quickly?

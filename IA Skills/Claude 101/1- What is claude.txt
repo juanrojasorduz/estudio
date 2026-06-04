@@ -1,3 +1,11 @@
+Learning objectives
+By the end of this lesson you'll be able to:
+
+Explain what Claude is and the principles that guide its design
+Describe Claude's core capabilities and how it differs from a simple chatbot
+Identify the different ways to access Claude (web, desktop, and mobile)
+
+
 ## Course roadmap
 1-Meet Claude: What is Claude, how do you talk to it, and how do you get great results?
 2-Organizing your work: How do Projects, Artifacts, and Skills give Claude structure and reusable knowledge?
@@ -60,3 +68,6 @@ Claude for Excel: Integrates Claude into Microsoft Excel, enabling users to anal
 It is particularly useful for financial modeling, formula explanations, troubleshooting errors, and navigating complex workbooks.
 
 While Claude is available across multiple tools and environments, the primary focus of the course is using Claude.ai as the main interface for everyday AI-assisted work.
+
+Lesson reflection
+What tasks in your current work might benefit from having Claude as a thinking partner? Take a look at your calendar (or better yet, ask Claude to) and identify a few tasks you might want to use Claude to support.
