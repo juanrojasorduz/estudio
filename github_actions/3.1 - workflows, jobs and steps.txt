@@ -1,0 +1,16 @@
+Workflows
+Attached to a github repository
+Contain one or more Jobs
+Triggered upon events
+
+Jobs
+Define a runner (execution environment)
+Contain one or more steps
+Run in parallel (default) or sequential
+Can be conditional
+
+Steps
+Execute a shell script or an action
+Can use custom or third-party actions
+Steps are executed in order
+Can be conditional

@@ -1,0 +1,45 @@
+
+
+Github Actions: A workflow automation service by Github
+
+Automate all kinds of repository-related processes & actions
+
+repository = buckets that contain code for applications or packages or websites
+
+so github offers various automations around code that is stored on Github around these
+repositories that hold that code
+
+areas in which can be implemented:
+1) Code Deployment (CI / CD): Automate code testing, building and Deployment
+ci: continuous integration: Code changes are automatically built, tested and merged with existing code
+cd: continuous delivery: After integration, new app or package versions are published automatically after the code
+    has been tested and integrated
+which are methods for automating app development and Deployment
+
+Example: I want to automatically upload and publish a new version of my website once we made a change in the website code
+
+2) Code and repository management
+Automate code reviews, issue management etc
+
+## Git & Github & Github Actions
+* Git: A free version control system which is used to manage source code changes of application, website etc
+no matter which programming language is used
+- Save code snapshots ("Commits")
+- Work with alternative code versions ("branches")
+- Move between branches & commits ("checkout")
+=> With Git, you can easily roll back to older code snapshots or develop new features without breaking production code
+
+* Github: A cloud git repository & services provider
+we can connect local with cloud repositories, so we can store and manage git repositories
+-Cloud git repository storage ("push" and "pull")
+Public and private team management and more
+-Code management & collaborative development
+via issues, projects, Pull requests and more
+-Automation and CI/CD
+via github actions, github apps and more 
+
+
+## Resources
+https://github.com/academind/github-actions-course-resources/tree/main
+https://github.com/academind/github-actions-course-resources
+https://academind.com/community/
