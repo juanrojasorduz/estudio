@@ -1,0 +1,313 @@
+CLAUDE PLATFORM & MODEL FOUNDATIONS - SYNTHESIS
+-------------------------------------------------
+Source: Claude_Platform___Model_Foundations.txt (Module 1)
+
+
+1. WHAT PROBLEM DOES IT ACTUALLY SOLVE?
+-------------------------------------------------
+
+CORE PROBLEM
+Most users learn one or two Claude features and apply them everywhere. That
+works for simple, one-off tasks but breaks down for recurring work, team
+deliverables, and anything that needs to hold up under review. The module's
+real subject is not "how to use Claude" but "which of four upstream decisions
+you make before you type a single prompt" - because those decisions set the
+quality ceiling for everything that follows. The four decisions: entry point,
+capability layer, model, and context management.
+
+NAIVE ALTERNATIVE
+The naive approach is to always use default Chat, re-paste the same
+background context every session, use whichever model is default, and let a
+conversation run indefinitely until it visibly breaks. This "solves" the
+immediate task but re-creates the same setup cost every time and produces
+silent quality degradation nobody is watching for.
+
+SUB-COMPONENTS AND WHAT EACH ONE SOLVES
+
+a) Entry point (Chat / Projects / Artifacts / Research)
+   Solves: WHERE the work should happen so that context either does or does
+   not persist, and so the output lands in the right format.
+   - Chat solves one-off, non-repeating work with zero setup.
+   - Projects solve the "re-explaining the same background every session"
+     tax by making standing instructions and a knowledge base persistent.
+   - Artifacts solve the problem of a deliverable getting buried inline in a
+     conversational thread instead of existing as a separate, editable
+     object.
+   - Research solves the problem of a single lookup being insufficient -
+     it runs multi-step, multi-source search and synthesis.
+
+b) Capability layer (Projects / Skills / Code Execution / Memory)
+   Solves: WHAT Claude can reliably do inside an entry point, beyond raw
+   text generation.
+   - Skills solve inconsistent execution of a repeatable procedure.
+   - Code Execution solves the fact that Claude's text generation produces
+     "plausible-looking" numbers, not verified ones - it solves correctness
+     for computation, data transformation, charts, and real downloadable
+     files.
+   - Memory solves the cost of re-entering the same facts every session.
+
+c) Model selection (Haiku / Sonnet / Opus)
+   Solves: matching the speed-vs-capability trade-off to the task, so you
+   are not over-engineering routine work (using Opus for simple
+   classification) or under-resourcing high-stakes work (using Haiku for
+   ambiguous, judgment-heavy synthesis).
+
+d) Context management (context limits, restart/summarize/persist, Memory
+   curation, usage limits)
+   Solves: the fact that context is a finite, depleting budget. Long
+   sessions silently degrade - instructions given early can lose force
+   after summarization - even though the model's tone stays equally
+   confident throughout. This item also solves the trust problem created by
+   behavioral property #2 below: fluent tone is not evidence of accuracy.
+
+UNDERLYING BEHAVIORAL PROPERTIES THAT MOTIVATE ALL OF THE ABOVE
+These aren't tools to choose between - they are constraints that make the
+four decisions necessary in the first place:
+1. Responses vary run to run (probabilistic generation, not retrieval).
+2. Confident tone is not a signal of accuracy - fabricated and verified
+   content read identically fluent.
+3. Context is a budget - it fills and gets summarized, which compresses
+   detail.
+4. Knowledge has a training cutoff - stale by default unless a current
+   source is connected.
+5. Configured procedures (Skills) reduce output variance but do not
+   eliminate it - review remains necessary regardless of setup quality.
+
+
+2. IN WHAT CONTEXT DOES THIS SOLUTION ACTUALLY FIT?
+-------------------------------------------------
+
+ENTRY POINTS
+
+Chat
+- Fits: one-off questions, quick drafts, exploratory prompting, tasks that
+  start and end in a single session.
+- Does NOT fit: any workstream where you find yourself re-pasting the same
+  background paragraph session after session - that is the signal the
+  workstream has outgrown Chat.
+- Check before using Chat: Will I need this context again next week? If
+  yes, stop and consider a Project instead.
+
+Projects
+- Fits: when at least two of these three hold - the task recurs, the
+  background context is stable across sessions, the output format is
+  consistent.
+- Does NOT fit / caution: a single unrepeated task, or work where the
+  context changes substantially every time (a Project's knowledge base and
+  standing instructions become a liability if they're wrong or stale, since
+  they auto-apply to every conversation in that space).
+- Check before building a Project (ask all three):
+  1. Does this task recur?
+  2. Is the background context the same across sessions?
+  3. Is the output format consistent?
+  If two or more are "yes," the Project pays for itself within two or
+  three sessions.
+
+Artifacts
+- Fits: draft documents, data tables, formatted reports, code - anything a
+  recipient will open and read as a standalone deliverable.
+- Does NOT fit: answers you're going to act on immediately within the
+  conversation itself (those belong inline).
+
+Research
+- Fits: tasks needing deep multi-step investigation across multiple
+  sources, or synthesis of current information beyond a quick lookup.
+- Does NOT fit / overkill: a quick current-information lookup - regular
+  Chat's web search toggle covers that at much lower cost/time.
+- Caution: on Team/Enterprise plans, web search must first be enabled at
+  the workspace level by an Owner/Primary Owner before members can toggle
+  it on; whether it's on by default is not specified and should be
+  verified in-product.
+
+CAPABILITY LAYER
+
+Skills
+- Fits: a task with a defined, repeatable procedure (e.g., generating a
+  weekly report in a fixed format).
+- Does NOT fit / caution: assuming a Skill removes the need for review -
+  it reduces variance, it does not eliminate it. Also requires a trust
+  evaluation before enabling third-party Skills (what access does it get,
+  who wrote it) - Anthropic-provided or org-approved Skills are the
+  lower-risk starting point.
+
+Code Execution
+- Fits: any numeric output that will be used or reported, data cleaning/
+  transformation, charts or visualizations, or a real downloadable file
+  (.xlsx, .pptx, .docx, .pdf).
+- Does NOT fit: prose-only tasks with no computation or verifiable output
+  - there's nothing for it to verify.
+
+Memory
+- Fits: recurring role context, output-format preferences, names of
+  frequent collaborators, standing constraints that apply across projects.
+- Does NOT fit / caution: information that's only relevant once, or
+  information that changes frequently and won't be actively reviewed - a
+  stale memory entry can be actively misleading rather than neutral.
+  Project-scoped Memory should be used to keep client/workstream contexts
+  separate. Incognito mode should be used for sensitive or confidential
+  one-off work, but note it does not override org-level data retention.
+
+Check before implementing any capability layer (the analyst's four
+questions, generalized):
+1. Which parts of this task are the same every time? -> Standing
+   instructions + Skill.
+2. Which reference material recurs across sessions? -> Knowledge base.
+3. Which outputs must be computed correctly, not just "sound right"? ->
+   Code Execution.
+4. Which context should carry across sessions without re-entry? -> Memory.
+
+MODEL SELECTION
+
+Haiku
+- Fits: routine, structured extraction/classification at volume, where
+  speed matters and the cost of an imperfect individual output is low.
+- Does NOT fit: ambiguous, judgment-heavy, or high-stakes work - Haiku is
+  the wrong choice if ambiguity is high and errors are costly.
+
+Sonnet
+- Fits: most professional drafting, synthesis, and analysis - the default
+  starting point for knowledge work.
+- Does NOT fit as a hard boundary, but signals to move off it: if quality
+  is falling short on a complex task, move up to Opus; if speed/volume
+  dominate and the task is structured, move down to Haiku.
+
+Opus
+- Fits: complex judgment calls, high-stakes output, ambiguous or
+  multi-layered inputs, client-facing deliverables, strategic planning.
+- Does NOT fit / overkill: routine, structured, high-volume work - using
+  Opus here is slower and (on metered/usage-budgeted plans, including API)
+  more costly per call for no quality benefit.
+- Check before selecting a tier: Is the task structured or ambiguous? Is
+  the cost of an individual error high or low? Does volume or quality
+  dominate? On a metered/API plan, does the per-call cost trade-off change
+  the answer?
+- Caution/verify-at-use: the model picker lineup, default model, and
+  auto-switching behavior vary by plan and change over time - verify
+  in-product rather than assuming. As of the source's June 2026 note, a
+  fourth tier above Opus existed in the shipped product, but the
+  certification/this lesson intentionally teaches the three-tier frame.
+
+CONTEXT MANAGEMENT
+
+- Fits (all sessions): treat context as a depleting budget from the start,
+  not just when problems appear.
+- Signs intervention is needed: Claude stops following earlier
+  instructions; responses address only the most recent exchange; accuracy
+  drops in ways consistent with lost early-session context.
+- Three responses, each with a distinct fit:
+  - Restart: fits when the session has drifted beyond recovery, or when
+    starting a genuinely new task in the same workstream. Project
+    instructions/knowledge base carry forward automatically; the thread
+    does not.
+  - Summarize: fits when you want to preserve continuity without carrying
+    a degraded window forward - produce a summary of decisions/open items,
+    paste it into a new conversation.
+  - Persist: fits for information that should be available in ALL future
+    sessions - save to Memory or the Project knowledge base rather than
+    re-entering it.
+- Does NOT fit: extending a single session indefinitely on intensive,
+  higher-tier-model work - usage limits (rolling session window plus
+  weekly caps, with a separate weekly pool for the top model tier) make
+  this an availability risk, not just a quality risk. Better to segment
+  large tasks in advance.
+
+
+3. PRACTICAL EXAMPLES
+-------------------------------------------------
+
+1) Entry point - wrong fit (from source material)
+   A coordinator drafts a weekly status report in a new Chat every Monday,
+   re-typing project name, team structure, stakeholders, and format each
+   time. Result: a 40-minute session, ~12 minutes of which is pure
+   context-loading, repeated indefinitely.
+
+2) Entry point - right fit (from source material)
+   The same coordinator builds a Project: background and stakeholder list
+   go into the knowledge base, format and escalation rules go into standing
+   instructions. Session time drops from 40 to 25 minutes with identical
+   report quality - the entry-point decision alone eliminated the setup
+   tax.
+
+3) Capability layer - compounding fit (from source material)
+   A business analyst runs a monthly regulatory tracking report in plain
+   Chat for two months (65 minutes/session, manual re-paste of context and
+   format, 2 then 1 errors caught pre-publish). In month three she moves
+   portfolio context and format instructions into a Project, prior reports
+   into the knowledge base, adds a Skill for report formatting, and moves
+   numeric work to Code Execution. Session time drops to 30 minutes and
+   zero errors are found in months three through eight.
+
+4) Model selection - fit
+   Classifying and extracting fields from hundreds of similar structured
+   support tickets: Haiku is the right choice - high volume, low ambiguity,
+   low individual-error cost, speed matters.
+
+5) Model selection - NOT the right fit (clarifying example, source-implied)
+   Using Haiku for a client-facing strategic recommendation built from
+   ambiguous, conflicting inputs would be the wrong choice - the task
+   requires the nuanced judgment and multi-step reasoning the source
+   explicitly assigns to Opus; using Haiku here trades quality for a speed
+   advantage that doesn't matter at low volume.
+
+6) Context management - NOT the right fit (clarifying example)
+   Running a single unbroken two-hour session for a complex, high-stakes
+   analytical task without ever summarizing or persisting interim
+   decisions is the wrong approach: the source notes that detailed
+   instructions given in the first 10 minutes can lose force by minute 90
+   due to summarization, and usage limits may interrupt the session before
+   the work is even done. Segmenting the task and persisting progress to
+   the knowledge base is the fit here instead.
+
+7) Research vs. quick lookup - contrast
+   "What's today's exchange rate?" fits a quick Chat web-search toggle, not
+   Research. "Synthesize current regulatory positions across five
+   agencies' recent publications" fits Research - it needs multi-step,
+   multi-source investigation, not a single lookup.
+
+
+4. SUMMARY / CHECKLIST
+-------------------------------------------------
+
+BEFORE YOU START A SESSION, ANSWER FOUR QUESTIONS IN ORDER:
+
+1. ENTRY POINT
+   - One-off, no reuse -> Chat
+   - Recurs + stable context + consistent format (2 of 3) -> Project
+   - Output is a deliverable to be opened/read -> Artifact
+   - Needs deep multi-source investigation -> Research
+     (quick current-info lookup -> just use Chat's web search toggle)
+
+2. CAPABILITY LAYER (use any combination, independently)
+   - Same procedure every time? -> Skill
+   - Recurring reference material? -> Knowledge base (Project)
+   - Output must be verifiably correct (numbers, files, charts)? ->
+     Code Execution
+   - Context needed across ALL future sessions? -> Memory
+
+3. MODEL TIER
+   - Structured, high-volume, low stakes -> Haiku
+   - Most professional work (default starting point) -> Sonnet
+   - Ambiguous, high-stakes, judgment-heavy -> Opus
+   - On metered/API plans, factor per-call cost into the tier choice
+
+4. CONTEXT DISCIPLINE
+   - Treat context as a depleting budget from the start, not a crisis to
+     react to later.
+   - Watch for: dropped earlier instructions, answers ignoring earlier
+     decisions, accuracy drift.
+   - Respond with: Restart (drifted beyond recovery / new task), Summarize
+     (preserve continuity, drop degraded window), or Persist (save to
+     Memory/knowledge base for all future sessions).
+   - Curate Memory on a regular cadence - delete what's expired, update
+     what's changed; stale memory is worse than no memory.
+
+STANDING REMINDERS REGARDLESS OF CONFIGURATION
+- Outputs vary run to run, even from a well-configured Skill - review is
+  never optional.
+- Fluent, confident tone is never evidence of accuracy - verify
+  independently, especially for numbers and facts.
+- Knowledge has a training cutoff - connect a current source or enable web
+  search/Research when recency matters.
+- Feature names, default models, and usage-limit specifics change over
+  time and by plan - verify in-product/in Help Center before finalizing
+  anything you're publishing or teaching from this material.
